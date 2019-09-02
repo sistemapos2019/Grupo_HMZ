@@ -23,12 +23,13 @@
           
         </ul>
         <ul class="navbar-nav ml-auto">
-          <button type="submit" class="btn btn-success btn-fill float-left">
-          Crear Orden
-        </button>
-        <button type="submit" class="btn btn-info btn-fill float-right">
-          Para Llevar
-        </button>
+          <sidebar-link to="/admin/crear-orden">
+            <i class="btn btn-success btn-mid active" role="button">Crear Orden</i>
+          </sidebar-link>
+          <sidebar-link to="/admin/llevar">
+            <i class="btn btn-primary btn-mid active" role="button">Para Llevar</i>
+          </sidebar-link>
+      
             <a class="nav-link" href="#">
               
             </a>

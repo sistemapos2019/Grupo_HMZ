@@ -67,7 +67,7 @@
           >
             <template slot="header">
               <h4 class="card-title">Ordenes Recientes</h4>
-              <p class="card-category"></p>
+              
             </template>
             <l-table class="table-hover table-striped"
                      :columns="table1.columns"

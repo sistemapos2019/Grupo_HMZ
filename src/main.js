@@ -23,6 +23,12 @@ import LightBootstrap from './light-bootstrap-main'
 // router setup
 import routes from './routes/routes'
 
+//axios
+import axios from 'axios'
+import VueAxios from 'vue-axios'
+ 
+Vue.use(VueAxios, axios)
+
 import './registerServiceWorker'
 // plugin setup
 Vue.use(VueRouter)

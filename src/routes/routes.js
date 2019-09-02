@@ -32,7 +32,7 @@ const routes = [
       {
         path: 'crear-orden',
         name: 'Crear Orden',
-        component: Overview
+        component: CrearOrden
       },
       {
         path: 'user',
