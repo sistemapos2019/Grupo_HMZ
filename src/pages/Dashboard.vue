@@ -46,7 +46,7 @@
             </div>
           </stats-card>
         </div>
-
+      
         <div class="col-xl-3 col-md-6">
           <stats-card>
             <div slot="header" class="icon-info">
@@ -62,19 +62,15 @@
           </stats-card>
         </div>
         <div class="col-12">
-          <card class="strpied-tabled-with-hover"
-                body-classes="table-full-width table-responsive"
-          >
+          <card class="strpied-tabled-with-hover" body-classes="table-full-width table-responsive">
             <template slot="header">
               <h4 class="card-title">Ordenes Recientes</h4>
-              
             </template>
             <l-table class="table-hover table-striped"
                      :columns="table1.columns"
                      :data="table1.data">
             </l-table>
           </card>
-
         </div>    
     
       </div>
