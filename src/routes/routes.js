@@ -3,8 +3,10 @@ import DashboardLayout from '../layout/DashboardLayout.vue'
 import NotFound from '../pages/NotFoundPage.vue'
 
 // Admin pages
-import Overview from 'src/pages/Dashboard.vue'
+import Dashboard from 'src/pages/Dashboard.vue'
+import DashboardLlevar from 'src/pages/DashboardLlevar.vue'
 import CrearOrden from 'src/pages/CrearOrden.vue'
+import Ordenes from 'src/pages/Ordenes.vue'
 import UserProfile from 'src/pages/UserProfile.vue'
 import TableList from 'src/pages/TableList.vue'
 import Typography from 'src/pages/Typography.vue'
@@ -25,14 +27,24 @@ const routes = [
     redirect: '/admin/overview',
     children: [
       {
-        path: 'overview',
+        path: 'dashboard',
         name: 'Dashboard',
-        component: Overview
+        component: Dashboard
+      },
+      {
+        path: 'dashboard-llevar',
+        name: 'Dashboard para Llevar',
+        component: DashboardLlevar
       },
       {
         path: 'crear-orden',
         name: 'Crear Orden',
         component: CrearOrden
+      },
+      {
+        path: 'ordenes',
+        name: 'Ordenes',
+        component: Ordenes
       },
       {
         path: 'user',

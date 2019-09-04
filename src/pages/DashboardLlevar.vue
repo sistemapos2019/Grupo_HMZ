@@ -1,14 +1,13 @@
 <template>
   <div class="content">
-    <div class="container-fluid">
-      
+    <div class="container-fluid">  
       <div class="row">
         <div  class="col-2">
           <ul class="navbar-nav ml-auto">
             <sidebar-link to="/admin/crear-orden">
             <i class="btn btn-success btn-lg" role="button">Editar</i>
           </sidebar-link>
-          </ul>
+          </ul>  
         </div>
         <div  class="">
            <ul class="navbar-nav ml-auto">
@@ -19,7 +18,7 @@
         </div>
         
         <div class="col-12">
-          <card class="table-wrapper-scroll-y my-custom-scrollbar" body-classes="table-">
+          <card class="strpied-tabled-with-hover" body-classes="table-full-width table-responsive">
             <template slot="header">
               <h4 class="card-title">Ordenes Recientes</h4>
             </template>
@@ -29,14 +28,9 @@
             </l-table>
           </card>
         </div>  
-        
-        
       </div>
-      
     </div>
-    
   </div>
-  
 </template>
 <script>
   import ChartCard from 'src/components/Cards/ChartCard.vue'
