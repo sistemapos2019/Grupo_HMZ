@@ -6,8 +6,17 @@ import NotFound from '../pages/NotFoundPage.vue'
 import Dashboard from 'src/pages/Dashboard.vue'
 import DashboardLlevar from 'src/pages/DashboardLlevar.vue'
 import CrearOrden from 'src/pages/CrearOrden.vue'
+import CrearOrdenLlevar from 'src/pages/CrearOrdenLlevar.vue'
+import ModificarOrden from 'src/pages/ModificarOrden.vue'
 import Ordenes from 'src/pages/Ordenes.vue'
-import UserProfile from 'src/pages/UserProfile.vue'
+import Admin from 'src/pages/Admin.vue'
+import AdminMesas from 'src/pages/AdminMesas.vue'
+import AdminUsuarioRol from 'src/pages/AdminUsuarioRol.vue'
+import AdminProductos from 'src/pages/AdminProductos.vue'
+import AdminCategorias from 'src/pages/AdminCategorias.vue'
+import AdminCompras from 'src/pages/AdminCompras.vue'
+import AdminParametros from 'src/pages/AdminParametros.vue'
+import Estadisticas from 'src/pages/Estadisticas.vue'
 import TableList from 'src/pages/TableList.vue'
 import Typography from 'src/pages/Typography.vue'
 import Icons from 'src/pages/Icons.vue'
@@ -19,7 +28,7 @@ const routes = [
   {
     path: '/',
     component: DashboardLayout,
-    redirect: '/admin/overview'
+    redirect: '/admin/dashboard'
   },
   {
     path: '/admin',
@@ -42,14 +51,59 @@ const routes = [
         component: CrearOrden
       },
       {
+        path: 'crear-orden-llevar',
+        name: 'Crear Orden para Llevar',
+        component: CrearOrdenLlevar
+      },
+      {
+        path: 'modificar-orden',
+        name: 'Modificar Orden',
+        component: ModificarOrden
+      },
+      {
         path: 'ordenes',
         name: 'Ordenes',
         component: Ordenes
       },
       {
-        path: 'user',
-        name: 'User',
-        component: UserProfile
+        path: 'admin',
+        name: 'admin',
+        component: Admin
+      },
+      {
+        path: 'admin/mesas',
+        name: 'Administración Mesas',
+        component: AdminMesas
+      },
+      {
+        path: 'admin/usuario-rol',
+        name: 'Administración Usuario-Rol',
+        component: AdminUsuarioRol
+      },
+      {
+        path: 'admin/productos',
+        name: 'Administración Productos',
+        component: AdminProductos
+      },
+      {
+        path: 'admin/categorias',
+        name: 'Administración Categorías',
+        component: AdminCategorias
+      },
+      {
+        path: 'admin/compras',
+        name: 'Administración Compras',
+        component: AdminCompras
+      },
+      {
+        path: 'admin/parametros',
+        name: 'Administración Parametros',
+        component: AdminParametros
+      },
+      {
+        path: 'estadisticas',
+        name: 'Estadísticas',
+        component: Estadisticas
       },
       {
         path: 'table-list',

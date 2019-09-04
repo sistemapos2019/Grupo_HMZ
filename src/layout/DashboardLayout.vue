@@ -10,49 +10,28 @@
         <i class="nc-icon nc-spaceship"></i>
         <p>Para Llevar</p>
       </sidebar-link>
-      <sidebar-link to="/admin/user">
-        <i class="nc-icon nc-circle-09"></i>
-        <p>Usuarios y Roles</p>
+      <sidebar-link to="/admin/admin">
+        <i class="nc-icon nc-settings-gear-64"></i>
+        <p>Administración</p>
       </sidebar-link>
       <sidebar-link to="/admin/Ordenes">
         <i class="nc-icon nc-notes"></i>
         <p>Ordenes</p>
       </sidebar-link>
-      <sidebar-link to="/admin/typography">
-        <i class="nc-icon nc-paper-2"></i>
-        <p>Menú</p>
-      </sidebar-link>
-      <hr style="border-color:gray;">
-      <sidebar-link to="/admin/overview">
+     <!-- <hr style="border-color:gray;"> -->
+      <sidebar-link to="/admin/estadisticas">
         <i class="nc-icon nc-chart-bar-32"></i>
         <p>Estadísticas</p>
       </sidebar-link>
-      <!--
-      <sidebar-link to="/admin/maps">
-        <i class="nc-icon nc-pin-3"></i>
-        <p>Maps</p>
-      </sidebar-link>
-      -->
-      <!--
-      <sidebar-link to="/admin/notifications">
-        <i class="nc-icon nc-bell-55"></i>
-        <p>Notifications</p>
-      </sidebar-link>
-      -->
       <sidebar-link to="/admin/icons">
         <i class="nc-icon nc-atom"></i>
         <p>Confirguración</p>
       </sidebar-link>
-
-      
     </side-bar>
     <div class="main-panel">
       <top-navbar></top-navbar>
-
       <dashboard-content @click="toggleSidebar">
-
       </dashboard-content>
-
       <content-footer></content-footer>
     </div>
   </div>

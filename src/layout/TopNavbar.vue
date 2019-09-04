@@ -2,13 +2,8 @@
   <nav class="navbar navbar-expand-lg">
     <div class="container-fluid">
       <a class="navbar-brand" href="#">{{routeName}}</a>
-      <button type="button"
-              class="navbar-toggler navbar-toggler-right"
-              :class="{toggled: $sidebar.showSidebar}"
-              aria-controls="navigation-index"
-              aria-expanded="false"
-              aria-label="Toggle navigation"
-              @click="toggleSidebar">
+      <button type="button" class="navbar-toggler navbar-toggler-right" :class="{toggled: $sidebar.showSidebar}"
+        aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation" @click="toggleSidebar">
         <span class="navbar-toggler-bar burger-lines"></span>
         <span class="navbar-toggler-bar burger-lines"></span>
         <span class="navbar-toggler-bar burger-lines"></span>
@@ -17,25 +12,21 @@
         <ul class="nav navbar-nav mr-auto">
           <li class="nav-item">
             <a class="nav-link" href="#" data-toggle="dropdown">
-             <!-- <i class="nc-icon nc-palette"></i> -->
+              <!-- <i class="nc-icon nc-palette"></i> -->
             </a>
           </li>
-          
         </ul>
         <ul class="navbar-nav ml-auto">
           <sidebar-link to="/admin/crear-orden">
-            <i class="btn btn-success btn-mid active" role="button">Crear Orden</i>
+            <i class="btn btn-success btn-sm " role="button">Crear Orden</i>
           </sidebar-link>
-          <sidebar-link to="/admin/llevar">
-            <i class="btn btn-primary btn-mid active" role="button">Para Llevar</i>
+          <sidebar-link to="/admin/crear-orden-llevar">
+            <i class="btn btn-primary btn-sm " role="button">Para Llevar</i>
           </sidebar-link>
-      
-            <a class="nav-link" href="#">
-              
-            </a>
+          <a class="nav-link" href="#">
+          </a>
           <base-dropdown title="Opciones">
             <a class="dropdown-item" href="#">Opcion 1</a>
-            
             <div class="divider"></div>
             <a class="dropdown-item" href="#">Cerrar Sesión</a>
           </base-dropdown>
