@@ -12,6 +12,7 @@ import Ordenes from 'src/pages/Ordenes.vue'
 import Admin from 'src/pages/Admin.vue'
 import AdminMesas from 'src/pages/AdminMesas.vue'
 import AdminUsuarioRol from 'src/pages/AdminUsuarioRol.vue'
+import EditarUsuarioRol from 'src/pages/EditarUsuarioRol.vue'
 import AdminProductos from 'src/pages/AdminProductos.vue'
 import AdminCategorias from 'src/pages/AdminCategorias.vue'
 import AdminCompras from 'src/pages/AdminCompras.vue'
@@ -79,6 +80,11 @@ const routes = [
         path: 'admin/usuario-rol',
         name: 'Administración Usuario-Rol',
         component: AdminUsuarioRol
+      },
+      {
+        path: 'admin/usuario-rol/editar',
+        name: 'Editar Usuario-Rol',
+        component: EditarUsuarioRol
       },
       {
         path: 'admin/productos',

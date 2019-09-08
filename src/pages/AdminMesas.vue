@@ -14,7 +14,34 @@
             ></l-table>
           </card>
         </div>
+        <div class="col-md-4">
+          <div class="card">
+            <div class="card-body">
+              <h4 class="card-title">Opciones</h4>
+            </div>
+            <hr>
+            <div class="">
+              <ul class="navbar-nav ml-auto">
+                <sidebar-link to="#">
+                  <div class="Edit">
+                    <i class="card-body" role="button"><i class="nc-icon nc-settings-tool-66"></i> Editar Mesa </i>
+                  </div>
+                </sidebar-link>
+              </ul>
+            </div>
+            <div class="">
+              <ul class="navbar-nav ml-auto">
+                <sidebar-link to="#">
+                  <div class="">
+                    <i class="card-body" role="button"> <i class="nc-icon nc-simple-add"></i> Agregar Mesas </i>
+                  </div>
+                </sidebar-link>
+              </ul>
+            </div>
+          </div>
+        </div>
       </div>
+      
     </div>
   </div>
 </template>
@@ -70,4 +97,5 @@ export default {
 </script>
 
 <style>
+
 </style>
