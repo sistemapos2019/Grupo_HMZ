@@ -1,51 +1,57 @@
 <template>
   <div class="container">
+    <br>
+    <br>
   <div class="row">
     <div class="col">
      <ul class="navbar-nav ml-auto">
           <sidebar-link to="/admin/admin/mesas">
-            <i  class="btn btn-success btn-sm" role="button">Mesas</i>
+                  <button class="btn btn-primary btn-sty">Mesas<br><i class="nc-icon nc-istanbul"></i></button>
           </sidebar-link>
           </ul>
     </div>
     <div class="col">
      <ul class="navbar-nav ml-auto">
           <sidebar-link to="/admin/admin/productos">
-            <i class="btn btn-primary btn-sm" role="button">Productos</i>
+            <button class="btn btn-primary btn-sty">Productos<br><i class="nc-icon nc-grid-45"></i></button>
           </sidebar-link>
           </ul>
     </div>
     <div class="col">
       <ul class="navbar-nav ml-auto">
           <sidebar-link to="/admin/admin/usuario-rol">
-            <i class="btn btn-primary btn-sm" role="button">Usuarios y Roles</i>
+            <button class="btn btn-primary btn-sty">Usuarios / Rol<br><i class="nc-icon nc-badge"></i></button>
           </sidebar-link>
           </ul>
     </div>
   </div>
+  <br>
+  <br>
   <div class="row">
     <div class="col">
      <ul class="navbar-nav ml-auto">
           <sidebar-link to="/admin/admin/categorias">
-            <i  class="btn btn-success btn-sm" role="button">Categorías</i>
+             <button class="btn btn-primary btn-sty">Categorias<br><i class="nc-icon nc-single-copy-04"></i></button>
           </sidebar-link>
           </ul>
     </div>
     <div class="col">
      <ul class="navbar-nav ml-auto">
           <sidebar-link to="/admin/admin/compras">
-            <i class="btn btn-primary btn-sm" role="button">Compras</i>
+          <button class="btn btn-primary btn-sty">Compras<br><i class="nc-icon nc-cart-simple"></i></button>
           </sidebar-link>
           </ul>
     </div>
     <div class="col">
       <ul class="navbar-nav ml-auto">
           <sidebar-link to="/admin/admin/parametros">
-            <i class="btn btn-primary btn-sm" role="button">Parámetros</i>
+            <button class="btn btn-primary btn-sty">Parámetros<br><i class="nc-icon nc-puzzle-10"></i></button>
           </sidebar-link>
           </ul>
     </div>
   </div>
+  <br>
+  <br>
 </div>
 </template>
 
@@ -54,4 +60,19 @@ export default {};
 </script>
 
 <style>
+.btn-sty{
+  width: 180px;
+  height: 80px;
+}
+
+.nc-icon{
+  font-size: 25px;
+}
+
+.col{
+left: 50px;
+}
+
+
+
 </style>
