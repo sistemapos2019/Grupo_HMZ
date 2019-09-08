@@ -30,7 +30,7 @@
               <ul class="navbar-nav ml-auto">
                 <sidebar-link to="#">
                   <div class="">
-                    <i class="card-body" role="button"><i class="nc-icon nc-money-coins"></i> Cobrar Orden </i>
+                    <i class="card-body" role="button"> <i class="nc-icon nc-money-coins"></i> Cobrar Orden </i>
                   </div>
                 </sidebar-link>
               </ul>
@@ -46,6 +46,7 @@
   import StatsCard from 'src/components/Cards/StatsCard.vue'
   import LTable from 'src/components/Table.vue'
   import Card from 'src/components/Cards/Card.vue'
+  import Modal from 'src/layout/Modal.vue'
 const tableColumns = ['IdOrden','Mesero', 'Cliente', 'Total', 'Estado','TiempoPreparado', 'Preparado']
 const tableData = [
   {
@@ -108,7 +109,8 @@ const tableData = [
       LTable,
       ChartCard,
       StatsCard,
-      Card
+      Card,
+      Modal
     },
     data () {
       return {
