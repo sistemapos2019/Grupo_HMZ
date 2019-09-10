@@ -2,6 +2,15 @@
   <div class="content">
     <div class="container-fluid">
       <div class="row">
+        <div class="col-sm-3">
+        <input class="form-control" type="text" placeholder="Search" aria-label="Search"/>
+        </div>
+          <div class="col-sm-3">
+        <button type="button" class="btn btn-light"><i class="nc-icon nc-bullet-list-67"></i> Sorft</button>
+        </div>
+      </div>
+       <br>
+      <div class="row">
         <div class="col-md-8">
           <card id="card" class="table-wrapper-scroll-y my-custom-scrollbar" body-classes="table-">
             <template slot="header">
