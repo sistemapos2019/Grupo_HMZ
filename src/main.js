@@ -1,39 +1,20 @@
-/*!
-
- =========================================================
- * Vue Light Bootstrap Dashboard - v2.0.0 (Bootstrap 4)
- =========================================================
-
- * Product Page: http://www.creative-tim.com/product/light-bootstrap-dashboard
- * Copyright 2019 Creative Tim (http://www.creative-tim.com)
- * Licensed under MIT (https://github.com/creativetimofficial/light-bootstrap-dashboard/blob/master/LICENSE.md)
-
- =========================================================
-
- * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
- */
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import VModal from 'vue-js-modal'
 import App from './App.vue'
-
 // LightBootstrap plugin
 import LightBootstrap from './light-bootstrap-main'
-
 // router setup
 import routes from './routes/routes'
-
 //axios
 import axios from 'axios'
 import VueAxios from 'vue-axios'
- 
-Vue.use(VueAxios, axios)
-
 import './registerServiceWorker'
 // plugin setup
 Vue.use(VueRouter)
 Vue.use(LightBootstrap)
-
+Vue.use(VueAxios, axios)
+Vue.use(VModal)
 // configure router
 const router = new VueRouter({
   routes, // short for routes: routes
