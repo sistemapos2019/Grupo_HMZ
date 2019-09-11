@@ -19,7 +19,7 @@
             <hr>
             <div class="">
               <ul class="navbar-nav ml-auto">
-                <sidebar-link to="/admin/crear-orden">
+                <sidebar-link to="/admin/modificar-orden">
                   <div class="">
                     <i class="card-body" role="button"><i class="nc-icon nc-settings-tool-66"></i> Editar Orden </i>
                   </div>
@@ -28,9 +28,9 @@
             </div>
             <div class="">
               <ul class="navbar-nav ml-auto">
-                <sidebar-link to="/admin/crear-orden">
+                <sidebar-link to="#">
                   <div class="">
-                    <i class="card-body" role="button"><i class="nc-icon nc-money-coins"></i> Cobrar Orden </i>
+                    <i class="card-body" role="button"><i class="nc-icon nc-money-coins"></i><modal-cobrar id="modal-cobrar"/></i>
                   </div>
                 </sidebar-link>
               </ul>
@@ -46,13 +46,15 @@
   import StatsCard from 'src/components/Cards/StatsCard.vue'
   import LTable from 'src/components/Table.vue'
   import Card from 'src/components/Cards/Card.vue'
-const tableColumns = ['IdOrden','Mesero', 'Cliente', 'Total', 'Estado','TiempoPreparado', 'Preparado']
+  import ModalCobrar from '@/components/ModalCobrar.vue'
+const tableColumns = ['IdOrden','Mesero','Cliente', 'Total', 'Estado','TiempoPreparado', 'Preparado']
 const tableData = [
   {
    idorden: 1,
    mesero : "Juan",
    cliente : "Carlos",
    total : 10.0,
+   mesa: 1,
    estado : "Pendiente",
    tiempopreparado : 5.00,
    preparado : "Sí"
@@ -62,6 +64,7 @@ const tableData = [
    mesero : "Juan",
    cliente : "Carlos",
    total : 10.0,
+   mesa: 1,
    estado : "Pendiente",
    tiempopreparado : 5.00,
    preparado : "Sí"
@@ -71,6 +74,7 @@ const tableData = [
    mesero : "Juan",
    cliente : "Carlos",
    total : 10.0,
+   mesa: 1,
    estado : "Pendiente",
    tiempopreparado : 5.00,
    preparado : "Sí"
@@ -80,6 +84,7 @@ const tableData = [
    mesero : "Juan",
    cliente : "Carlos",
    total : 10.0,
+   mesa: 1,
    estado : "Pendiente",
    tiempopreparado : 5.00,
    preparado : "Sí"
@@ -89,6 +94,7 @@ const tableData = [
    mesero : "Juan",
    cliente : "Carlos",
    total : 10.0,
+   mesa: 1,
    estado : "Pendiente",
    tiempopreparado : 5.00,
    preparado : "Sí"
@@ -98,6 +104,7 @@ const tableData = [
    mesero : "Juan",
    cliente : "Carlos",
    total : 10.0,
+   mesa: 1,
    estado : "Pendiente",
    tiempopreparado : 5.00,
    preparado : "Sí"
@@ -108,7 +115,8 @@ const tableData = [
       LTable,
       ChartCard,
       StatsCard,
-      Card
+      Card,
+      ModalCobrar
     },
     data () {
       return {
@@ -132,4 +140,9 @@ const tableData = [
     background-color: cadetblue;
   }
   
+  #modal-cobrar{
+    min-height: 11em;
+    display: table-cell;
+    vertical-align: middle 
+  }
 </style>

@@ -20,9 +20,11 @@
           <sidebar-link to="/admin/crear-orden">
             <i class="btn btn-success btn-sm " role="button">Crear Orden</i>
           </sidebar-link>
+          <!--
           <sidebar-link to="/admin/crear-orden-llevar">
             <i class="btn btn-primary btn-sm " role="button">Para Llevar</i>
           </sidebar-link>
+          -->
           <a class="nav-link" href="#">
           </a>
           <base-dropdown title="Opciones">

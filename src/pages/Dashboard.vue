@@ -2,15 +2,6 @@
   <div class="content">
     <div class="container-fluid">
       <div class="row">
-        <div class="col-md-8">
-          <card class="table-wrapper-scroll-y my-custom-scrollbar" body-classes="table-">
-            <template slot="header">
-              <h4 class="card-title">Ordenes Recientes</h4>
-            </template>
-            <l-table class="table-hover table-striped" :columns="table1.columns" :data="table1.data">
-            </l-table>
-          </card>
-        </div>
         <div class="col-md-4">
           <div class="card">
             <div class="card-body">
@@ -37,6 +28,18 @@
             </div>
           </div>
         </div>
+        <div class="col-sm-12">
+          <div class="table-responsive">
+          <card class="table-wrapper-scroll-y my-custom-scrollbar" body-classes="table-">
+            <template slot="header">
+              <h4 class="card-title">Ordenes Recientes</h4>
+            </template>
+            <l-table class="table-hover table-striped" :columns="table1.columns" :data="table1.data">
+            </l-table>
+          </card>
+        </div>
+        </div>
+        
       </div>
     </div>
   </div>
@@ -47,13 +50,17 @@
   import LTable from 'src/components/Table.vue'
   import Card from 'src/components/Cards/Card.vue'
   import ModalCobrar from '@/components/ModalCobrar.vue'
-const tableColumns = ['IdOrden','Mesero', 'Cliente', 'Total', 'Estado','TiempoPreparado', 'Preparado']
+const tableColumns = ['IdOrden','Mesa','Mesero', 'Cliente', 'Total', 'Estado','llevar','TiempoPreparado', 'Preparado','TiempoRapido','rapido']
 const tableData = [
   {
    idorden: 1,
    mesero : "Juan",
    cliente : "Carlos",
    total : 10.0,
+   mesa: 1,
+   tiemporapido: 2.05,
+   rapido: "sí",
+   llevar: 1,
    estado : "Pendiente",
    tiempopreparado : 5.00,
    preparado : "Sí"
@@ -63,6 +70,10 @@ const tableData = [
    mesero : "Juan",
    cliente : "Carlos",
    total : 10.0,
+   mesa: 1,
+   llevar: 1,
+   tiemporapido: 2.05,
+   rapido: "sí",
    estado : "Pendiente",
    tiempopreparado : 5.00,
    preparado : "Sí"
@@ -72,6 +83,10 @@ const tableData = [
    mesero : "Juan",
    cliente : "Carlos",
    total : 10.0,
+   mesa: 1,
+   llevar: 1,
+   tiemporapido: 2.05,
+   rapido: "sí",
    estado : "Pendiente",
    tiempopreparado : 5.00,
    preparado : "Sí"
@@ -81,6 +96,10 @@ const tableData = [
    mesero : "Juan",
    cliente : "Carlos",
    total : 10.0,
+   mesa: 1,
+   llevar: 1,
+   tiemporapido: 2.05,
+   rapido: "sí",
    estado : "Pendiente",
    tiempopreparado : 5.00,
    preparado : "Sí"
@@ -90,6 +109,10 @@ const tableData = [
    mesero : "Juan",
    cliente : "Carlos",
    total : 10.0,
+   mesa: 1,
+   llevar: 1,
+   tiemporapido: 2.05,
+   rapido: "sí",
    estado : "Pendiente",
    tiempopreparado : 5.00,
    preparado : "Sí"
@@ -99,6 +122,10 @@ const tableData = [
    mesero : "Juan",
    cliente : "Carlos",
    total : 10.0,
+   mesa: 1,
+   llevar: 1,
+   tiemporapido: 2.05,
+   rapido: "sí",
    estado : "Pendiente",
    tiempopreparado : 5.00,
    preparado : "Sí"
