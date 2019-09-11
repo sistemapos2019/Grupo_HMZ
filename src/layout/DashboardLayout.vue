@@ -23,10 +23,12 @@
         <i class="nc-icon nc-chart-bar-32"></i>
         <p>Estadísticas</p>
       </sidebar-link>
+      
       <sidebar-link to="/admin/icons">
         <i class="nc-icon nc-atom"></i>
         <p>Confirguración</p>
       </sidebar-link>
+      
     </side-bar>
     <div class="main-panel">
       <top-navbar></top-navbar>

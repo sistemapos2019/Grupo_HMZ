@@ -30,7 +30,7 @@
               <ul class="navbar-nav ml-auto">
                 <sidebar-link to="#">
                   <div class="">
-                    <i class="card-body" role="button"><i class="nc-icon nc-money-coins"></i><modal-login id="modal-login"/></i>
+                    <i class="card-body" role="button"><i class="nc-icon nc-money-coins"></i><modal-cobrar id="modal-cobrar"/></i>
                   </div>
                 </sidebar-link>
               </ul>
@@ -46,7 +46,7 @@
   import StatsCard from 'src/components/Cards/StatsCard.vue'
   import LTable from 'src/components/Table.vue'
   import Card from 'src/components/Cards/Card.vue'
-  import ModalLogin from '@/components/ModalLogin.vue'
+  import ModalCobrar from '@/components/ModalCobrar.vue'
 const tableColumns = ['IdOrden','Mesero', 'Cliente', 'Total', 'Estado','TiempoPreparado', 'Preparado']
 const tableData = [
   {
@@ -110,7 +110,7 @@ const tableData = [
       ChartCard,
       StatsCard,
       Card,
-      ModalLogin
+      ModalCobrar
     },
     data () {
       return {
@@ -134,7 +134,7 @@ const tableData = [
     background-color: cadetblue;
   }
   
-  #modal-login{
+  #modal-cobrar{
     min-height: 11em;
     display: table-cell;
     vertical-align: middle 
