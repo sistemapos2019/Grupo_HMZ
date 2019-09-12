@@ -27,6 +27,17 @@
               </ul>
             </div>
           </div>
+          
+         <div class="row">
+        <div class="col-sm-9">
+        <input class="form-control" type="text" placeholder="Search" aria-label="Search"/>
+        </div>
+          <div class="col-sm-3">
+        <button type="button" class="btn btn-light"><i class="nc-icon nc-bullet-list-67"></i> Sorft</button>
+        </div>
+      </div>
+          
+          
         </div>
         <div class="col-sm-12">
           <div class="table-responsive">
@@ -39,6 +50,7 @@
           </card>
         </div>
         </div>
+        
         
       </div>
     </div>
