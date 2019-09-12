@@ -15,9 +15,11 @@ import AdminUsuarioRol from 'src/pages/AdminUsuarioRol.vue'
 import EditarUsuarioRol from 'src/pages/EditarUsuarioRol.vue'
 import AdminProductos from 'src/pages/AdminProductos.vue'
 import AdminCategorias from 'src/pages/AdminCategorias.vue'
+import LibroCompras from 'src/pages/LibroCompras.vue'
 import AdminCompras from 'src/pages/AdminCompras.vue'
 import AdminParametros from 'src/pages/AdminParametros.vue'
 import Estadisticas from 'src/pages/Estadisticas.vue'
+import Inventario from 'src/pages/Inventario.vue'
 import TableList from 'src/pages/TableList.vue'
 import Typography from 'src/pages/Typography.vue'
 import Icons from 'src/pages/Icons.vue'
@@ -107,9 +109,19 @@ const routes = [
         component: AdminParametros
       },
       {
+        path: 'libro-compras',
+        name: 'Libro Compras',
+        component: LibroCompras
+      },
+      {
         path: 'estadisticas',
         name: 'Estadísticas',
         component: Estadisticas
+      },
+      {
+        path: 'inventario',
+        name: 'Inventario',
+        component: Inventario
       },
       {
         path: 'table-list',

@@ -14,6 +14,10 @@
         <i class="nc-icon nc-settings-gear-64"></i>
         <p>Administración</p>
       </sidebar-link>
+      <sidebar-link to="/admin/libro-compras">
+        <i class="nc-icon nc-bullet-list-67"></i>
+        <p>Libro de compras</p>
+      </sidebar-link>
       <!--
       <sidebar-link to="/admin/Ordenes">
         <i class="nc-icon nc-notes"></i>
@@ -24,6 +28,11 @@
       <sidebar-link to="/admin/estadisticas">
         <i class="nc-icon nc-chart-bar-32"></i>
         <p>Estadísticas</p>
+      </sidebar-link>
+
+       <sidebar-link to="/admin/inventario">
+        <i class="nc-icon nc-single-copy-04"></i>
+        <p>inventario</p>
       </sidebar-link>
       <!--
       <sidebar-link to="/admin/icons">
