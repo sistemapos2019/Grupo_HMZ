@@ -16,10 +16,13 @@ import EditarUsuarioRol from 'src/pages/EditarUsuarioRol.vue'
 import AdminProductos from 'src/pages/AdminProductos.vue'
 import AdminCategorias from 'src/pages/AdminCategorias.vue'
 import LibroCompras from 'src/pages/LibroCompras.vue'
+import LibroVentas from 'src/pages/LibroVentas.vue'
 import AdminCompras from 'src/pages/AdminCompras.vue'
 import AdminParametros from 'src/pages/AdminParametros.vue'
 import Estadisticas from 'src/pages/Estadisticas.vue'
 import Inventario from 'src/pages/Inventario.vue'
+import Login from 'src/pages/Login.vue'
+import LoginModificar from 'src/pages/LoginModificar.vue'
 import TableList from 'src/pages/TableList.vue'
 import Typography from 'src/pages/Typography.vue'
 import Icons from 'src/pages/Icons.vue'
@@ -69,6 +72,16 @@ const routes = [
         component: Ordenes
       },
       {
+        path: 'login',
+        name: 'Login',
+        component: Login
+      },
+      {
+        path: 'login-modificar',
+        name: 'Login Modificar',
+        component: LoginModificar
+      },
+      {
         path: 'admin',
         name: 'admin',
         component: Admin
@@ -112,6 +125,11 @@ const routes = [
         path: 'libro-compras',
         name: 'Libro Compras',
         component: LibroCompras
+      },
+      {
+        path: 'libro-ventas',
+        name: 'Libro De Ventas',
+        component: LibroVentas
       },
       {
         path: 'estadisticas',
