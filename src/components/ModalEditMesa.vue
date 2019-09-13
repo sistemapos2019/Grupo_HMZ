@@ -1,7 +1,7 @@
 <template>
   <div class="normal-case tracking-normal">
     <a href="/#editar" @click.prevent="show" class="text-copy-primary uppercase hover:text-gray-600"> Editar</a>
-    <modal id="modaleditar" name="modal-editar" @opened="opened" :adaptive="true" :height="250" :width="400">
+    <modal id="modaleditar" name="modal-editar" @opened="opened" :adaptive="true" :height="450" :width="400">
         <div class="px-5 py-8">
           <h4 class="mb-4 uppercase tracking-wide text-xl"> Editar</h4>
         <form action="#" method="post">
