@@ -1,9 +1,9 @@
 <template>
   <div class="normal-case tracking-normal">
-    <a href="/#agregar" @click.prevent="show" class="text-copy-primary uppercase hover:text-gray-600">Cobrar Orden</a>
-    <modal id="modalcobrar" name="modal-agregar" @opened="opened" :adaptive="true" :height="350" :width="400">
+    <a href="/#agregar" @click.prevent="show" class="text-copy-primary uppercase hover:text-gray-600">agregar</a>
+    <modal id="modalagregar" name="modal-agregar" @opened="opened" :adaptive="true" :height="350" :width="400">
         <div class="px-5 py-8">
-          <h4 class="mb-4 uppercase tracking-wide text-xl">Cobrar Orden</h4>
+          <h4 class="mb-4 uppercase tracking-wide text-xl">agregar</h4>
         <form action="#" method="post">
           <div class="form-group mb-4">
               <label for="staticTotal" class="block font-normal uppercase tracking-wide text-xs mb-1">Total:</label>
