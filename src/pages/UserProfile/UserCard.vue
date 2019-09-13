@@ -6,15 +6,9 @@
         <img class="avatar border-gray" src="img/faces/face-3.jpg" alt="..."/>
 
         <h4 class="title">Juan Perez<br />
-          <small>juan</small>
+        <small>juan</small>
         </h4>
       </a>
-    </div>
-    <p class="description text-center"> "Soy un empleado entusiasta <br>
-      Me gusta divertirme <br>
-      soy feliz"
-    </p>
-    <div slot="footer" class="text-center d-flex justify-content-center">
     </div>
   </card>
 </template>

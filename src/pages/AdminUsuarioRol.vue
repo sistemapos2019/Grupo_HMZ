@@ -42,7 +42,7 @@
               <ul class="navbar-nav ml-auto">
                 <sidebar-link to="#">
                   <div class="">
-                    <i class="card-body" role="button"> <i class="nc-icon nc-simple-add"></i> Agregar Usuarios </i>
+                    <i class="card-body" role="button"> <i class="nc-icon nc-simple-add"></i><modalAddUser id="modal-agregar"/></i>
                   </div>
                 </sidebar-link>
               </ul>
@@ -60,6 +60,7 @@ import ChartCard from "src/components/Cards/ChartCard.vue";
 import StatsCard from "src/components/Cards/StatsCard.vue";
 import LTable from "src/components/Table.vue";
 import Card from "src/components/Cards/Card.vue";
+import ModalAddUser from '@/components/ModalAddUser.vue';
 const tableColumns = [
   "id",
   "Nombre",
@@ -86,7 +87,8 @@ export default {
     LTable,
     ChartCard,
     StatsCard,
-    Card
+    Card,
+    ModalAddUser
   },
   data() {
     return {
@@ -100,5 +102,9 @@ export default {
 </script>
 
 <style>
-
+#modal-agregar {
+  min-height: 11em;
+  display: table-cell;
+  vertical-align: middle;
+}
 </style>
