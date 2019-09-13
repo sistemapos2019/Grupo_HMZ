@@ -18,6 +18,10 @@
         <i class="nc-icon nc-bullet-list-67"></i>
         <p>Libro de compras</p>
       </sidebar-link>
+       <sidebar-link to="/admin/libro-ventas">
+        <i class="nc-icon nc-bullet-list-67"></i>
+        <p>Libro de ventas</p>
+      </sidebar-link>
       <!--
       <sidebar-link to="/admin/Ordenes">
         <i class="nc-icon nc-notes"></i>

@@ -13,10 +13,10 @@
                     <h4 class="card-title">Inventario</h4>
                     <div class="row">
           <div class="col-md-4">  </div>
-            
+           
            <div class="col-md-2">
            
-              <a href="#"> <i class="nc-icon nc-simple-add"></i> Agregar</a>
+              <a href="#">  <ModalAgregarProducto/></a>
               
               </div>
             <div class="col-md-2">
@@ -41,8 +41,7 @@
                             <tr>
                             <th>Id</th>
                             <th>Nombre</th>
-                            <th>Descripcion</th>
-                            <th>Fecha de ingreso  </th>
+                             
                             <th>Cantidad</th>
                           
                         </tr>
@@ -51,24 +50,21 @@
                             <tr>
                                 <td>1</td>
                                 <td>Azucar Del Cañal - Bolsa</td>
-                                <td>Bolsa de 1 Libra</td>
-                                  <td>10-09-2019</td>
+                                 
                                 <td>40</td>
                               
                             </tr>
                                <tr>
                                 <td>2</td>
                                 <td>Aceite Mazolla- Bolsa</td>
-                                <td>Bolsa de 1 Litro</td>
-                                  <td>09-09-2019</td>
+                                 
                                 <td>12</td>
                               
                             </tr>
                                <tr>
                                 <td>3</td>
                                 <td>Café de Ataco - Bolsa</td>
-                                <td>Bolsa de 1 Libra</td>
-                                  <td>10-09-2019</td>
+                                 
                                 <td>25</td>
                               
                             </tr>
@@ -77,8 +73,7 @@
                                <tr>
                                 <td>5</td>
                                 <td>Paquete de servilletas LIMPIO</td>
-                                <td>Paquete de 100 unidades</td>
-                                  <td>10-09-2019</td>
+                                 
                                 <td>23</td>
                               
                             </tr>
@@ -97,10 +92,12 @@
   </template>
    
   <script>
+  import ModalAgregarProducto from '@/components/ModalAgregarProducto';
    import Datepicker from 'vuejs-datepicker';
   export default {
     components: {
-        Datepicker
+        Datepicker,
+        ModalAgregarProducto
     },
     methods:{
       
