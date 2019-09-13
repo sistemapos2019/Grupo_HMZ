@@ -16,6 +16,7 @@ import EditarUsuarioRol from 'src/pages/EditarUsuarioRol.vue'
 import AdminProductos from 'src/pages/AdminProductos.vue'
 import AdminCategorias from 'src/pages/AdminCategorias.vue'
 import LibroCompras from 'src/pages/LibroCompras.vue'
+import LibroVentas from 'src/pages/LibroVentas.vue'
 import AdminCompras from 'src/pages/AdminCompras.vue'
 import AdminParametros from 'src/pages/AdminParametros.vue'
 import Estadisticas from 'src/pages/Estadisticas.vue'
@@ -112,6 +113,11 @@ const routes = [
         path: 'libro-compras',
         name: 'Libro Compras',
         component: LibroCompras
+      },
+      {
+        path: 'libro-ventas',
+        name: 'Libro De Ventas',
+        component: LibroVentas
       },
       {
         path: 'estadisticas',
