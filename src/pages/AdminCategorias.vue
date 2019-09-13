@@ -30,7 +30,7 @@
                 <sidebar-link to="#">
                   <div class="Edit">
                     <i class="card-body" role="button">
-                      <i class="nc-icon nc-settings-tool-66"></i> Editar </i>
+                      <i class="nc-icon nc-settings-tool-66"></i><modalEditCat id="modal-agregar"/> </i>
                   </div>
                 </sidebar-link>
               </ul>
@@ -39,7 +39,7 @@
               <ul class="navbar-nav ml-auto">
                 <sidebar-link to="#">
                   <div class>
-                   <i class="card-body" role="button"> <i class="nc-icon nc-simple-add"></i> Agregar </i> 
+                   <i class="card-body" role="button"> <i class="nc-icon nc-simple-add"></i><modalAddCat id="modal-agregar"/></i> 
                   </div>
                 </sidebar-link>
               </ul>
@@ -56,7 +56,8 @@ import ChartCard from "src/components/Cards/ChartCard.vue";
 import StatsCard from "src/components/Cards/StatsCard.vue";
 import LTable from "src/components/Table.vue";
 import Card from "src/components/Cards/Card.vue";
-import ModalLogin from "@/components/ModalLogin.vue";
+import ModalEditCat from '@/components/ModalEditCat.vue';
+import ModalAddCat from '@/components/ModalAddCat.vue';
 const tableColumns = ["id", "Nombre"];
 const tableData = [
   {
@@ -79,7 +80,8 @@ export default {
     ChartCard,
     StatsCard,
     Card,
-    ModalLogin
+    ModalEditCat,
+    ModalAddCat
   },
   data() {
     return {
@@ -93,7 +95,7 @@ export default {
 </script>
 
 <style>
-#modal-login {
+#modal-agregar {
   min-height: 11em;
   display: table-cell;
   vertical-align: middle;
