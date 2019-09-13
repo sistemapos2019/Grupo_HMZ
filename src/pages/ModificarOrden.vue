@@ -10,6 +10,7 @@
               <div class="Categorias">
                 <label for="numeroOrden">Orden:</label>
                 <span> 3</span>
+                <!--
                 <form>
                   <div class="form-row">
                     <div class="">
@@ -23,6 +24,7 @@
                     </div>
                   </div>
                 </form>
+                -->
               </div>
               <hr>
               <form>
@@ -143,6 +145,7 @@
               <div class="card-body">
                 <h4 class="card-title">Orden</h4>
                 <hr>
+                <!--
                 <div class="px-4">
                   <input class="form-check-input" type="checkbox" id="gridCheck1">
                 <label class="form-check-label" for="gridCheck1">
@@ -150,6 +153,7 @@
                 </label>
                 </div>
                 <hr>
+                -->
                 <table class="table table-sm">
                   <thead>
                     <tr>

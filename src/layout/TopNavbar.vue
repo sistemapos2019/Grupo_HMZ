@@ -17,7 +17,7 @@
           </li>
         </ul>
         <ul class="navbar-nav ml-auto">
-          <sidebar-link to="/admin/crear-orden">
+          <sidebar-link to="/admin/login">
             <i class="btn btn-success btn-sm " role="button">Crear Orden</i>
           </sidebar-link>
           <!--

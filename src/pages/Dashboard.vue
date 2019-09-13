@@ -10,9 +10,9 @@
             <hr>
             <div class="">
               <ul class="navbar-nav ml-auto">
-                <sidebar-link to="/admin/modificar-orden">
+                <sidebar-link to="/admin/login-modificar">
                   <div class="">
-                    <i class="card-body" role="button"><i class="nc-icon nc-settings-tool-66"></i> Editar Orden </i>
+                    <i class="card-body" role="button"><i class="nc-icon nc-settings-tool-66"></i> Modificar Orden </i>
                   </div>
                 </sidebar-link>
               </ul>
@@ -26,35 +26,97 @@
                 </sidebar-link>
               </ul>
             </div>
-          </div>
-          
-         <div class="row">
-        <div class="col-sm-9">
+          </div> 
+        </div>
+            <card class="card">
+              <div class="row">
+        <div class="col-sm-6">
         <input class="form-control" type="text" placeholder="Search" aria-label="Search"/>
         </div>
           <div class="col-sm-3">
         <button type="button" class="btn btn-light"><i class="nc-icon nc-bullet-list-67"></i> Sorft</button>
         </div>
       </div>
-          
-          
-        </div>
-        <div class="col-sm-12">
-          <div class="table-responsive">
-          <card class="table-wrapper-scroll-y my-custom-scrollbar" body-classes="table-">
-            <template slot="header">
+            <div class="card-body">
               <h4 class="card-title">Ordenes Recientes</h4>
-            </template>
-            <l-table class="table-hover table-striped" :columns="table1.columns" :data="table1.data">
-            </l-table>
+              <hr>
+              <table class="table table-sm">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Mesa</th>
+                    <th scope="col">Mesero</th>
+                    <th scope="col">Cliente</th>
+                    <th scope="col">Total</th>
+                    <th scope="col">Estado</th>
+                    <th scope="col">Llevar</th>
+                    <th scope="col">Preparado</th>
+                    <th scope="col">Rapido</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row">1</th>
+                    <td>1</td>
+                    <td>Juan Perez</td>
+                    <td>Carlos Jimenez</td>
+                    <td>$15.90</td>
+                    <td>Pendiente</td>
+                    <td><span class="nc-icon nc-check-2 px-2"></span></td>
+                    <td id="preparado">5:00</td>
+                    <td><span class="nc-icon nc-check-2 px-2"></span></td>
+                  </tr>
+                  <tr>
+                    <th scope="row">2</th>
+                    <td>2</td>
+                    <td>Juan Perez</td>
+                    <td>Carlos Jimenez</td>
+                    <td>$15.90</td>
+                    <td>Pendiente</td>
+                    <td><span class="nc-icon nc-simple-remove px-2"></span></td>
+                    <td id="preparado">6:26</td>
+                    <td><span class="nc-icon nc-check-2 px-2"></span></td>
+                  </tr>
+                  <tr>
+                    <th scope="row">3</th>
+                    <td>3</td>
+                    <td>Juan Perez</td>
+                    <td>Carlos Jimenez</td>
+                    <td>$15.90</td>
+                    <td>Pendiente</td>
+                    <td><span class="nc-icon nc-simple-remove px-2"></span></td>
+                    <td id="preparado">6:26</td>
+                    <td><span class="nc-icon nc-simple-remove px-2"></span></td>
+                  </tr>
+                  <tr>
+                    <th scope="row">4</th>
+                    <td>4</td>
+                    <td>Juan Perez</td>
+                    <td>Carlos Jimenez</td>
+                    <td>$15.90</td>
+                    <td>Pendiente</td>
+                    <td><span class="nc-icon nc-simple-remove px-2"></span></td>
+                    <td id="preparadoAmarillo">12:26</td>
+                    <td><span class="nc-icon nc-check-2 px-2"></span></td>
+                  </tr>
+                  <tr>
+                    <th scope="row">5</th>
+                    <td>5</td>
+                    <td>Juan Perez</td>
+                    <td>Carlos Jimenez</td>
+                    <td>$15.90</td>
+                    <td>Pendiente</td>
+                    <td><span class="nc-icon nc-simple-remove px-2"></span></td>
+                    <td id="preparadoRojo">22:28</td>
+                    <td><span class="nc-icon nc-check-2 px-2"></span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </card>
         </div>
-        </div>
-        
-        
       </div>
     </div>
-  </div>
 </template>
 <script>
   import ChartCard from 'src/components/Cards/ChartCard.vue'
@@ -62,7 +124,7 @@
   import LTable from 'src/components/Table.vue'
   import Card from 'src/components/Cards/Card.vue'
   import ModalCobrar from '@/components/ModalCobrar.vue'
-const tableColumns = ['IdOrden','Mesa','Mesero', 'Cliente', 'Total', 'Estado','llevar','TiempoPreparado', 'Preparado','TiempoRapido','rapido']
+const tableColumns = ['IdOrden','Mesa','Mesero', 'Cliente', 'Total', 'Estado','llevar','TiempoPreparado','TiempoRapido']
 const tableData = [
   {
    idorden: 1,
@@ -177,5 +239,21 @@ const tableData = [
     min-height: 11em;
     display: table-cell;
     vertical-align: middle 
+  }
+  #preparado{
+    background-color: green;
+    color: aliceblue;
+  }
+  #preparadoRapido{
+    background-color: orange;
+    color: aliceblue;
+  }
+  #preparadoAmarillo{
+    background-color: orange;
+    color: aliceblue;
+  }
+  #preparadoRojo{
+    background-color: red;
+    color: aliceblue;
   }
 </style>

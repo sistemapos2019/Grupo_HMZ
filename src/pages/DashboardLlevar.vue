@@ -3,12 +3,73 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col-md-8">
-          <card class="table-wrapper-scroll-y my-custom-scrollbar" body-classes="table-">
-            <template slot="header">
+                     <card class="card">
+              <div class="row">
+        <div class="col-sm-6">
+        <input class="form-control" type="text" placeholder="Search" aria-label="Search"/>
+        </div>
+          <div class="col-sm-3">
+        <button type="button" class="btn btn-light"><i class="nc-icon nc-bullet-list-67"></i> Sorft</button>
+        </div>
+      </div>
+            <div class="card-body">
               <h4 class="card-title">Ordenes Recientes</h4>
-            </template>
-            <l-table class="table-hover table-striped" :columns="table1.columns" :data="table1.data">
-            </l-table>
+              <hr>
+              <table class="table table-sm">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Mesero</th>
+                    <th scope="col">Cliente</th>
+                    <th scope="col">Total</th>
+                    <th scope="col">Estado</th>
+                    <th scope="col">Preparado</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row">1</th>
+                    <td>Juan Perez</td>
+                    <td>Carlos Jimenez</td>
+                    <td>$15.90</td>
+                    <td>Pendiente</td>
+                    <td id="preparado">5:00</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">2</th>
+                    <td>Juan Perez</td>
+                    <td>Carlos Jimenez</td>
+                    <td>$15.90</td>
+                    <td>Pendiente</td>
+                    <td id="preparado">5:00</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">3</th>
+                    <td>Juan Perez</td>
+                    <td>Carlos Jimenez</td>
+                    <td>$15.90</td>
+                    <td>Pendiente</td>
+                    <td id="preparado">6:25</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">4</th>
+                    <td>Juan Perez</td>
+                    <td>Carlos Jimenez</td>
+                    <td>$15.90</td>
+                    <td>Pendiente</td>
+                    <td id="preparadoAmarillo">12:26</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">4</th>
+                    <td>Juan Perez</td>
+                    <td>Carlos Jimenez</td>
+                    <td>$15.90</td>
+                    <td>Pendiente</td>
+                    <td id="preparadoRojo">22:28</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </card>
         </div>
         <div class="col-md-4">
@@ -19,9 +80,9 @@
             <hr>
             <div class="">
               <ul class="navbar-nav ml-auto">
-                <sidebar-link to="/admin/modificar-orden">
+                <sidebar-link to="/admin/login-modificar">
                   <div class="">
-                    <i class="card-body" role="button"><i class="nc-icon nc-settings-tool-66"></i> Editar Orden </i>
+                    <i class="card-body" role="button"><i class="nc-icon nc-settings-tool-66"></i> Modificar Orden </i>
                   </div>
                 </sidebar-link>
               </ul>
