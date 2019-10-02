@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="CodeIgniter Application Test Suite" tests="2" assertions="2" failures="0" errors="0" time="0.014873">
+    <testsuite name="Manejadorordenestest" file="C:\xampp\htdocs\ja\application\test\controllers\Manejadorordenestest.php" tests="1" assertions="1" failures="0" errors="0" time="0.010806">
+      <testcase name="testObtenerActivas" class="Manejadorordenestest" file="C:\xampp\htdocs\ja\application\test\controllers\Manejadorordenestest.php" line="10" assertions="1" time="0.010806"/>
+    </testsuite>
+    <testsuite name="Manejadorproductostest" file="C:\xampp\htdocs\ja\application\test\controllers\Manejadorproductostest.php" tests="1" assertions="1" failures="0" errors="0" time="0.004067">
+      <testcase name="testObtenerxCategoria" class="Manejadorproductostest" file="C:\xampp\htdocs\ja\application\test\controllers\Manejadorproductostest.php" line="9" assertions="1" time="0.004067"/>
+    </testsuite>
+  </testsuite>
+</testsuites>
