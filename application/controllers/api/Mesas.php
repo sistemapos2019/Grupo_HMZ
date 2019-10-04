@@ -2,7 +2,7 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Categorias extends CI_Controller {
+class Mesas extends CI_Controller {
     
     public function __construct()
     {
@@ -16,7 +16,7 @@ class Categorias extends CI_Controller {
     public function crud()
     {
         $crud = new grocery_CRUD();
-        $crud->set_table("categoria");
+        $crud->set_table("mesa");
         $crud->set_language("spanish");
         $crud->unset_delete();
         $crud->unset_print();
@@ -38,4 +38,4 @@ class Categorias extends CI_Controller {
 
 }
 
-/* End of file Categorias.php */
+/* End of file Mesas.php */
