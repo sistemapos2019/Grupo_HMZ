@@ -2,11 +2,11 @@
 # INICIO
 <IfModule mod_rewrite.c>
 RewriteEngine On
-RewriteBase /jupiter/
+RewriteBase /dsi-backend/
 RewriteRule ^index.php$ - [L]
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule . /jupiter/index.php [L]
+RewriteRule . /dsi-backend/index.php [L]
 </IfModule>
 
 # FIN
