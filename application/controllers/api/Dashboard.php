@@ -7,13 +7,19 @@ class Dashboard extends CI_Controller {
     public function __construct()
     {
         parent::__construct();
+        $this->load->model('Dashboardmodel',"dashboard");
     
     }
 
-    public function index()
+    public function GetDashboardPrincipal()
     {
-        echo '<h1>oasdpasio</h1>   <iframe src="http://localhost/jupiter/configuraciones"></iframe>';
+        $registros = $this->dashboard->obtenerDashboardPrincipal();
+        echo json_encode($registros);
     }
 
+    public function GetDashboardParaLlevar()
+    {
+        $registros = $this->dashboard->obtenerDashboardParaLlevar();
+        echo json_encode($registros);
+    }
 }
-    
