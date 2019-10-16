@@ -8,7 +8,7 @@ class Dashboard extends CI_Controller {
     {
         parent::__construct();
         $this->load->model('Dashboardmodel',"dashboard");
-    
+        
     }
 
     public function GetDashboardPrincipal()
