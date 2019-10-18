@@ -2,76 +2,32 @@
   <div class="content">
     <div class="container-fluid">
       <div class="row">
-        <div class="col-md-8">
-                     <card class="card">
-              <div class="row">
-        <div class="col-sm-6">
-        <input class="form-control" type="text" placeholder="Search" aria-label="Search"/>
-        </div>
-          <div class="col-sm-3">
-        <button type="button" class="btn btn-light"><i class="nc-icon nc-bullet-list-67"></i> Sorft</button>
-        </div>
+        <div class="col-md-12">
+          <card class="card">
+            <div class="row">
       </div>
             <div class="card-body">
               <h4 class="card-title">Ordenes Recientes</h4>
               <hr>
-              <table class="table table-sm">
-                <thead>
+              <table id="user-table2" class="display table-bordered nowrap" cellspacing="0" width="100%">
+              <thead>
+                <tr>
                   <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Mesero</th>
-                    <th scope="col">Cliente</th>
-                    <th scope="col">Total</th>
-                    <th scope="col">Estado</th>
-                    <th scope="col">Preparado</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <th scope="row">1</th>
-                    <td>Juan Perez</td>
-                    <td>Carlos Jimenez</td>
-                    <td>$15.90</td>
-                    <td>Pendiente</td>
-                    <td id="preparado">5:00</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">2</th>
-                    <td>Juan Perez</td>
-                    <td>Carlos Jimenez</td>
-                    <td>$15.90</td>
-                    <td>Pendiente</td>
-                    <td id="preparado">5:00</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">3</th>
-                    <td>Juan Perez</td>
-                    <td>Carlos Jimenez</td>
-                    <td>$15.90</td>
-                    <td>Pendiente</td>
-                    <td id="preparado">6:25</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">4</th>
-                    <td>Juan Perez</td>
-                    <td>Carlos Jimenez</td>
-                    <td>$15.90</td>
-                    <td>Pendiente</td>
-                    <td id="preparadoAmarillo">12:26</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">4</th>
-                    <td>Juan Perez</td>
-                    <td>Carlos Jimenez</td>
-                    <td>$15.90</td>
-                    <td>Pendiente</td>
-                    <td id="preparadoRojo">22:28</td>
-                  </tr>
-                </tbody>
-              </table>
+                  <th>#</th>
+                  <th>Mesero</th>
+                  <th>Cliente</th>
+                  <th>Total</th>
+                  <th>Estado</th>
+                  <th>Preparado</th>
+                </tr>
+              </thead>
+              <tbody>
+              </tbody>
+            </table>
             </div>
           </card>
         </div>
+        <!--
         <div class="col-md-4">
           <div class="card">
             <div class="card-body">
@@ -98,6 +54,7 @@
             </div>
           </div>
         </div>
+        -->
       </div>
     </div>
   </div>
@@ -108,69 +65,40 @@
   import LTable from 'src/components/Table.vue'
   import Card from 'src/components/Cards/Card.vue'
   import ModalCobrar from '@/components/ModalCobrar.vue'
-const tableColumns = ['IdOrden','Mesero','Cliente', 'Total', 'Estado','TiempoPreparado', 'Preparado']
-const tableData = [
-  {
-   idorden: 1,
-   mesero : "Juan",
-   cliente : "Carlos",
-   total : 10.0,
-   mesa: 1,
-   estado : "Pendiente",
-   tiempopreparado : 5.00,
-   preparado : "Sí"
-  },
-  {
-   idorden: 1,
-   mesero : "Juan",
-   cliente : "Carlos",
-   total : 10.0,
-   mesa: 1,
-   estado : "Pendiente",
-   tiempopreparado : 5.00,
-   preparado : "Sí"
-  },
-  {
-   idorden: 1,
-   mesero : "Juan",
-   cliente : "Carlos",
-   total : 10.0,
-   mesa: 1,
-   estado : "Pendiente",
-   tiempopreparado : 5.00,
-   preparado : "Sí"
-  },
-  {
-   idorden: 1,
-   mesero : "Juan",
-   cliente : "Carlos",
-   total : 10.0,
-   mesa: 1,
-   estado : "Pendiente",
-   tiempopreparado : 5.00,
-   preparado : "Sí"
-  },
-  {
-   idorden: 1,
-   mesero : "Juan",
-   cliente : "Carlos",
-   total : 10.0,
-   mesa: 1,
-   estado : "Pendiente",
-   tiempopreparado : 5.00,
-   preparado : "Sí"
-  },
-  {
-  idorden: 1,
-   mesero : "Juan",
-   cliente : "Carlos",
-   total : 10.0,
-   mesa: 1,
-   estado : "Pendiente",
-   tiempopreparado : 5.00,
-   preparado : "Sí"
-  }]
-  
+  import DashboardParaLlevarRepository from '../repositories/DashboardParaLlevarRepository'
+  import { async } from 'q';
+  const tableColumns = ['IdOrden','Mesero','Cliente', 'Total', 'Estado','TiempoPreparado', 'Preparado']
+  var tableData = []
+  function llenarTabla(registrosData, dataTable2){
+    let tableBody = document.querySelector('#tableRegistros');
+    let contenido = '';
+    registrosData.map(
+      (registro) =>{
+        let colorTiempoPreparado = '';
+        
+        switch(registro.Preparado){
+         case "ROJO":
+           colorTiempoPreparado = `<div style="background-color:red">${registro.TiempoPreparado}</div>`
+           break;
+          case "AMARILLO":
+             colorTiempoPreparado = `<div style="background-color:yellow">${registro.TiempoPreparado}</div>`
+            break;
+          case "VERDE":
+            colorTiempoPreparado = `<div style="background-color:green">${registro.TiempoPreparado}</div>`
+            break;
+       }
+
+        if(registro.llevar == 1){
+          dataTable2.row.add([
+            registro.IdOrden, 
+            registro.Mesero,
+            registro.Cliente, registro.Total,
+            registro.Estado, colorTiempoPreparado
+          ]).draw(true);
+        }
+      }
+    )
+  }
   export default {
     components: {
       LTable,
@@ -179,8 +107,32 @@ const tableData = [
       Card,
       ModalCobrar
     },
+    methods:{
+      traerRegistros: function(){
+        let self = this
+        let request = ''
+        const dashboarData = (response, dataTable2) => {
+          console.log(response);
+          self.table1.data = response;
+          llenarTabla(response, dataTable2);
+          console.log(self.table1);
+          tableData = response;
+        }
+        let data = new DashboardParaLlevarRepository;
+        let response = data.findAll().then((response) =>{dashboarData(response,this.dataTable2)});
+      },
+    },
+    mounted(){
+       this.dataTable2 = $('#user-table2').DataTable({});
+    },
+    created(){
+      this.traerRegistros();
+    },
     data () {
       return {
+        tableData, 
+        tableColumns,
+        dataTable2:null,
         table1: {
           columns: [...tableColumns],
           data: [...tableData]

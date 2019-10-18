@@ -1,7 +1,6 @@
 export default class BaseRepository{
-
     constructor(){
-        this.URL="http://localhost:3000/api/";
+        this.URL = 'http://localhost/dsi-backend/api/';
     }
 
 }

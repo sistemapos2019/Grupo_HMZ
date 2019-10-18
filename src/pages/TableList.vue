@@ -56,7 +56,8 @@
 <script>
   import LTable from 'src/components/Table.vue'
   import Card from 'src/components/Cards/Card.vue'
-  import CategoriaRepository from '../repositories/CategoriaRepository.js'
+  //import CategoriaRepository from '../repositories/CategoriaRepository.js'
+  /*
   var algo = new CategoriaRepository();
   var tableData = [{
     id: 1,
@@ -70,6 +71,7 @@ algo.getAll().then(r=>{
   tableData =r;
   return r;
 });
+*/
   const tableColumns = ['Id', 'Nombre']
   
   export default {

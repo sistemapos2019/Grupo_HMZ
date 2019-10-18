@@ -1,7 +1,7 @@
 import BaseRepository from './BaseRepository.js';
 
 class CategoriaRepository extends BaseRepository{
-
+/*
     getAll(){
         try{
            return fetch(this.URL+"Categoria");
@@ -10,7 +10,7 @@ class CategoriaRepository extends BaseRepository{
             console.error(e);
         }
     }
-
+*/
 }
 
 export default CategoriaRepository;

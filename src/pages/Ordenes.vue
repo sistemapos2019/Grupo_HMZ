@@ -86,13 +86,16 @@
   import ChartCard from 'src/components/Cards/ChartCard.vue'
   import StatsCard from 'src/components/Cards/StatsCard.vue'
   import Card from 'src/components/Cards/Card.vue'
-  import CategoriaRepository from '../repositories/CategoriaRepository.js'
+  //import CategoriaRepository from '../repositories/CategoriaRepository.js'
+  /*
   var algo = new CategoriaRepository();
   var tableData = [{
     id: 1,
     name: 'Dakota Rice',
     
   }]
+  */
+  /*
 algo.getAll().then(r=>{
   return r.json() 
 }).then(r=>{
@@ -100,6 +103,7 @@ algo.getAll().then(r=>{
   tableData =r;
   return r;
 });
+*/
   const tableColumns = ['Id', 'Nombre']
   
   export default {
