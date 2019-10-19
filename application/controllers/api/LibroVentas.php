@@ -6,12 +6,19 @@ class LibroVentas extends CI_Controller {
     public function __construct()
     {
         parent::__construct();
-        $this->db = $this->load->database('pos',true);
+        $this->load->model("LibroVentasModel", "ventas");
 
     }
     public function index()
     {
        $this->load->view("LibroVentas/index");
+    }
+    public function getVentasMes()
+    {
+        $mes=$_POST['mes'];
+        $ventas=$this->ventas->getVentasMes($mes);
+        header('Content-Type: application/json');   
+        echo json_encode($ventas);
     }
     
 }
