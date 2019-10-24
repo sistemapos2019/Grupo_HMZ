@@ -9,36 +9,28 @@
               <hr>
               <div class="Categorias">
                 <label for="numeroOrden">Orden:</label>
-                <span> 3</span>
-                <form>
-                  <div class="form-row">
-                    <div class="">
-                      <input type="text" class="form-control" placeholder="Mesa">
-                    </div>
-                    <div class="px-1">
-                      <input type="text" class="form-control" placeholder="Mesero">
-                    </div>
-                    <div class="px-1">
-                      <input type="text" class="form-control" placeholder="Cliente">
-                    </div>
-                  </div>
-                </form>
+                <span id="numeroDeOrden"> </span>
+              <div class="row">
+                <div class="col-md-4">
+                  <Label for="nombre">Nombre</Label>
+                  <input type="text" name="nombre" placeholder="Nombre del cliente" id="nombre" class="form-control">
+                </div>
+                <div class="col-md-4">
+                  <Label for="mesa">Mesa</Label>
+                  <select name="mesa" id="mesa" class="form-control">
+                    <option value="">--Seleccione Mesa--</option>
+                  </select>
+                </div>
+                <div class="col-md-4">
+                  <Label for="mesero">Mesero</Label>
+                  <input placeholder="Nombre del mesero" type="text" class="form-control">
+                </div>
+              </div>
               </div>
               <hr>
               <form>
-                <div class="form-row">
-                    <div class="">
-                      <button type="button" class="btn btn-primary btn-sm">Platillos</button>
-                    </div>
-                    <div class="px-1">
-                      <button type="button" class="btn btn-primary btn-sm">Postres</button>
-                    </div>
-                    <div class="px-1">
-                      <button type="button" class="btn btn-primary btn-sm">Bebidas Frías</button>
-                    </div>
-                    <div class="px-1">
-                      <button type="button" class="btn btn-primary btn-sm">Entradas</button>
-                    </div>
+                <div class="form-row" id="seccionCategorias">
+                    
                 </div>
               </form>
               <hr>
@@ -216,10 +208,67 @@
   import ChartCard from 'src/components/Cards/ChartCard.vue'
   import LTable from 'src/components/Table.vue'
   import Card from 'src/components/Cards/Card.vue'
+  let ultimoId;
+  let categorias;
+  let mesas;
+  async function obtenerUltimoId() {
+    let response = await fetch('http://localhost/dsi-backend/api/ordenes/ObtenerUltimoId');
+    let data = await response.json()
+    return data;
+  }
+  async function obtenerCategorias() {
+    let response = await fetch('http://localhost/dsi-backend/api/ordenes/obtenerCategorias');
+    let data = await response.json()
+    return data;
+  }
+  async function obtenerMesas() {
+    let response = await fetch('http://localhost/dsi-backend/api/ordenes/obtenerMesas');
+    let data = await response.json()
+    return data;
+  }
   
+
   
   export default {
-    components: {
+  methods:{
+    consultarUltimoId(){
+      obtenerUltimoId().then(r => {
+        this.ultimoId = r;
+        document.querySelector("#numeroDeOrden").innerHTML=`${this.ultimoId.id}`;
+      });
+    },
+    consultarMesas(){
+     
+      obtenerMesas().then(r => {
+        this.mesas = r;
+        let opciones= `<option value="">--Seleccione Mesa--</option>`;
+        this.mesas.map(mesa=>{
+          opciones+=`<option value="${mesa.id}">${mesa.mesa}</option>`;
+        });
+        let mesaSelect = document.querySelector("#mesa");
+        mesaSelect.innerHTML=opciones;
+      });
+    },
+    consultarCategorias(){
+      obtenerCategorias().then(r => {
+        this.categorias = r;
+        let opciones="";
+        this.categorias.map(categoria=>{
+          opciones+=`<div class="px-1">
+                      <button type="button" onclick="javascript:obtenerProductos('${categoria.id}')" class="btn btn-primary btn-sm">${categoria.nombre}</button>
+                    </div>`;
+        });
+        let seccionCategorias = document.querySelector("#seccionCategorias");
+        seccionCategorias.innerHTML=opciones;
+      });
+    }
+  },
+  created(){
+    this.consultarUltimoId()
+    this.consultarCategorias()
+    this.consultarMesas()
+  },
+  components: {
       Card,
       ChartCard,
       StatsCard
