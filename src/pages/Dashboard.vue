@@ -2,7 +2,7 @@
   <div class="content">
     <div class="container-fluid">
       <div class="row">
-        <div class="col-md-3">
+       <!-- <div class="col-md-3">
           <div class="card">
             <div class="card-body">
               <h4 class="card-title">Opciones</h4>
@@ -28,13 +28,36 @@
               </ul>
             </div>
           </div>
-        </div>
-        <div class="col-md-9">
+        </div> -->
+        <div class="col-md-12">
           <card class="card">
           <div class="row">
           </div>
           <div class="card-body">
             <h4 class="card-title">Ordenes Recientes</h4>
+            <div class="container">
+              <div class="row">
+                <div class="col-">
+              <ul class="navbar-nav ml-auto">
+                <sidebar-link to="/admin/login-modificar">
+                  <div class="">
+                    <button class="btn btn-primary btn-sm">Modificar Orden</button>
+                  </div>
+                </sidebar-link>
+              </ul>
+            </div>
+            <div class="px-3">
+              <ul class="navbar-nav ml-auto">
+                <sidebar-link to="#">
+                  <div class="">
+                    <button class="btn btn-primary btn-sm">
+                      <modal-cobrar id="modal-cobrar" /></button>
+                  </div>
+                </sidebar-link>
+              </ul>
+            </div>
+              </div>
+            </div>
             <hr>
             <table id="user-table" class="display table-bordered nowrap" cellspacing="0" width="100%">
               <thead>
