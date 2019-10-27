@@ -52,6 +52,17 @@
   </div>
   <br>
   <br>
+  <div class="row">
+    <div class="col ">
+      <ul class="navbar-nav ml-auto">
+          <sidebar-link to="/admin/admin/bitacoras">
+            <button class="btn btn-primary btn-sty">Bitácoras<br><i class="nc-icon nc-notes"></i></button>
+          </sidebar-link>
+          </ul>
+    </div>
+  </div>
+  <br>
+  <br>
 </div>
 </template>
 

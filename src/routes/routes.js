@@ -20,6 +20,7 @@ import AdminCompras from 'src/pages/AdminCompras.vue'
 import AdminParametros from 'src/pages/AdminParametros.vue'
 import Estadisticas from 'src/pages/Estadisticas.vue'
 import Inventario from 'src/pages/Inventario.vue'
+import AdminBitacoras from 'src/pages/AdminBitacoras.vue'
 import Login from 'src/pages/Login.vue'
 import LoginModificar from 'src/pages/LoginModificar.vue'
 import TableList from 'src/pages/TableList.vue'
@@ -89,6 +90,11 @@ const routes = [
         path: 'admin/mesas',
         name: 'Administración Mesas',
         component: AdminMesas
+      },
+      {
+        path: 'admin/bitacoras',
+        name: 'Administración Bitácoras',
+        component: AdminBitacoras
       },
       {
         path: 'admin/usuario-rol',
