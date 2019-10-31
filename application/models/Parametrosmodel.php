@@ -18,7 +18,7 @@ class Parametrosmodel extends CI_Model {
 
     public function obtenerTodos()
     {
-         $resultados= $this->db->query("SELECT * FROM parametros;")->result();
+         $resultados= $this->db->query("SELECT * FROM parametro;")->result();
 
          $params = [];
          foreach ($resultados as $resultado) {

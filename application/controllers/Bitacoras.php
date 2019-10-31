@@ -11,8 +11,7 @@ class Bitacoras extends CI_Controller {
         $this->load->library('grocery_CRUD');
     }
 
-    public function crud(){
-
+    public function index(){
         $crud = new grocery_CRUD();
         $crud->set_table("bitacora");
         $crud->set_language("spanish");
@@ -24,19 +23,7 @@ class Bitacoras extends CI_Controller {
         $crud->unset_clone();
         $crud->required_fields('idUsuario', 'fecha', 'suceso');
         $output =$crud->render();
-        foreach ($output->css_files as $key => $css) {
-            echo ' <link rel="stylesheet" type="text/css" href="'.$css.'">';
-        }
-        foreach ($output->js_files as $key => $js) {
-            echo '<script src="'.$js.'" > </script>';
-        }
-        foreach ($output->js_lib_files as $key => $js) {
-            echo '<script src="'.$js.'" > </script>';
-        }
-        echo $output->output;
-
-
+        $this->layout->load_view('bitacoras/index',$output);
     }
-
 }
 /* End of file Bitacoras.php */

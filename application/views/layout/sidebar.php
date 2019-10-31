@@ -14,6 +14,12 @@
             
           </a>
         </li>
+        <li>
+        <a href="<?= base_url();?>DashboardLlevar">
+            <i class="fa fa-dashboard"></i> <span>Dashboard Llevar</span>
+            
+          </a>
+        </li>
         <?php if($configuraciones['modoEntorno']=="CAJA"){?>
           <script>
         
@@ -30,9 +36,35 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li class="active"><a href="<?= base_url();?>Productos"><i class="fa fa-circle-o"></i> Administración de productos</a></li>
+            <li class="active"><a href="<?= base_url();?>Productos/index"><i class="fa fa-circle-o"></i> Administración de productos</a></li>
             <li><a href="<?= base_url();?>Categorias"><i class="fa fa-circle-o"></i> Administración de categorias</a></li>
+            <li><a href="<?= base_url();?>Mesas/index"><i class="fa fa-circle-o"></i> Administración de mesas</a></li>
+            <li><a href="<?= base_url();?>Usuarios/index"><i class="fa fa-circle-o"></i> Administración de usuarios</a></li>
+            <li><a href="<?= base_url();?>Parametros/index"><i class="fa fa-circle-o"></i> Administración de parametros</a></li>
+            <li><a href="<?= base_url();?>Compras/index"><i class="fa fa-circle-o"></i> Administración de compras</a></li>
+            <li><a href="<?= base_url();?>Bitacoras/index"><i class="fa fa-circle-o"></i> Administración de bitacora</a></li>
           </ul>
+        </li>
+
+        <li>
+        <a href="<?= base_url();?>LibroCompras">
+            <i class="fa fa-dashboard"></i> <span>Libro Compras</span>
+            
+          </a>
+        </li>
+
+        <li>
+        <a href="<?= base_url();?>LibroVentas">
+            <i class="fa fa-dashboard"></i> <span>Libro Ventas</span>
+            
+          </a>
+        </li>
+
+        <li>
+        <a href="<?= base_url();?>Inventario">
+            <i class="fa fa-dashboard"></i> <span>Inventario</span>
+            
+          </a>
         </li>
 
         <li>
@@ -48,6 +80,7 @@
             
           </a>
         </li>
+        
         <?php }else{ ?>
           <script>
         

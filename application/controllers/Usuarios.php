@@ -11,10 +11,7 @@ class Usuarios extends CI_Controller {
         $this->load->library('grocery_CRUD');
     }
     
- 
-
-    public function crud()
-    {
+    public function index(){
         $crud = new grocery_CRUD();
         $crud->set_table("usuario");
         $crud->set_language("spanish");
@@ -26,17 +23,24 @@ class Usuarios extends CI_Controller {
         $crud->field_type('clave', 'password');
         $crud->field_type('rol','dropdown',
             array('G' => 'G', 'M' => 'M'));
+            $crud->callback_before_update(array($this,'encrypt_password_callback'));
         $output =$crud->render();
-        foreach ($output->css_files as $key => $css) {
-            echo ' <link rel="stylesheet" type="text/css" href="'.$css.'">';
-           }
-        foreach ($output->js_files as $key => $js) {
-            echo '<script src="'.$js.'" > </script>';
-           }
-        foreach ($output->js_lib_files as $key => $js) {
-         echo '<script src="'.$js.'" > </script>';
-        }
-       echo $output->output;
+        $this->layout->load_view('usuarios/index',$output);
+    }
+    
+    function encrypt_password_callback($post_array, $primary_key){
+    //Encrypt password only if is not empty. Else don't change the password to an empty field
+    if(!empty($post_array['clave']))
+    {
+        
+        $post_array['clave'] = base64_encode($post_array['clave']);
+    }
+    else
+    {
+        unset($post_array['clave']);
+    }
+ 
+  return $post_array;
     }
 
 }

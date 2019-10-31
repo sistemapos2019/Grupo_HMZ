@@ -11,21 +11,20 @@
             <li class="active">Dashboard</li>
         </ol>
     </section>
-
     <!-- Main content -->
     <section class="content">
-
-
-
         <div class="">
-
-
-
             <div class="row">
-                <div class="col-md-8">
+                <div class="col-md-12">
                     <div class="box">
                         <div class="box-header">
                             <h3 class="box-title">Ordenes</h3>
+                            <ul class="nav nav-pills nav-stacked">
+                                <li  class="active"><a href="<?= base_url(); ?>ordenes/crearorden"><span class="fa fa-plus-square"></span>Nueva Orden</a></li>
+                                <li class="opcionMenu disabled" id="botonModificar" role="presentation"><a><span class="fa fa-plus-square"></span>Modificar Orden</a></li>
+                              <!--  <li class="opcionMenu disabled" onclick="javascript:mostrarAlertaImprimir()" role="presentation"><a href="#"><span class="fa fa-plus-square"></span>Imprimir</a></li> -->
+                                <li class="opcionMenu disabled" id="optCobrar"><a href="#"><span class="fa fa-plus-square"></span>Cobrar</a></li>
+                            </ul>
                         </div>
                         <div class="box-body">
                             <table id="tablaOrdenes" style="table-layout: fixed;" class="table table-bordered table-hover dataTable display ">
@@ -33,49 +32,39 @@
                                     <tr>
                                         <th>Orden</th>
                                         <th>Mesa</th>
-                                        <th>Cliente</th>
                                         <th>Mesero</th>
+                                        <th>Cliente</th>
                                         <th>Total</th>
+                                        <th>Estado</th>
+                                        <th>Preparado</th>
+                                        <th>Rapido</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <?php 
-                                    
                                     foreach ($ordenesActivas as  $orden) {
-                                       ?>
+                                        $colorTiempoPreparado = '';
+                                        if($orden->llevar == 0){
+                                            
+                                            ?>
                                     <tr>
-                                        <th><?php echo $orden->id;?></th>
-                                        <th><?php echo $orden->mesa;?></th>
-                                        <th><?php echo $orden->cliente;?></th>
-                                        <th><?php echo $orden->mesero;?></th>
-                                        <th>$<?php echo $orden->total;?></th>
-
+                                        <th><?php echo $orden->IdOrden;?></th>
+                                        <th><?php echo $orden->Mesa;?></th>
+                                        <th><?php echo $orden->Mesero;?></th>
+                                        <th><?php echo $orden->Cliente;?></th>
+                                        <th>$<?php echo $orden->Total;?></th>
+                                        <th><?php echo $orden->Estado;?></th>
+                                        <th><?php echo $orden->TiempoPreparado;?></th>
+                                        <th><?php echo $orden->TiempoRapido;?></th>
                                     </tr>
                                     <?php
+                                        }
+                                       
                                     }
                                     ?>
-                                   
                                    </tr>
-
                                 </tbody>
-
                             </table>
-                        </div>
-
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="box">
-                        <div class="box-header">
-                            <h3 class="box-title" id="aaa">Opciones</h3>
-                        </div>
-                        <div class="box-body">
-                            <ul class="nav nav-pills nav-stacked">
-                                <li  class="active"><a href="<?= base_url(); ?>ordenes/crearorden"><span class="fa fa-plus-square"></span>Nueva Orden</a></li>
-                                <li class="opcionMenu disabled" id="botonModificar" role="presentation"><a><span class="fa fa-plus-square"></span>Modificar Orden</a></li>
-                              <!--  <li class="opcionMenu disabled" onclick="javascript:mostrarAlertaImprimir()" role="presentation"><a href="#"><span class="fa fa-plus-square"></span>Imprimir</a></li> -->
-                                <li class="opcionMenu disabled" id="optCobrar"><a href="#"><span class="fa fa-plus-square"></span>Cobrar</a></li>
-                            </ul>
                         </div>
                     </div>
                 </div>

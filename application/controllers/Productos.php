@@ -3,18 +3,15 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Productos extends CI_Controller {
-    
+
     public function __construct()
     {
         parent::__construct();
         $this->db = $this->load->database('pos',true);
         $this->load->library('grocery_CRUD');
     }
-    
- 
 
-    public function crud()
-    {
+    public function index(){
         $crud = new grocery_CRUD();
         $crud->set_table("producto");
         $crud->set_language("spanish");
@@ -27,17 +24,9 @@ class Productos extends CI_Controller {
         $crud->unset_clone();        
         $crud->required_fields('nombre','precio','inventario','idCategoria','preparado');
         $output =$crud->render();
-        foreach ($output->css_files as $key => $css) {
-            echo ' <link rel="stylesheet" type="text/css" href="'.$css.'">';
-           }
-        foreach ($output->js_files as $key => $js) {
-            echo '<script src="'.$js.'" > </script>';
-           }
-        foreach ($output->js_lib_files as $key => $js) {
-         echo '<script src="'.$js.'" > </script>';
-        }
-       echo $output->output;
+        $this->layout->load_view('productos/index',$output);
     }
+    
 
 }
 
