@@ -16,7 +16,7 @@
         </li>
         <li>
         <a href="<?= base_url();?>DashboardLlevar">
-            <i class="fa fa-dashboard"></i> <span>Dashboard Llevar</span>
+            <i class="fa fa-motorcycle"></i> <span>Dashboard Llevar</span>
             
           </a>
         </li>
@@ -48,28 +48,28 @@
 
         <li>
         <a href="<?= base_url();?>LibroCompras">
-            <i class="fa fa-dashboard"></i> <span>Libro Compras</span>
+            <i class="fa fa-book"></i> <span>Libro Compras</span>
             
           </a>
         </li>
 
         <li>
         <a href="<?= base_url();?>LibroVentas">
-            <i class="fa fa-dashboard"></i> <span>Libro Ventas</span>
+            <i class="fa fa-book"></i> <span>Libro Ventas</span>
             
           </a>
         </li>
 
         <li>
         <a href="<?= base_url();?>Inventario">
-            <i class="fa fa-dashboard"></i> <span>Inventario</span>
+            <i class="fa fa-linode"></i> <span>Inventario</span>
             
           </a>
         </li>
 
         <li>
           <a href="<?= base_url();?>Estadisticas">
-            <i class="fa fa-cog"></i> <span>Estadísticas</span>
+            <i class="fa fa-bar-chart"></i> <span>Estadísticas</span>
             
           </a>
         </li>

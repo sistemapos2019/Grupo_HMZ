@@ -3,12 +3,12 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            Dashboard
+            Dashboard para Llevar
             <small id="modo"></small>
         </h1>
         <ol class="breadcrumb">
-            <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-            <li class="active">Dashboard</li>
+            <li><a href="#"><i class="fa fa-motorcycle"></i> Home</a></li>
+            <li class="active">Dashboard para Llevar</li>
         </ol>
     </section>
     <!-- Main content -->
@@ -31,33 +31,27 @@
                                 <thead>
                                     <tr>
                                         <th>Orden</th>
-                                        <th>Mesa</th>
                                         <th>Mesero</th>
                                         <th>Cliente</th>
                                         <th>Total</th>
                                         <th>Estado</th>
                                         <th>Preparado</th>
-                                        <th>Rapido</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <?php 
-                                    foreach ($ordenesActivas as  $orden) {
-                                        $colorTiempoPreparado = '';
-                                        if($orden->llevar == 0){                                            
+                                    foreach ($ordenesActivas as  $orden) {                                         
                                             ?>
                                     <tr>
                                         <th><?php echo $orden->IdOrden;?></th>
-                                        <th><?php echo $orden->Mesa;?></th>
                                         <th><?php echo $orden->Mesero;?></th>
                                         <th><?php echo $orden->Cliente;?></th>
                                         <th>$<?php echo $orden->Total;?></th>
                                         <th><?php echo $orden->Estado;?></th>
                                         <th><?php echo $orden->TiempoPreparado;?></th>
-                                        <th><?php echo $orden->TiempoRapido;?></th>
                                     </tr>
                                     <?php
-                                        }
+                                        
                                        
                                     }
                                     ?>
