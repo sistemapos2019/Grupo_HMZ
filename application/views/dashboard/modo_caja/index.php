@@ -43,8 +43,34 @@
                                 <tbody>
                                     <?php 
                                     foreach ($ordenesActivas as  $orden) {
-                                        $colorTiempoPreparado = '';
-                                        if($orden->llevar == 0){                                            
+                                        $colorTiempo = '';
+                                        $colorTiempoRapido = '';
+                                        if($orden->llevar == 0){     
+                                            switch ($orden->Preparado) {
+                                                case 'ROJO':
+                                                    $colorTiempo = "red";
+                                                    break;
+                                                case 'AMARILLO':
+                                                    $colorTiempo = "yellow";
+                                                    break;
+                                                case 'VERDE':
+                                                    $colorTiempo = "green";
+                                                    break;
+                                            }
+
+                                            switch ($orden->Rapido) {
+                                                
+                                                case 'ROJO':
+                                                    $colorTiempoRapido = "red";
+                                                    break;
+                                                case 'AMARILLO':
+                                                    $colorTiempoRapido = "yellow";
+                                                    break;
+                                                case 'VERDE':
+                                                    $colorTiempoRapido = "green";
+                                                    break;
+                                            }
+                                                                                   
                                             ?>
                                     <tr>
                                         <th><?php echo $orden->IdOrden;?></th>
@@ -53,8 +79,8 @@
                                         <th><?php echo $orden->Cliente;?></th>
                                         <th>$<?php echo $orden->Total;?></th>
                                         <th><?php echo $orden->Estado;?></th>
-                                        <th><?php echo $orden->TiempoPreparado;?></th>
-                                        <th><?php echo $orden->TiempoRapido;?></th>
+                                        <th style = "background-color:<?php echo $colorTiempo;?>;"><?php echo $orden->TiempoPreparado;?></th>
+                                        <th style = "background-color:<?php echo $colorTiempoRapido;?>;"><?php echo $orden->TiempoRapido;?></th>
                                     </tr>
                                     <?php
                                         }

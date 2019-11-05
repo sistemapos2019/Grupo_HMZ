@@ -40,7 +40,19 @@
                                 </thead>
                                 <tbody>
                                     <?php 
-                                    foreach ($ordenesActivas as  $orden) {                                         
+                                    foreach ($ordenesActivas as  $orden) {    
+                                        $colorTiempo = '';       
+                                        switch ($orden->Preparado) {
+                                            case 'ROJO':
+                                                $colorTiempo = "red";
+                                                break;
+                                            case 'AMARILLO':
+                                                $colorTiempo = "yellow";
+                                                break;
+                                            case 'VERDE':
+                                                $colorTiempo = "green";
+                                                break;
+                                        }                              
                                             ?>
                                     <tr>
                                         <th><?php echo $orden->IdOrden;?></th>
@@ -48,7 +60,7 @@
                                         <th><?php echo $orden->Cliente;?></th>
                                         <th>$<?php echo $orden->Total;?></th>
                                         <th><?php echo $orden->Estado;?></th>
-                                        <th><?php echo $orden->TiempoPreparado;?></th>
+                                        <th style = "background-color:<?php echo $colorTiempo;?>;"><?php echo $orden->TiempoPreparado;?></th>
                                     </tr>
                                     <?php
                                         
