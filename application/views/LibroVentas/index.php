@@ -1,46 +1,33 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title>Document</title>
-        <!-- Bootstrap 3.3.7 -->
-        <!-- jQuery 3 -->
-        <script
-            src="<?= base_url();?>assets/bower_components/jquery/dist/jquery.min.js"></script>
-        <!-- Bootstrap 3.3.7 -->
-        <link
-            rel="stylesheet"
-                href="<?= base_url();?>assets/bower_components/bootstrap/dist/css/bootstrap.min.css">
+<div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1>
+            Libro Ventas
+                <small></small>
+            </h1>
+            <ol class="breadcrumb">
+                <li>
+                    <a href="#">
+                        <i class="fa fa-dashboard"></i>
+                        Home</a>
+                </li>
+                <li class="active">Libro Ventas</li>
+            </ol>
+        </section>
 
-            <!-- jQuery UI 1.11.4 -->
-            <script
-                src="<?= base_url();?>assets/bower_components/jquery-ui/jquery-ui.min.js"></script>
-            <script
-                src="<?= base_url();?>assets/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-            <!-- datepicker -->
-            <script
-                src="<?= base_url();?>assets/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
-            <script
-                src="<?= base_url();?>assets/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
-            <link
-                rel="stylesheet"
-                href="<?= base_url();?>assets/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
-            <link
-                rel="stylesheet"
-                href="<?= base_url();?>assets/bower_components/datatables.net-bs/css/select.dataTables.min.css">
+        <!-- Main content -->
+        <section class="content">
 
-            <link
-                rel="stylesheet"
-                href="<?= base_url();?>assets/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
-            <!-- Daterange picker -->
-            <link
-                rel="stylesheet"
-            href="<?= base_url();?>assets/bower_components/bootstrap-daterangepicker/daterangepicker.css">
-    </head>
-    <body>
-        <div class="container" style="margin-top:5%;">
+            <div class="">
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="box">
+                            <div class="box-header">
+                                <h3 class="box-title"></h3>
+                            </div>
+                            <div class="box-body">
+                            <div class="container" style="width:100%;">
             <div class="row" style="margin-bottom:1%;">
                 <div class="col-md-2"></div>
                 <div class="col-md-3"><input
@@ -58,18 +45,21 @@
                     <table border="1" class="col-md-12" style="overflow-x:scroll;">
                         <thead>
                             <tr>
-                                <td colspan="6">Nombre del Contribuyente: Cocina de la abuela</td>
+                                <td colspan="6">Nombre del Contribuyente: <?php
+                                     echo $parametros["Nombre"];
+                                ?></td>
 
                             </tr>
                             <tr>
-                                <td colspan="1">Mes: Septiembre</td>
-                                <td colspan="1">Año: 2019</td>
-                                <td colspan="4">NCR: 10032123</td>
+                                <td id="fechas" colspan="2">  </td>
+                                <td colspan="4">NCR: <?php
+                                    echo $parametros["NRC"];
+                                ?></td>
 
                             </tr>
                             <tr>
                                 <th colspan="1"></th>
-                                <th colspan="2" align="center">Compras Gravadas</th>
+                                <th colspan="2" align="center">Documentos Emitidos</th>
                                 <th colspan="3" align="center"></th>
                             </tr>
                             <tr>
@@ -122,9 +112,20 @@
     </div>
 
 </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </section>
+    </section>
+</div>
+      
 
 <script>
-
     $(function () {
         $("#fecha").datepicker(
             {viewMode: "months", minViewMode: "months", autoclose: true, format: 'yyyy-mm'}
@@ -137,7 +138,7 @@
             
         let formData = new FormData();
         formData.append("mes", mesSeleccionado);
-        fetch("http://localhost/dsi-backend/api/libroventas/getVentasMes", {
+        fetch("http://localhost/dsi-backend/libroventas/getVentasMes", {
             method: "POST",
             body: formData
         })
@@ -163,11 +164,15 @@
         let ventasnetasElemento=$("#ventasnetas");
         let impuestoElemento=$("#impuesto");
         let totalesdeventaElemento=$("#totalesdeventa");
+        let fechasElemento=$("#fechas");
         
 
         let contenido ="";
+        let fechas ="";
+
         let totalPropinas=0.0, totalVentas=0.0, totalReal =0.0, impuesto=0.0, ventasnetas=0.0, totalesdeventa=0.0;
         registros.map(registro=>{
+            fechas=$("#fecha").val();
             totalPropinas+=parseFloat(registro.propina);
             totalVentas+=parseFloat(registro.total);
             totalReal +=parseFloat(registro.total)+parseFloat(registro.propina);
@@ -200,6 +205,9 @@
         totalesdeventaElemento.html("");
         totalesdeventaElemento.html("$"+totalesdeventa.toFixed(2));
 
+        fechasElemento.html("");
+        fechasElemento.html("Fecha: "+fechas);
+
         ventasnetasElemento.html("");
         ventasnetasElemento.html("$"+ventasnetas.toFixed(2));
 
@@ -216,6 +224,3 @@
         totalrealElemento.html("$"+totalReal.toFixed(2));
     }
 </script>
-
-</body>
-</html>

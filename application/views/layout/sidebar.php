@@ -47,14 +47,14 @@
         </li>
 
         <li>
-        <a href="<?= base_url();?>LibroCompras">
+        <a href="<?= base_url();?>LibroCompras/index">
             <i class="fa fa-book"></i> <span>Libro Compras</span>
             
           </a>
         </li>
 
         <li>
-        <a href="<?= base_url();?>LibroVentas">
+        <a href="<?= base_url();?>LibroVentas/index">
             <i class="fa fa-book"></i> <span>Libro Ventas</span>
             
           </a>
