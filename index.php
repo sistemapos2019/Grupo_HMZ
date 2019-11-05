@@ -55,7 +55,7 @@ header("Access-Control-Allow-Origin: *");
  * NOTE: If you change these, also change the error_reporting() code below
  */
 	define('ENVIRONMENT', isset($_SERVER['CI_ENV']) ? $_SERVER['CI_ENV'] : 'development');
-
+	date_default_timezone_set('America/El_Salvador');
 /*
  *---------------------------------------------------------------
  * ERROR REPORTING
