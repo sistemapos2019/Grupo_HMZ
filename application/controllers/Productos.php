@@ -6,9 +6,10 @@ class Productos extends CI_Controller {
 
     public function __construct()
     {
-        parent::__construct();
-        $this->db = $this->load->database('pos',true);
+        parent::__construct(); 
         $this->load->library('grocery_CRUD');
+        $this->load->model('Productomodel','productos');
+        
     }
 
     public function index(){
@@ -25,6 +26,13 @@ class Productos extends CI_Controller {
         $crud->required_fields('nombre','precio','inventario','idCategoria','preparado');
         $output =$crud->render();
         $this->layout->load_view('productos/index',$output);
+    }
+
+    public function obtenerProductosPorCategoria($categoria = "")
+    {
+        if($categoria!=""){
+            echo(json_encode($this->productos->obtenerProductosPorCategoria($categoria)));
+        }
     }
     
 

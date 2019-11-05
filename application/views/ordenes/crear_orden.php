@@ -1,3 +1,7 @@
+    <?php
+   $imprimirPreparados= $parametros['Imprimir Ticket de productos preparados']=="SI"?true:false;
+   $imprimirNoPreparados= $parametros['Imprimir Ticket de productos NO preparados o rapidos']=="SI"?true:false;
+    ?>
     <div class="content-wrapper" style=" min-height:80% !important; height: auto !important;">
         <!-- Content Header (Page header) -->
         <section class="content-header">
@@ -26,13 +30,12 @@
                                 <h3 class="box-title">Productos</h3>
                             </div>
                             <div class="box-body">
-                                <div class="col-md-3">
+                                <div class="col-md-1">
                                     Orden: <?php echo $id;?>
                                     <input type="hidden" id="codigoOrden" value="<?php echo $id;?>">
                                 </div>
                                 <div class="col-md-3">
-                                    <input type="text" id="numeroMesa" placeholder="Numero de Mesa" class="form-control col-md-3">
-
+                                  <select name="numeroMesa" id="numeroMesa" class="form-control col-md-3"></select>
                                 </div>
                                 <div class="col-md-3">
                                     <input type="text" id="mesero" placeholder="Mesero" class="form-control col-md-3">
@@ -40,8 +43,17 @@
                                 </div>
                                 <div class="col-md-3">
                                     <input type="text" id="cliente" placeholder="Cliente" class="form-control col-md-3">
-
+                                    
+                                   
+                                    
                                 </div>
+                                <div class="col-md-2">
+                                Para Llevar:
+                                <input type="checkbox" name="llevar" id="llevar">
+                            
+                               
+                                </div>
+
                                 <br>
                                 <hr>
                                 <div class="col-md-12">
@@ -49,14 +61,15 @@
                                     if (count($categorias) > 0) {
                                         foreach ($categorias as  $categoria) {
                                             ?>
-                                            <button id="<?php echo $categoria->Nombre; ?>" class="btn btn-primary" style="margin-right:5px;" onclick="javascript:obtenerProductosCategoria(<?php echo $categoria->Id; ?>)">
-                                                <p style="word-wrap: break-word;"><?php echo $categoria->Nombre; ?></p>
+                                            <button id="<?php echo $categoria->nombre; ?>" class="btn btn-primary" style="margin-right:5px;" onclick="javascript:obtenerProductosCategoria(<?php echo $categoria->id; ?>)">
+                                                <p style="word-wrap: break-word;"><?php echo $categoria->nombre; ?></p>
                                                 </button>                                                                                                                                                                                                                                                    <?php
                                                 }
                                                 } ?>
                                 </div>
                                 <br>
                                 <hr>
+                             
                                 <table class="table table-bordered">
                                     <tbody id="productosMostrados">
                                         <tr>
@@ -129,24 +142,44 @@
             $("#Bebidas").click();
             recargarTablaOrden();
             generarTotalOrden();
-
+            obtenerMesas();
         });
 
+        function obtenerMesas() {
+            let mesasSelect =document.querySelector("#numeroMesa");
+            mesasSelect.innerHTML ="<option value=''>--N. de mesa--</option>";
+            fetch('<?php echo base_url()?>/ordenesapi/obtenermesas')
+                .then(
+                    r => {
+                        return r.json();
+                    }
+                )
+                .then(mesas => {
+                   
+                    mesas.forEach(mesa => {
+                        mesasSelect.innerHTML+=`<option value="${mesa.id}">${mesa.mesa}</option>`;
+                    });
+                  
+                });
+        }
+
         function obtenerProductosCategoria(id) {
-            fetch('<?php echo base_url()?>productosapi/obtenerProductosPorCategoria/' + id)
+            fetch('<?php echo base_url()?>productos/obtenerProductosPorCategoria/' + id)
                 .then(
                     r => {
                         return r.json();
                     }
                 )
                 .then(json => {
+                    console.log(json);
                     let valores = [];
                     productos[id] = [];
                     json.forEach(producto => {
                         valores.push(
-                            {id: producto.Id, nombre: producto.Nombre, precio: producto.Precio}
+                            {id: producto.id, nombre: producto.nombre, precio: producto.precio}
                         );
                     });
+                   
                     productos[id] = valores;
                     recrearOpciones(id);
                 });
@@ -232,13 +265,11 @@
                 $.unblockUI();
                 
                 if(yaCreada==1){
-                imprimeTicket( "","",generarTicketCobrar(json));}
+                    //Configurar 
+             //   imprimeTicket( "","",generarTicketCobrar(json));
+                }
                 else{
-                    console.log(json);
-                imprimeTicket( <?php if($parametros['ImprimirPreparados']=="SI"){ ?>generarPreparados(json), <?php } else{
-                ?>"",<?php } 
-                if($parametros['ImprimirNoPreparados']=="SI")
-                {?>generarNoPreparados(json), <?php } else{ ?> "",<?php }?> generarTicketCobrar(json) );
+                    
                 }
                 Swal.fire(
                             'Exitoso!',
@@ -279,11 +310,12 @@
                 cont += 1;
             }
             if(cont == 2){
-            formData.append('mesa', $("#numeroMesa").val());
-            formData.append('mesero', $("#mesero").val());
+            formData.append('idMesa', $("#numeroMesa").val()); 
             formData.append('cliente', $("#cliente").val());
             formData.append('comentario', $("#comentario").val());
+            formData.append('llevar', $('#llevar').prop('checked')?"1":"0");
             formData.append('total',totalOrden);
+            formData.append('propina',totalOrden*0.1);
             formData.append('orden', JSON.stringify(orden));
 
             fetch(url, {
@@ -291,7 +323,7 @@
             body:formData,            
             }).then(res => {return res.json()}).then(res =>
              {
-                 console.log(res);
+               
             
                 swal({
                 title: "Exito!",
@@ -302,7 +334,7 @@
                 
                 .then(r=>{
                     yaCreada=1;
-                    imprimeTicket( generarPreparados(res)+generarNoPreparados(res),"","");
+                   // imprimeTicket( generarPreparados(res)+generarNoPreparados(res),"","");
                     /*
                     swal({
                     title: 'Finalizar Orden',

@@ -1,5 +1,4 @@
-<?php
-require_once(ENTITIES_PATH  . "Producto.php");
+<?php 
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
@@ -24,6 +23,12 @@ class Productomodel extends CI_Model {
         }
     }
     
+    
+    public function obtenerProductosPorCategoria($Id)
+    {   
+        $query = $this->db->query("SELECT * FROM producto where idCategoria =$Id");
+      return $query->result();
+    }
 
 }
 

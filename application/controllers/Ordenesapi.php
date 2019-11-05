@@ -7,10 +7,11 @@ class Ordenesapi extends CI_Controller {
     public function __construct(){
       parent::__construct();
       $this->load->model('Productomodel','productos');
-      $this->load->model('Categoriasmodel','categorias');
-      $this->load->library('manejadores/manejadorordenes');
-      $this->load->library('manejadores/manejadorcategoria');
+      $this->load->model('Categoriasmodel','categorias'); 
       $this->load->model("parametrosmodel","parametros");
+      
+      $this->load->model('OrdenesModel', 'ordenes');
+      
       
             //Do your magic here
     }
@@ -18,10 +19,15 @@ class Ordenesapi extends CI_Controller {
     public function crearOrden()
     {
         // la ruta es 'ordenes/crearorden'
-        $data['categorias']= $this->manejadorcategoria->Obtener();
-        $data['id'] = $this->manejadorordenes->obtenerID();
+        $data['categorias']= $this->categorias->obtenerCategorias();
+        $data['id'] =$this->ordenes->ObtenerUltimoId()->id;
         $data['parametros'] = $this->parametros->obtenerTodos();
         $this->layout->load_view('ordenes/crear_orden', $data);
+    }
+
+    public function obtenerMesas()
+    {
+        echo json_encode($this->ordenes->obtenerMesas());
     }
 
     public function detallesOrden($id){
@@ -41,79 +47,89 @@ class Ordenesapi extends CI_Controller {
 
     public function guardarOrden()
     {
-        $orden = new Orden();
-        $orden->Fecha = date("Y-m-d H:m:s");
-        $orden->Mesero = $_POST['mesero'];
-        $orden->Mesa = $_POST['mesa'];
-        $orden->Cliente= $_POST['cliente'];
-        $orden->Estado = 1;
-        $orden->Observacion = $_POST['comentario'];
-        $orden->Total= $_POST['total'];
-        $orden->DetalleOrden = json_decode($_POST['orden']);
-       
-        $id = $this->manejadorordenes->insertar($orden);
+        $orden = [];
+        $orden['idMesa'] =$_POST['idMesa'];
+        $orden['idUsuario'] =1;
+        $orden['llevar'] =$_POST['llevar'];
+        $orden['estado'] ="AA";
+        $orden['observacion'] =$_POST['comentario'];
+        $orden['total'] =$_POST['total'];
+        $orden['propina'] =$_POST['propina'];
+        $orden['formaPago']="E";
+        $orden['cliente'] = $_POST['cliente'];
+        $orden['tiempoPreparado'] = date("Y-m-d H:i:s");
+        $orden['tiempoRapido'] = date("Y-m-d H:i:s");
         
-        $respuesta['orden'] = $this->manejadorordenes->obtenerOrden($id );
-        $respuesta['detalleOrden'] = $this->manejadorordenes->ObtenerDetalleVenta($id );
+        $detalleOrden = json_decode($_POST['orden']);
+        $id = $this->ordenes->crearOrden($orden);
+       $this->ordenes->guardarDetalleOrden($id, $detalleOrden);
+       
+    //Agregar detalle de productos para ticket
         
         if($id!=0){
             header('Content-Type: application/json');
-            echo json_encode($respuesta);
+            echo json_encode([]);
         }
         else{
             header('Content-Type: application/json');
             echo "{'Estado':'FALLO'}";
         }
-       
+      
+        
     }
     public function actualizarOrden ()
     {
-        if(isset($_POST['actualizarguardar'])){
+        
+        echo "<pre>";
+        print_r ($_POST);
+        echo "</pre>";
+        
+        // if(isset($_POST['actualizarguardar'])){
 
-        $orden = new Orden();
-        $orden->Fecha = date("Y-m-d H:m:s");
-        $orden->Mesero = $_POST['mesero'];
-        $orden->Mesa = $_POST['mesa'];
-        $orden->Cliente= $_POST['cliente'];
-        $orden->Estado = 1;
-        $orden->Observacion = $_POST['comentario'];
-        $orden->Total= $_POST['total'];
-        $orden->DetalleOrden = json_decode($_POST['orden']);
+        // $orden = new Orden();
+        // $orden->Fecha = date("Y-m-d H:m:s");
+        // $orden->Mesero = $_POST['mesero'];
+        // $orden->Mesa = $_POST['mesa'];
+        // $orden->Cliente= $_POST['cliente'];
+        // $orden->Estado = 1;
+        // $orden->Observacion = $_POST['comentario'];
+        // $orden->Total= $_POST['total'];
+        // $orden->DetalleOrden = json_decode($_POST['orden']);
        
 
-        $id = $this->manejadorordenes->insertar($orden);
-        $orden->Id = $id;
-        $orden->Estado = $_POST['estado'];
-        $resultado=$this->manejadorordenes->actualizar($orden);
-        $respuesta['orden'] = $this->manejadorordenes->obtenerOrden($_POST['idOrden']);
-        $respuesta['detalleOrden'] = $this->manejadorordenes->ObtenerDetalleVenta($_POST['idOrden']);
+        // $id = $this->manejadorordenes->insertar($orden);
+        // $orden->Id = $id;
+        // $orden->Estado = $_POST['estado'];
+        // $resultado=$this->manejadorordenes->actualizar($orden);
+        // // $respuesta['orden'] = $this->manejadorordenes->obtenerOrden($_POST['idOrden']);
+        // // $respuesta['detalleOrden'] = $this->manejadorordenes->ObtenerDetalleVenta($_POST['idOrden']);
         
-        if($resultado){
-            header('Content-Type: application/json');
-            echo json_encode($respuesta);
-        }
-        else{
-            header('Content-Type: application/json');
-            echo "{'Estado':'FALLO'}";
-        }
-        }
-            else{
+        // if($resultado){
+        //     header('Content-Type: application/json');
+        //     echo json_encode($respuesta);
+        // }
+        // else{
+        //     header('Content-Type: application/json');
+        //     echo "{'Estado':'FALLO'}";
+        // }
+        // }
+        //     else{
                 
-        $orden = new Orden();
-        $orden->Id = $_POST['idOrden'];
-        $orden->Estado = $_POST['estado'];
-        $resultado=$this->manejadorordenes->actualizar($orden);
+        // $orden = new Orden();
+        // $orden->Id = $_POST['idOrden'];
+        // $orden->Estado = $_POST['estado'];
+        // $resultado=$this->manejadorordenes->actualizar($orden);
       
-        $respuesta['orden'] = $this->manejadorordenes->obtenerOrden($_POST['idOrden']);
-        $respuesta['detalleOrden'] = $this->manejadorordenes->ObtenerDetalleVenta($_POST['idOrden']);
-        if($resultado){
-            header('Content-Type: application/json');
-            echo json_encode($respuesta);
-        }
-        else{
-            header('Content-Type: application/json');
-            echo "{'Estado':'FALLO'}";
-        }
-    }
+        // $respuesta['orden'] = $this->manejadorordenes->obtenerOrden($_POST['idOrden']);
+        // $respuesta['detalleOrden'] = $this->manejadorordenes->ObtenerDetalleVenta($_POST['idOrden']);
+        // if($resultado){
+        //     header('Content-Type: application/json');
+        //     echo json_encode($respuesta);
+        // }
+        // else{
+        //     header('Content-Type: application/json');
+        //     echo "{'Estado':'FALLO'}";
+        // }
+    //}
     }
 }

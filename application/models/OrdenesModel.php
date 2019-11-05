@@ -22,4 +22,25 @@ class OrdenesModel extends CI_Model {
     {
         return $this->db->query("SELECT * FROM mesa;")->result();
     }
+    
+    public function crearOrden($orden)
+    { 
+            $this->db->insert('orden', $orden);
+            $insert_id = $this->db->insert_id();
+         
+            return  $insert_id;
+        
+    }
+
+    public function guardarDetalleOrden($id, $orden)
+    { 
+      
+            foreach ($orden as  $producto) {
+                if($producto->cantidad>0){
+                $this->db->insert('detalleorden',  array('idOrden' => $id, 'idProducto'=>$producto->id, 'cantidad'=>
+                 $producto->cantidad, 'precioUnitario'=>
+                 ($producto->total/number_format($producto->cantidad,2))));
+                }
+            }        
+    }
 }
