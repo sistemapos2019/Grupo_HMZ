@@ -10,17 +10,12 @@ class Productomodel extends CI_Model {
         
     }
     
-
+ 
     public function obtenerProductoPorId($Id)
     {   
-        $query = $this->db->query("SELECT * FROM productos where id =$Id");
+        $query = $this->db->query("SELECT * FROM producto where id =$Id");
         $registro = $query->row();
-        if($registro==null){
-        return new Producto();
-        }
-        else{
-            return new Producto($registro->id, $registro->nombre, $registro->precio,$registro->categoria, $registro->esPreparado);
-        }
+        return $registro;
     }
     
     
