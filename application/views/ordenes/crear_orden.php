@@ -1,6 +1,7 @@
     <?php
    $imprimirPreparados= $parametros['Imprimir Ticket de productos preparados']=="SI"?true:false;
    $imprimirNoPreparados= $parametros['Imprimir Ticket de productos NO preparados o rapidos']=="SI"?true:false;
+   $porcentajePropina =  intval ($parametros['Propina']);
     ?>
     <div class="content-wrapper" style=" min-height:80% !important; height: auto !important;">
         <!-- Content Header (Page header) -->
@@ -38,7 +39,14 @@
                                   <select name="numeroMesa" id="numeroMesa" class="form-control col-md-3"></select>
                                 </div>
                                 <div class="col-md-3">
-                                    <input type="text" id="mesero" placeholder="Mesero" class="form-control col-md-3">
+                                   <select name="mesero"  class="form-control col-md-3" id="mesero">
+                                   <option value="">--Mesero--</option>
+                                   <?php foreach ($meseros as $mesero) {
+                                       ?>
+                                       <option value="<?php echo $mesero->id?>"><?php echo $mesero->nombre; ?></option>
+                                       <?php
+                                   }?>
+                                   </select>
 
                                 </div>
                                 <div class="col-md-3">
@@ -49,11 +57,8 @@
                                 </div>
                                 <div class="col-md-2">
                                 Para Llevar:
-                                <input type="checkbox" name="llevar" id="llevar">
-                            
-                               
+                                <input type="checkbox" name="llevar" id="llevar">                               
                                 </div>
-
                                 <br>
                                 <hr>
                                 <div class="col-md-12">
@@ -85,8 +90,7 @@
                             <div class="box-header">
                                 <h3 class="box-title">Detalles de Orden</h3>
                             </div>
-                            <div class="box-body">
-                                <!-----------AQUI VA LA COSA DE EDITAR----------->
+                            <div class="box-body"> 
                                 <table class="table table-bordered">
                                     <tbody id="productosSeleccionados">
                                         <tr>
@@ -101,6 +105,9 @@
                                 <br>
                                 Comentario:
                                 <textarea name="" id="comentario" class="form-control" style="resize: none;"></textarea>
+                                <hr>
+                                <h3>Subtotal $ <span id="subtotalOrden"></span></h3>
+                                <h3>Propina $ <span id="propina"></span></h3>
                                 <hr>
                                 <h3>Total $ <span id="totalOrden"></span></h3>
                                 <hr>
@@ -129,8 +136,10 @@
         var productos = [];
         var orden = [];
         var totalOrden = 0.00;
+        var subTotalOrden =0.00;
         var idOrdenCreada=0;
         var yaCreada=0;
+        var propina =0.00;
         
 
         $(document).ready(r => {
@@ -243,16 +252,16 @@
             });
           
             let url= "<?php echo base_url()?>ordenesapi/actualizarOrden";
-            let formData = new FormData();
-            formData.append('idOrden', $("#codigoOrden").val());
-            formData.append('estado', '0');
-
+            let formData = new FormData(); 
+            formData.append('estado', 'CP');
             formData.append('actualizarguardar', '1');
-            formData.append('mesa', $("#numeroMesa").val());
-            formData.append('mesero', $("#mesero").val());
+            formData.append('idMesa', $("#numeroMesa").val()); 
             formData.append('cliente', $("#cliente").val());
+            formData.append('mesero', $("#mesero").val());
             formData.append('comentario', $("#comentario").val());
+            formData.append('llevar', $('#llevar').prop('checked')?"1":"0");
             formData.append('total',totalOrden);
+            formData.append('propina',totalOrden*0.1);
             formData.append('orden', JSON.stringify(orden));
             fetch(url, {
                 method: "POST",
@@ -264,13 +273,12 @@
                 
                 $.unblockUI();
                 
-                if(yaCreada==1){
+                // debugger;
+                // console.log(json);
+                // debugger;
                     //Configurar 
-             //   imprimeTicket( "","",generarTicketCobrar(json));
-                }
-                else{
-                    
-                }
+              imprimeTicket( generarPreparados(json.productos)+generarNoPreparados(json.productos),"",generarTicketCobrar(json.orden, json.productos));
+
                 Swal.fire(
                             'Exitoso!',
                             'Su orden se cobrado satisfactoriamente',
@@ -278,6 +286,7 @@
                                 window.location.href = "<?php echo base_url()?>Dashboard";
                             });                  
             }).catch(function (error) {
+                console.log(error);
                 $.unblockUI();
                 Swal.fire(
                             'Upps!',
@@ -312,6 +321,8 @@
             if(cont == 2){
             formData.append('idMesa', $("#numeroMesa").val()); 
             formData.append('cliente', $("#cliente").val());
+            formData.append('mesero', $("#mesero").val());
+            formData.append('estado','AA');
             formData.append('comentario', $("#comentario").val());
             formData.append('llevar', $('#llevar').prop('checked')?"1":"0");
             formData.append('total',totalOrden);
@@ -397,11 +408,17 @@
         }
 
         function generarTotalOrden() {
-            totalOrden = 0.00;
+            subTotalOrden = 0.00;
             orden.forEach(producto => {
-                totalOrden += producto.total;
+                subTotalOrden += producto.total;
             });
+            <?php if($porcentajePropina>0){?>
+                 propina = (<?php echo $porcentajePropina /100;?>* subTotalOrden );
+                totalOrden = subTotalOrden+propina;
+            <?php } ?>
+            $("#subtotalOrden").html(subTotalOrden.toFixed(2));
             $("#totalOrden").html(totalOrden.toFixed(2));
+            $("#propina").html(propina.toFixed(2));
         }
 
         function calcularTotal() {
@@ -466,7 +483,7 @@ function imprimeTicket(ticket1="", ticket2="", ticket3="") {
     return true;
 }
 
-function generarTicketCobrar(productos) {
+function generarTicketCobrar(orden, productos) {
     let cliente =$("#cliente").val();
     let mesa =$("#numeroMesa").val();
     let efectivo = parseFloat($("#efectivo").val());
@@ -478,10 +495,10 @@ function generarTicketCobrar(productos) {
     <strong>NIT: <?php echo $parametros["NIT"];?></strong> <br>
     <strong>Tel: <?php echo $parametros["Telefono"];?></strong> <br>
     <strong>Dirección: <?php echo $parametros["Direccion"];?></strong> <br>
-    <strong>Fecha: ${productos.orden[0].fecha}</strong>
+    <strong>Fecha: ${orden.fecha}</strong>
         <table style="width:100%">
   <tr>
-    <th> Orden: ${productos.orden[0].id} </th>
+    <th> Orden: ${orden.id} </th>
     <th> Mesa: ${mesa} </th>
     <th> Cliente: ${cliente}</th> 
   </tr></table>
@@ -496,14 +513,17 @@ function generarTicketCobrar(productos) {
   </tr>
  
     `;
-    productos.detalleOrden.forEach(producto => {
-        content+=`<tr> <td>${producto.nombre}</td><td> ${producto.cantidad}</td><td>  $${producto.total} </td></tr>`;
+    productos.forEach(producto => {
+        content+=`<tr> <td>${producto.nombre}</td><td> ${producto.cantidad}</td><td>  $${(producto.precio*producto.cantidad).toFixed(2)} </td></tr>`;
     });
     content+=`</table>
     <br> <br>
     <hr>
     <div align="left">
+    <strong> Subtotal: $${subTotalOrden.toFixed(2)}</strong><br>
+    <strong> Propina: $${propina.toFixed(2)}</strong><br>
     <strong> Total: $${totalOrden.toFixed(2)}</strong><br>
+    
     <strong> Efectivo: $${efectivo.toFixed(2)}</strong><br>
     <strong> Cambio: $${cambio.toFixed(2)}</strong><br>
     </div>
@@ -519,7 +539,14 @@ function generarTicketCobrar(productos) {
 }
 
 function generarPreparados(productos) {
-  
+<?php if ($imprimirPreparados){ ?>
+
+    let cantidadProductos =0;
+        productos.forEach(producto => {
+       if(producto.preparado==1){cantidadProductos++}});
+
+
+if(cantidadProductos>0){
 let contentPreparados=`<html><body>
 <h1>A Preparar Cocina</h1>
 <hr>
@@ -552,13 +579,25 @@ let contentPreparados=`<html><body>
   
    </body></html>
    `;
-   return contentPreparados;
+   return contentPreparados;}
+   else{
+       return "";
+   }
+   
+    <?php } else{?>
+        return "";
+        <?php }?>
 }
 
 
 
 function generarNoPreparados(productos) {
-    
+    <?php if ($imprimirNoPreparados){ ?>
+        let cantidadProductos =0;
+        productos.forEach(producto => {
+       if(producto.preparado==0){cantidadProductos++}});
+
+        if(cantidadProductos >0){
 let contentPreparados=`<html><body>
 <h1>¡Listos! Ya preparados</h1>
 <hr>
@@ -591,6 +630,13 @@ let contentPreparados=`<html><body>
    </body></html>
    `;
    return contentPreparados;
+}
+   else{
+       return "";
+   }
+   <?php } else{ ?>
+    return "";
+   <?php } ?>
 }
 
 

@@ -21,6 +21,20 @@
         <section class="content">
             <!---->
             <div class="row">
+            <div class="col-md-12">
+            <div class="box">
+                        <div class="box-header">
+                            <h3 class="box-title">Filtros</h3>
+                        </div>
+                        <div class="box-body">
+                        <input type="text" id="fechaInicio">
+                        <input type="text" id="fechaFin">
+                        <button>Consultar</button>
+                        </div>
+                        </div>
+            </div>
+            </div>
+            <div class="row">
                 <div class="col-md-6">
                     <div class="box">
                         <div class="box-header">
