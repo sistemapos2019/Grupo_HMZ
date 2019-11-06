@@ -334,25 +334,9 @@
                 
                 .then(r=>{
                     yaCreada=1;
-                   // imprimeTicket( generarPreparados(res)+generarNoPreparados(res),"","");
-                    /*
-                    swal({
-                    title: 'Finalizar Orden',
-                    text: "¿Quiere realizar el cobro de la orden?",
-                    type: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    cancelButtonText:'No',
-                    confirmButtonText: 'Si'
-                    }).then((result) => {
-                    if (result.value) {
-                       $("#btnCobrar").click();
-                    }else{
-                       
-                    }
-                    })
-                    */
+                    debugger;
+                     
+                    imprimeTicket( generarPreparados(res)+generarNoPreparados(res),"","");
                     window.location.href = "<?php echo base_url()?>Dashboard";
                 });
 
@@ -552,17 +536,18 @@ let contentPreparados=`<html><body>
                         </tr>
 
    `;
-     productos.detalleOrden.forEach(producto => {
-       if(producto.esPreparado==1){
+     productos.forEach(producto => {
+       if(producto.preparado==1){
         contentPreparados+=`<tr> <td>${producto.nombre}</td><td> ${producto.cantidad}</td></tr>`;
    }
-   });
-
+   }); 
+   
+   let observacion = $("#comentario").val();
    contentPreparados+=`</table>
    
    <br>
    <strong>Observacion:</strong>
-   ${productos.orden[0].observacion}
+   ${   observacion}
    <div style=" page-break-before: always;"></div>
   
    </body></html>
@@ -590,17 +575,18 @@ let contentPreparados=`<html><body>
                         </tr>
 
    `;
-     productos.detalleOrden.forEach(producto => {
-       if(producto.esPreparado==0){
+     productos.forEach(producto => {
+       if(producto.preparado==0){
         contentPreparados+=`<tr> <td>${producto.nombre}</td><td> ${producto.cantidad}</td></tr>`;
    }
    });
 
+   let observacion = $("#comentario").val();
    contentPreparados+=`</table>
    
    <br>
    <strong>Observacion:</strong>
-   ${productos.orden[0].observacion}
+   ${observacion}
    <div style=" page-break-before: always;"></div>
    </body></html>
    `;

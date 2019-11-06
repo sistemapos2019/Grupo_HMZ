@@ -61,14 +61,19 @@ class Ordenesapi extends CI_Controller {
         $orden['tiempoRapido'] = date("Y-m-d H:i:s");
         
         $detalleOrden = json_decode($_POST['orden']);
+       $productos=[];
         $id = $this->ordenes->crearOrden($orden);
        $this->ordenes->guardarDetalleOrden($id, $detalleOrden);
-       
-    //Agregar detalle de productos para ticket
+       foreach ($detalleOrden as  $producto) {
+                    $nuevoProducto = $this->productos->obtenerProductoPorId($producto->id);
+                    $nuevoProducto = (array) $nuevoProducto;
+                    $nuevoProducto['cantidad'] = $producto->cantidad;
+                 array_push($productos, $nuevoProducto);
+                    } 
         
         if($id!=0){
             header('Content-Type: application/json');
-            echo json_encode([]);
+            echo json_encode($productos);
         }
         else{
             header('Content-Type: application/json');
