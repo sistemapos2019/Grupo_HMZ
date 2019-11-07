@@ -1,6 +1,4 @@
-<?php
-include(APPPATH."/entities/Producto.php");
-include(APPPATH."/entities/Orden.php");
+<?php 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Ordenesapi extends CI_Controller {
@@ -33,11 +31,11 @@ class Ordenesapi extends CI_Controller {
     }
 
     public function detallesOrden($id){
-        $data['categorias']= $this->manejadorcategoria->Obtener();
-        $data['orden'] = $this->manejadorordenes->obtenerOrden($id);
+        $data['categorias']= $this->categorias->obtenerCategorias();
+        $data['orden'] = $this->ordenes->obtenerOrden($id);
         if( count($data['orden'])>0){
             $data['orden']=$data['orden'][0];
-        $data['detalle'] = $this->manejadorordenes->ObtenerDetalleVenta($id);
+        $data['detalle'] = $this->ordenes->obtenerDetalleOrden($id);
         $this->layout->load_view('ordenes/detalles_orden', $data);
         }
     }

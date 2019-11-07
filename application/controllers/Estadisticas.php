@@ -6,16 +6,15 @@ class Estadisticas extends CI_Controller {
     
     public function __construct()
     {
-        parent::__construct();
-        $this->load->library('manejadores/manejadorordenes');
+        parent::__construct(); 
     }
     
 
     public function index()
     {        
-        $data['totalOrdenes'] = $this->manejadorordenes->ObtenerTotalVentasFecha();
-        $data['productosVendidos'] = $this->manejadorordenes->ObtenerProductosVendidos();
-        $this->layout->load_view('estadisticas/index', $data);
+        // $data['totalOrdenes'] = $this->manejadorordenes->ObtenerTotalVentasFecha();
+        // $data['productosVendidos'] = $this->manejadorordenes->ObtenerProductosVendidos();
+        $this->layout->load_view('estadisticas/index', []);
     }
 
 }

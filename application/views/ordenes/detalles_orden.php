@@ -50,8 +50,8 @@
                                     if (count($categorias) > 0) {
                                         foreach ($categorias as  $categoria) {
                                             ?>
-                                            <button id="<?php echo $categoria->Nombre; ?>" class="btn btn-primary" style="margin-right:5px;" onclick="javascript:obtenerProductosCategoria(<?php echo $categoria->Id; ?>)">
-                                                <p style="word-wrap: break-word;"><?php echo $categoria->Nombre; ?></p>
+                                            <button id="<?php echo $categoria->nombre; ?>" class="btn btn-primary" style="margin-right:5px;" onclick="javascript:obtenerProductosCategoria(<?php echo $categoria->id; ?>)">
+                                                <p style="word-wrap: break-word;"><?php echo $categoria->nombre; ?></p>
                                                 </button>                                                                                                                                                                                                                                                    <?php
                                                 }
                                                 } ?>

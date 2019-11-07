@@ -44,6 +44,16 @@ class OrdenesModel extends CI_Model {
             }        
     }
 
+    public function obtenerOrden($id)
+    {
+       return $this->db->query("SELECT * FROM orden where id=$id;")->result();
+    }
+
+    public function obtenerDetalleOrden($id)
+    {
+        return $this->db->query("SELECT * FROM detalleorden WHERE idOrden =$id")->result();
+    }
+
     public function TiempoPreparadoNull($id)
     {
         return $this->db->query("UPDATE orden SET TiempoPreparado = NULL WHERE id = $id");

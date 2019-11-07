@@ -27,7 +27,8 @@
           
          $("#modo").html("Modo Caja");
         });
-               </script>
+       </script>
+       <?php if($this->session->userdata('rol')=="G"){?>
         <li class="treeview">
           <a href="<?= base_url();?>assets/#">
             <i class="fa  fa-laptop"></i> <span>Administración</span>
@@ -73,12 +74,8 @@
             
           </a>
         </li>
-        
-        <li>
-          <a href="<?= base_url();?>configuraciones">
-            <i class="fa fa-cog"></i> <span>Configuración</span>
-            
-          </a>
+       <?php }?>
+         
         </li>
         
         <?php }else{ ?>
