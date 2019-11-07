@@ -26,12 +26,14 @@ class SeguridadController extends CI_Controller {
          
             if(count($usuariosEncontrados)>0){
                         $dataSesion = array(
+                            'idUsuario'=>$usuariosEncontrados[0]->id, 
                                 'usuario'  => $usuariosEncontrados[0]->login,
                                 'rol'     =>  $usuariosEncontrados[0]->rol,
                                 'nombre'     =>  $usuariosEncontrados[0]->nombreCompleto,
                                 'logueado' => TRUE
                         );
                         echo "<script>alert('Inicio de sesión con exito');</script>";
+                        $this->seguridad->GuardarSucesoBitacora("Inicio de Sesión", $usuariosEncontrados[0]->id);
                     $this->session->set_userdata($dataSesion);
                    
                     header('Location: '.base_url());
@@ -51,6 +53,7 @@ class SeguridadController extends CI_Controller {
     public function CerrarSesion()
     {
         $array_items = array('usuario', 'rol', 'nombre', 'logueado');
+        $this->seguridad->GuardarSucesoBitacora("Cierre de Sesión", $this->session->userdata('idUsuario'));
         $this->session->unset_userdata($array_items);
         header('Location: '.base_url());
     }

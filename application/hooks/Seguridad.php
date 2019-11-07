@@ -21,5 +21,10 @@ class Seguridad
     }
 
     }
+
+    public function GenerarLogBitacora()
+    {
+       
+    }
     
 }

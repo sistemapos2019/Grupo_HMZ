@@ -8,6 +8,7 @@ class Ordenesapi extends CI_Controller {
       $this->load->model('Categoriasmodel','categorias'); 
       $this->load->model("parametrosmodel","parametros");
       $this->load->model("Usuariosmodel","usuarios");
+      $this->load->model("Seguridadmodel","seguridad");
       
       $this->load->model('OrdenesModel', 'ordenes');
       
@@ -70,7 +71,7 @@ class Ordenesapi extends CI_Controller {
                     $nuevoProducto['cantidad'] = $producto->cantidad;
                  array_push($productos, $nuevoProducto);
                     } 
-        
+        $this->seguridad->GuardarSucesoBitacora("Orden $id Creada", $orden['idUsuario']);
         if($id!=0){
             header('Content-Type: application/json');
             echo json_encode($productos);
@@ -114,7 +115,7 @@ class Ordenesapi extends CI_Controller {
                         $nuevoProducto['cantidad'] = $producto->cantidad;
                      array_push($productos, $nuevoProducto);
                         } 
-            
+           $this->seguridad->GuardarSucesoBitacora("Orden $id Creada Y Cobrada", $orden['idUsuario']);
             if($id!=0){
                 header('Content-Type: application/json');
 
@@ -148,5 +149,15 @@ class Ordenesapi extends CI_Controller {
             echo "{'Estado':'FALLO'}";
         }
     }
+    }
+    
+    public function setearRapido($id)
+    {
+      echo "ok";
+    }
+
+    public function setearPrepadado($id)
+    {
+       echo "ok";
     }
 }
