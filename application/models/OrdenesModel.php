@@ -43,4 +43,14 @@ class OrdenesModel extends CI_Model {
                 }
             }        
     }
+
+    public function TiempoPreparadoNull($id)
+    {
+        return $this->db->query("UPDATE orden SET TiempoPreparado = NULL WHERE id = $id");
+    }
+
+    public function TiempoRapidoNull($id)
+    {
+        return $this->db->query("UPDATE orden SET TiempoRapido = NULL WHERE id = $id");
+    }
 }

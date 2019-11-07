@@ -19,11 +19,12 @@
                     <div class="box">
                         <div class="box-header">
                             <h3 class="box-title">Ordenes</h3>
-                            <ul class="nav nav-pills nav-stacked">
-                                <li  class="active"><a href="<?= base_url(); ?>ordenes/crearorden"><span class="fa fa-plus-square"></span>Nueva Orden</a></li>
-                                <li class="opcionMenu disabled" id="botonModificar" role="presentation"><a><span class="fa fa-plus-square"></span>Modificar Orden</a></li>
+                            <ul class="nav nav-tabs" id="LlevarTabs" role="tablist">
+                            <li class="opcionMenu active" role="presentation"><a href="#"><span class="fa fa-plus-square"></span>Ordenes</a></li>
+                                <li  class="opcionMenu"><a href="<?= base_url(); ?>ordenes/crearorden"><span class="fa fa-plus-square"></span>Nueva Orden</a></li>
+                             <!--   <li class="opcionMenu disabled" id="botonModificar" role="presentation"><a><span class="fa fa-plus-square"></span>Modificar Orden</a></li> -->
                               <!--  <li class="opcionMenu disabled" onclick="javascript:mostrarAlertaImprimir()" role="presentation"><a href="#"><span class="fa fa-plus-square"></span>Imprimir</a></li> -->
-                                <li class="opcionMenu disabled" id="optCobrar"><a href="#"><span class="fa fa-plus-square"></span>Cobrar</a></li>
+                             <!--   <li class="opcionMenu disabled" id="optCobrar"><a href="#"><span class="fa fa-plus-square"></span>Cobrar</a></li> -->
                             </ul>
                         </div>
                         <div class="box-body">
@@ -60,7 +61,7 @@
                                         <th><?php echo $orden->Cliente;?></th>
                                         <th>$<?php echo $orden->Total;?></th>
                                         <th><?php echo $orden->Estado;?></th>
-                                        <th style = "background-color:<?php echo $colorTiempo;?>;"><?php echo $orden->TiempoPreparado;?></th>
+                                        <th style = "background-color:<?php echo $colorTiempo;?>; color: white"><?php echo $orden->TiempoPreparado;?></th>
                                     </tr>
                                     <?php
                                         

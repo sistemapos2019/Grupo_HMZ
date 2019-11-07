@@ -21,4 +21,5 @@ class Dashboardmodel extends CI_Model {
     {
         return $this->db->query("SELECT * FROM dashboardllevar;")->result();
     }
+
 }

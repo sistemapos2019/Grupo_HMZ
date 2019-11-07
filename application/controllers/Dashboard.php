@@ -4,6 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Dashboard extends CI_Controller {
     public function __construct(){
       parent::__construct();
+      $this->load->model('OrdenesModel',"ordenes");
       $this->load->model('Dashboardmodel',"dashboard");
             //Do your magic here
     }
@@ -26,6 +27,14 @@ class Dashboard extends CI_Controller {
         $otro = ($otro<59)?"".$otro: '';
         $num = ($num<59)?"".$num: '';
         return $num.":".$otro." min ";
+    }
+
+    public function setTiempoPreparadoNull($id){
+        $this->ordenes->TiempoPreparadoNull($id);
+    }
+
+    public function setTiempoRapidoNull($id){
+        $this->ordenes->TiempoRapidoNull($id);
     }
 
 }

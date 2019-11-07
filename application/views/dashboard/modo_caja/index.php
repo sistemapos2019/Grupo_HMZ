@@ -19,11 +19,14 @@
                     <div class="box">
                         <div class="box-header">
                             <h3 class="box-title">Ordenes</h3>
-                            <ul class="nav nav-pills nav-stacked">
-                                <li  class="active"><a href="<?= base_url(); ?>ordenes/crearorden"><span class="fa fa-plus-square"></span>Nueva Orden</a></li>
+                            <ul class="nav nav-tabs" id="OrdenesTabs" role="tablist">
+                            <li class="opcionMenu active" role="presentation"><a href="#"><span class="fa fa-plus-square"></span>Ordenes</a></li>
+                                <li  class="opcionMenu "><a href="<?= base_url(); ?>ordenes/crearorden"><span class="fa fa-plus-square"></span>Nueva Orden</a></li>
                                 <li class="opcionMenu disabled" id="botonModificar" role="presentation"><a><span class="fa fa-plus-square"></span>Modificar Orden</a></li>
-                              <!--  <li class="opcionMenu disabled" onclick="javascript:mostrarAlertaImprimir()" role="presentation"><a href="#"><span class="fa fa-plus-square"></span>Imprimir</a></li> -->
+                               <!--  <li class="opcionMenu disabled" onclick="javascript:mostrarAlertaImprimir()" role="presentation"><a href="#"><span class="fa fa-plus-square"></span>Imprimir</a></li> -->
                                 <li class="opcionMenu disabled" id="optCobrar"><a href="#"><span class="fa fa-plus-square"></span>Cobrar</a></li>
+                                <li class="opcionMenu disabled" id="optEntregaPreparado" onclick="javascript:setNullTiempoPreparado()"><a href="#"><span class="fa fa-plus-square"></span>Entregado Preparado</a></li>
+                                <li class="opcionMenu disabled" id="optEntregaRapido" onclick="javascript:setNullTiempoRapido()"><a href="#"><span class="fa fa-plus-square"></span>Entregado Rapido</a></li>
                             </ul>
                         </div>
                         <div class="box-body">
@@ -56,6 +59,8 @@
                                                 case 'VERDE':
                                                     $colorTiempo = "green";
                                                     break;
+                                                case '':
+                                                    $colorTiempo = "black";
                                             }
 
                                             switch ($orden->Rapido) {
@@ -79,8 +84,30 @@
                                         <th><?php echo $orden->Cliente;?></th>
                                         <th>$<?php echo $orden->Total;?></th>
                                         <th><?php echo $orden->Estado;?></th>
-                                        <th style = "background-color:<?php echo $colorTiempo;?>;"><?php echo $orden->TiempoPreparado;?></th>
-                                        <th style = "background-color:<?php echo $colorTiempoRapido;?>;"><?php echo $orden->TiempoRapido;?></th>
+                                        <?php
+                                            if($orden->Preparado != ''){
+                                                ?>
+                                                <th style = "background-color:<?php echo $colorTiempo;?>; color: white "><?php echo $orden->TiempoPreparado;?></th>
+                                                <?php
+                                            }else {
+                                                ?>
+                                                <th>Entregado</th>
+                                                <?php
+                                            }
+                                        ?>
+                                        <?php
+                                            if($orden->Rapido != ''){
+                                                ?>
+                                                <th style = "background-color:<?php echo $colorTiempoRapido;?>; color: white"><?php echo $orden->TiempoRapido;?></th>
+                                                <?php
+                                            }else {
+                                                ?>
+                                                <th>Entregado</th>
+                                                <?php
+                                            }
+                                        ?>
+                                        
+                                        
                                     </tr>
                                     <?php
                                         }
@@ -199,6 +226,8 @@
                 totalOrden =0.00;
                 totalOrden=(parseFloat(table.row(this).data()[4].substring(1)).toFixed(2));
                 haySeleccion = true;
+                preparado = table.row(this).data()[0];
+                rapido = table.row(this).data()[8];
                 generarTotalOrden();
             } else {
                 totalOrden =0.00;
@@ -231,6 +260,35 @@
         );
     }
 </script>
+
+<script>
+    function mostrarAlertaEntregadoPreparado() {
+        $.unblockUI();
+    Swal.fire(
+        'Preparado se ha entregado con exito!',
+            '',
+            'success');
+            setTimeout(function() {
+            location.reload();
+        },  2000);
+        
+    }
+</script>
+
+<script>
+    function mostrarAlertaEntregadoRapido() {
+        $.unblockUI();
+    Swal.fire(
+        'Rapido se ha entregado con exito!',
+            '',
+            'success');
+            setTimeout(function() {
+            location.reload();
+        }, 2000);
+        
+    }
+</script>
+
 
 <script src="<?php echo base_url()?>assets/bower_components/blockUI/blockui.js"></script>
     <script src="<?php echo base_url()?>assets/bower_components/swal2/sweetalert2.all.js"></script>
@@ -287,6 +345,20 @@ fetch(url, {
             $("#btnImprimir").attr("disabled", false);
 
         }
+    }
+
+    function setNullTiempoPreparado(id){
+        let url= "<?php echo base_url()?>Dashboard/setTiempoPreparadoNull/";
+        id = codigoOrden;
+        fetch(url + id);
+        mostrarAlertaEntregadoPreparado();
+    }
+
+    function setNullTiempoRapido(id){
+        let url= "<?php echo base_url()?>Dashboard/setTiempoRapidoNull/";
+        id = codigoOrden;
+        fetch(url + id);
+        mostrarAlertaEntregadoRapido();
     }
 
     function generarTotalOrden() {
