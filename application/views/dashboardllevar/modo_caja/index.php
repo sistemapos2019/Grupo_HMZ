@@ -27,7 +27,7 @@
                              <!--   <li class="opcionMenu disabled" id="optCobrar"><a href="#"><span class="fa fa-plus-square"></span>Cobrar</a></li> -->
                             </ul>
                         </div>
-                        <div class="box-body">
+                        <div class="box-body" style="min-width: 100px; overflow-x:  scroll;">
                             <table id="tablaOrdenes" style="table-layout: fixed;" class="table table-bordered table-hover dataTable display ">
                                 <thead>
                                     <tr>

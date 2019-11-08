@@ -29,7 +29,7 @@
                                 <li class="opcionMenu disabled" id="optEntregaRapido" onclick="javascript:setNullTiempoRapido()"><a href="#"><span class="fa fa-plus-square"></span>Entregado Rapido</a></li>
                             </ul>
                         </div>
-                        <div class="box-body">
+                        <div class="box-body" style="min-width: 100px; overflow-x:  scroll;">
                             <table id="tablaOrdenes" style="table-layout: fixed;" class="table table-bordered table-hover dataTable display ">
                                 <thead>
                                     <tr>

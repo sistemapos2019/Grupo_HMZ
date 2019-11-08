@@ -50,13 +50,11 @@
 												</tr>
 												<tr>
 													<td id="fechas" colspan="2"> </td>
-													<td colspan="4">NCR: <?php
-                                    echo $parametros["NCR"];
-                                ?></td>
-    <td colspan="6"></td>
+													<td colspan="4">NRC: <?php
+                                                     echo $parametros["NRC"];
+                                            ?></td>
+                                            <td colspan="6"></td>
 												</tr>
- 
-
 												<tr>
 													<th>No</th>
 													<th>Fecha de Emisión</th>
@@ -95,11 +93,11 @@
 												<tr>
 													 
 													<th colspan="6" align="center">Total:</th>
+                                                    <th id="totalmontointerno"></th>
+                                                    <th></th>
+                                                    <th id="totalcreditofiscal"></th>
+                                                    <th></th>
                                                     <th id="totalesdeventa"></th>
-                                                    <th></th>
-                                                    <th>12312</th>
-                                                    <th></th>
-                                                    <th>123213</th>
                                                     <th></th>
 												</tr>
 
@@ -162,18 +160,21 @@
         let impuestoElemento=$("#impuesto");
         let totalesdeventaElemento=$("#totalesdeventa");
         let fechasElemento=$("#fechas");
+        let totalmontointernoElemento=$("#totalmontointerno");
+        let totalcreditofiscalElemento=$("#totalcreditofiscal");
         
 
         let contenido ="";
         let fechas ="";
 
-        let totalPropinas=0.0, totalVentas=0.0, totalReal =0.0, impuesto=0.0, ventasnetas=0.0, totalesdeventa=0.0;
+        let totalcreditofiscal=0.0, totalmontointerno=0.0, totalPropinas=0.0, totalVentas=0.0, totalReal =0.0, impuesto=0.0, ventasnetas=0.0, totalesdeventa=0.0;
         registros.map(registro=>{
             fechas=$("#fecha").val();
             totalPropinas+=parseFloat(registro.propina);
             totalVentas+=parseFloat(registro.total);
             totalReal +=parseFloat(registro.total)+parseFloat(registro.propina);
-
+            totalmontointerno +=parseFloat(registro.montoInterno);
+            totalcreditofiscal +=parseFloat(registro.creditoFiscal);
             impuesto=parseFloat(totalVentas)*0.13;
             ventasnetas=parseFloat(totalVentas)-parseFloat(impuesto);
             totalesdeventa=parseFloat(ventasnetas)+parseFloat(impuesto);
@@ -215,6 +216,12 @@
 
         totalventasElemento.html("");
         totalventasElemento.html("$"+totalVentas.toFixed(2));
+
+        totalmontointernoElemento.html("");
+        totalmontointernoElemento.html("$"+totalmontointerno.toFixed(2));
+
+        totalcreditofiscalElemento.html("");
+        totalcreditofiscalElemento.html("$"+totalcreditofiscal.toFixed(2));
 
         impuestoElemento.html("");
         impuestoElemento.html("$"+impuesto.toFixed(2));
