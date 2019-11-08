@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Jupiter</title>
+  <title>Sistema POS</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.7 -->
@@ -17,7 +17,7 @@
   <!-- AdminLTE Skins. Choose a skin from the css/skins
        folder instead of downloading all of them to reduce the load. -->
   <link rel="stylesheet" href="<?= base_url();?>assets/dist/css/skins/_all-skins.min.css">
-  <link rel="icon" type="image/png" href="<?= base_url();?>assets/dist/img/jupiter.png">
+  <link rel="icon" type="image/png" href="<?= base_url();?>assets/dist/img/posicon.png">
   <!-- Morris chart -->
   <link rel="stylesheet" href="<?= base_url();?>assets/bower_components/morris.js/morris.css">
   <!-- jvectormap -->
@@ -49,9 +49,9 @@
     <!-- Logo -->
     <a href="<?= base_url();?>dashboard" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
-      <span class="logo-mini"><b><img src="<?= base_url();?>assets/dist/img/jupiter.png" style="width:30px; height:30px;"alt="User Image"></b></span>
+      <span class="logo-mini"><b><img src="<?= base_url();?>assets/dist/img/posicon.png" style="width:30px; height:30px;"alt="User Image"></b></span>
       <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg"><b><?php echo $parametros["Nombre"];?></b></span>
+      <span class="logo-lg"><b><?php echo "Sistema POS";?></b></span>
     </a>
     <!-- Header Navbar: style can be found in header.less -->
     <nav class="navbar navbar-static-top">
