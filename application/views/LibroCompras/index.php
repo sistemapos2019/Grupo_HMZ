@@ -1,141 +1,127 @@
 <div class="content-wrapper">
-        <!-- Content Header (Page header) -->
-        <section class="content-header">
-            <h1>
-            Libro Compras
-                <small></small>
-            </h1>
-            <ol class="breadcrumb">
-                <li>
-                    <a href="#">
-                        <i class="fa fa-dashboard"></i>
-                        Home</a>
-                </li>
-                <li class="active">Libro Compras</li>
-            </ol>
-        </section>
+	<!-- Content Header (Page header) -->
+	<section class="content-header">
+		<h1>
+			Libro Compras
+			<small></small>
+		</h1>
+		<ol class="breadcrumb">
+			<li>
+				<a href="#">
+					<i class="fa fa-dashboard"></i>
+					Home</a>
+			</li>
+			<li class="active">Libro Compras</li>
+		</ol>
+	</section>
 
-        <!-- Main content -->
-        <section class="content">
+	<!-- Main content -->
+	<section class="content">
 
-            <div class="">
+		<div class="">
 
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="box">
-                            <div class="box-header">
-                                <h3 class="box-title"></h3>
-                            </div>
-                            <div class="box-body">
-                            <div class="container" style="width:100%;">
-            <div class="row" style="margin-bottom:1%;">
-                <div class="col-md-2"></div>
-                <div class="col-md-3"><input
-                    type="text"
-                    class="form-control"
-                    placeholder="Seleccione su fecha"
-                    onkeypress="return false"
-                    id="fecha"></div>
-                <div class="col-md-2">
-                    <button class="btn btn-primary" onclick="javascript:obtenerRegistros()">Consultar</button>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <table border="1" class="col-md-12" style="overflow-x:scroll;">
-                        <thead>
-                            <tr>
-                                <td colspan="12">Nombre del Contribuyente: <?php
+			<div class="row">
+				<div class="col-md-12">
+					<div class="box">
+						<div class="box-header">
+							<h3 class="box-title"></h3>
+						</div>
+						<div class="box-body">
+							<div class="container" style="width:100%;">
+								<div class="row" style="margin-bottom:1%;">
+									<div class="col-md-2"></div>
+									<div class="col-md-3"><input type="text" class="form-control"
+											placeholder="Seleccione su fecha" onkeypress="return false" id="fecha">
+									</div>
+									<div class="col-md-2">
+										<button class="btn btn-primary"
+											onclick="javascript:obtenerRegistros()">Consultar</button>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-12">
+										<table border="1" class="col-md-12" style="overflow-x:scroll;">
+											<thead>
+												<tr>
+													<td colspan="12">Nombre del Contribuyente: <?php
                                      echo $parametros["Nombre"];
                                 ?></td>
 
-                            </tr>
-                            <tr>
-                                <td id="fechas" colspan="2">  </td>
-                                <td colspan="4">NCR: <?php
-                                    echo $parametros["NRC"];
+												</tr>
+												<tr>
+													<td id="fechas" colspan="2"> </td>
+													<td colspan="4">NCR: <?php
+                                    echo $parametros["NCR"];
                                 ?></td>
+    <td colspan="6"></td>
+												</tr>
+ 
 
-                            </tr>
-                            
-                            <!--
-                            <tr>
-                                <th colspan="1"></th>
-                                <th colspan="2" align="center">Documentos Emitidos</th>
-                                <th colspan="3" align="center"></th>
-                            </tr>
-                            -->
-                            
-                            <tr>
-                                <th>No</th>
-                                <th>Fecha de Emisión</th>
-                                <th>No. de Documento</th>
-                                <th>NRC</th>
-                                <th>NIT/DUI</th>
-                                <th>Nombre Proveedor</th>
-                                <th>Internas</th>
-                                <th>Importaciones</th>
-                                <th>Credito Fiscal</th>
-                                <th>IVA</th>
-                                <th>Total Compras</th>
-                                <th>Compras a Excluidos</th>
-                            </tr>
-                            
-                        </thead>
-                        <tbody id="registros">
-                           
-                        </tbody>
-                        <tfoot>
-                            <tr>
-                              <!--  <th colspan="3" align="left"></th> -->
-                            <!--    <th colspan="1" id="totalventas"></th> -->
-                             <!--   <th colspan="1" id="totalpropinas"></th> -->
-                             <!--   <th id="totalReal"></th> -->
+												<tr>
+													<th>No</th>
+													<th>Fecha de Emisión</th>
+													<th>No. de Documento</th>
+													<th>NRC</th>
+													<th>NIT/DUI</th>
+													<th>Nombre Proveedor</th>
+													<th>Internas</th>
+													<th>Importaciones</th>
+													<th>Credito Fiscal</th>
+													<th>IVA</th>
+													<th>Total Compras</th>
+													<th>Compras a Excluidos</th>
+												</tr>
 
-                            </tr>
-                            <tr>
-                              <!--  <th colspan="2" align="left">Total De Ventas:</th> -->
-                              <!--  <th colspan="1" id="totalesventas"></th> -->
-                             <!--   <th colspan="2">Ventas Netas Gravadas Locales:</th> -->
-                              <!--  <th id="ventasnetas"></th> -->
+											</thead>
+											<tbody id="registros">
 
-                            </tr>
-                            <tr>
-                                <th colspan="8" align="left"></th>
-                                <th colspan="2">Total:</th>
-                                <th id="totalesdeventa"></th>
+											</tbody>
+											<tfoot>
+												<tr>
+													<!--  <th colspan="3" align="left"></th> -->
+													<!--    <th colspan="1" id="totalventas"></th> -->
+													<!--   <th colspan="1" id="totalpropinas"></th> -->
+													<!--   <th id="totalReal"></th> -->
 
-                            </tr>
-                            <tr>
-                                <th colspan="4" align="right"></th>
-                                <th colspan="2">Total:</th>
-                                
+												</tr>
+												<tr>
+													<!--  <th colspan="2" align="left">Total De Ventas:</th> -->
+													<!--  <th colspan="1" id="totalesventas"></th> -->
+													<!--   <th colspan="2">Ventas Netas Gravadas Locales:</th> -->
+													<!--  <th id="ventasnetas"></th> -->
 
-                            </tr>
-                            
-                        </tfoot>
-                    </table>
-                    <br>
-                </div>
-            </div>
+												</tr>
+											 
+												<tr>
+													 
+													<th colspan="6" align="center">Total:</th>
+                                                    <th id="totalesdeventa"></th>
+                                                    <th></th>
+                                                    <th>12312</th>
+                                                    <th></th>
+                                                    <th>123213</th>
+                                                    <th></th>
+												</tr>
 
-        </div>
-    </div>
+											</tfoot>
+										</table>
+										<br>
+									</div>
+								</div>
 
+							</div>
+						</div>
+
+					</div>
+				</div>
+
+			</div>
+		</div>
+
+ 
+</section>
 </div>
-                            </div>
-
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-
-        </section>
-    </section>
-</div>
-      
-
+ 
 <script>
     $(function () {
         $("#fecha").datepicker(
