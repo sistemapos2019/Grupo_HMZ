@@ -31,9 +31,20 @@ class Ordenesapi extends CI_Controller {
         echo json_encode($this->ordenes->obtenerMesas());
     }
 
+    public function cobrarDesdeDashboard()
+    {
+        $id = $_POST['idOrden'];
+        $this->ordenes->ActualizarRegistroOrden($id,array('estado' => "CC" ));
+        $data['orden']=$this->ordenes->obtenerOrden($id);
+        $data['detalle'] =$this->ordenes->obtenerDetalleOrden($id);
+        echo json_encode($data);
+    }
+
     public function detallesOrden($id){
         $data['categorias']= $this->categorias->obtenerCategorias();
         $data['orden'] = $this->ordenes->obtenerOrden($id);
+        $data['meseros'] =$this->usuarios->obtenerMeseros();
+        $data['id'] = $id;
         if( count($data['orden'])>0){
             $data['orden']=$data['orden'][0];
         $data['detalle'] = $this->ordenes->obtenerDetalleOrden($id);
@@ -132,23 +143,36 @@ class Ordenesapi extends CI_Controller {
          
         }
             else{
-                
-        $orden = new Orden();
-        $orden->Id = $_POST['idOrden'];
-        $orden->Estado = $_POST['estado'];
-        $resultado=$this->manejadorordenes->actualizar($orden);
-      
-        $respuesta['orden'] = $this->manejadorordenes->obtenerOrden($_POST['idOrden']);
-        $respuesta['detalleOrden'] = $this->manejadorordenes->ObtenerDetalleVenta($_POST['idOrden']);
-        if($resultado){
+                //actualizar los productos
+            $detalle =  json_decode($_POST['detalle']);
+            $idOrden = $_POST['idOrden'];
+            foreach ($detalle as  $producto) {
+                $productoEnOrden = $this->ordenes->buscarProductoEnOrden($idOrden, $producto->id);
+                if(count($productoEnOrden)>0){
+                    $this->ordenes->ActualizarCantidadProductoEnOrden($idOrden, $producto->id, $producto->cantidad);
+                }
+                else{
+                    if(number_format($producto->cantidad,2)>0){
+                        $this->ordenes->AgregarProductoAOrden($idOrden, $producto);
+                    }
+                }
+            }
+
+            //Actualiza los datos de la orden
+            $datosOrden  = array('idMesa' => $_POST['idMesa'],
+            'idUsuario'=>$_POST['mesero'], 
+            'cliente'=>$_POST['cliente'], 'llevar'=>$_POST['llevar'],
+            'estado'=>$_POST['estado'], 'observacion'=>$_POST['comentario'] ,
+            'tiempoPreparado'=>date("Y-m-d H:i:s"), 'tiempoRapido'=>date("Y-m-d H:i:s"),
+            'total'=>$_POST['total'], 'propina'=>$_POST['propina']
+            );
+            $this->ordenes->ActualizarRegistroOrden($idOrden, $datosOrden);
             header('Content-Type: application/json');
-            echo json_encode($respuesta);
-        }
-        else{
-            header('Content-Type: application/json');
-            echo "{'Estado':'FALLO'}";
-        }
-    }
+            $respuesta = array('productos' => $detalle, 'orden'=>array(
+                "id"=>$idOrden
+            ) );
+            echo json_encode( $respuesta );
+            }
     }
     
     public function setearRapido($id)

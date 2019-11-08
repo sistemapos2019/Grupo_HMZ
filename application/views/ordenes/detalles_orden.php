@@ -1,8 +1,13 @@
-<div class="content-wrapper" style=" min-height:80% !important; height: auto !important;">
+<?php
+   $imprimirPreparados= $parametros['Imprimir Ticket de productos preparados']=="SI"?true:false;
+   $imprimirNoPreparados= $parametros['Imprimir Ticket de productos NO preparados o rapidos']=="SI"?true:false;
+   $porcentajePropina =  intval ($parametros['Propina']);
+    ?>
+    <div class="content-wrapper" style=" min-height:80% !important; height: auto !important;">
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                Detalles De Orden
+                Detalle Orden: <?php echo $id;?>
                 <small></small>
             </h1>
             <ol class="breadcrumb">
@@ -11,7 +16,7 @@
                         <i class="fa fa-dashboard"></i>
                         Home</a>
                 </li>
-                <li class="active">Detalles De Orden</li>
+                <li class="active">Detalle Orden</li>
             </ol>
         </section>
 
@@ -19,7 +24,6 @@
         <section class="content">
 
             <div class="">
-
                 <div class="row">
                     <div class="col-md-8">
                         <div class="box">
@@ -27,21 +31,35 @@
                                 <h3 class="box-title">Productos</h3>
                             </div>
                             <div class="box-body">
+                                <div class="col-md-1">
+                                    Orden: <?php echo $id;?>
+                                    <input type="hidden" id="codigoOrden" value="<?php echo $id;?>">
+                                </div>
                                 <div class="col-md-3">
-                                    Orden: 1
+                                  <select name="numeroMesa" id="numeroMesa" class="form-control col-md-3"></select>
+                                </div>
+                                <div class="col-md-3">
+                                   <select name="mesero"  class="form-control col-md-3" id="mesero">
+                                   <option value="">--Mesero--</option>
+                                   <?php foreach ($meseros as $mesero) {
+                                       ?>
+                                       <option value="<?php echo $mesero->id?>"
+                                         <?php if($orden->idUsuario == $mesero->id){ echo "selected";}?>
+                                       ><?php echo $mesero->nombre; ?></option>
+                                       <?php
+                                   }?>
+                                   </select>
 
                                 </div>
                                 <div class="col-md-3">
-                                    <input type="text" placeholder="Numero de Mesa" value="Mesa 1" class="form-control col-md-3">
-
+                                    <input type="text" id="cliente" placeholder="Cliente" value="<?php echo $orden->cliente;?>" class="form-control col-md-3">
+                                    
+                                   
+                                    
                                 </div>
-                                <div class="col-md-3">
-                                    <input type="text" placeholder="Mesero" value="Juan Carlos" class="form-control col-md-3">
-
-                                </div>
-                                <div class="col-md-3">
-                                    <input type="text" placeholder="Cliente" value="Benja" class="form-control col-md-3">
-
+                                <div class="col-md-2">
+                                Para Llevar:
+                                <input type="checkbox" name="llevar" id="llevar"   <?php if($orden->llevar == "1"){ echo "checked";}?>>                               
                                 </div>
                                 <br>
                                 <hr>
@@ -58,6 +76,7 @@
                                 </div>
                                 <br>
                                 <hr>
+                             
                                 <table class="table table-bordered">
                                     <tbody id="productosMostrados">
                                         <tr>
@@ -73,19 +92,33 @@
                             <div class="box-header">
                                 <h3 class="box-title">Detalles de Orden</h3>
                             </div>
-                            <div class="box-body">
-                                <!-----------AQUI VA LA COSA DE EDITAR----------->
+                            <div class="box-body">  
                                 <table class="table table-bordered">
                                     <tbody id="productosSeleccionados">
-                                    
+                                        <tr>
+                                            <th>Producto</th>
+                                            <th>Cantidad</th>
+                                            <th style="width: 40px"> - +</th>
+                                        </tr>
+
                                     </tbody>
                                 </table>
                                 <br>
+                                <br>
+                                Comentario:
+                                <textarea name="" id="comentario" class="form-control" style="resize: none;"></textarea>
+                                <hr>
+                                <h3>Subtotal $ <span id="subtotalOrden"></span></h3>
+                                <h3>Propina $ <span id="propina"></span></h3>
                                 <hr>
                                 <h3>Total $ <span id="totalOrden"></span></h3>
                                 <hr>
+                                <div id="qrPreparado" style="display:none;"></div>
+                                <div id="qrRapido" style="display:none;"></div>
                                 <button id="btnSave" class="btn btn-primary">Guardar Orden</button>
+                                <?php if($parametros["ModoEntorno"]=="CAJA"){?>
                                 <button id="btnCobrar" onclick="javascript:calcularTotal()" class="btn btn-warning" data-toggle="modal" data-target="#myModal">Cobrar Orden</button>
+                                            <?php }?>
                             </div>
 
                         </div>
@@ -96,176 +129,342 @@
 
         </section>
         </section>
+      
+        
     </div>
     <script src="<?php echo base_url()?>assets/bower_components/blockUI/blockui.js"></script>
-    
     <script src="<?php echo base_url()?>assets/bower_components/swal2/sweetalert2.all.js"></script>
+    <link rel="stylesheet" href="<?php echo base_url()?>assets/dist/css/toastr.min.css">
+    <script src="<?php echo base_url()?>assets/dist/js/toastr.js"></script>
+    <script src="<?php echo base_url()?>assets/dist/js/qrcode.min.js"></script>
     <link rel="stylesheet" href="<?php echo base_url()?>assets/bower_components/swal2/sweetalert2.css">
-
+                        
     <script>
         var productos = [];
-        var orden =[];
-        var totalOrden =0.00;
+        var orden = [];
+        var totalOrden = 0.00;
+        var subTotalOrden =0.00;
+        var idOrdenCreada=0;
+        var yaCreada=0;
+        var propina =0.00;
+        
+        let productos_ = [];
+        $(document).ready(r => {
+            generarQRPreparado() ; 
+            generarQRRapido() ; 
+            productos_ = JSON.parse('<?php echo json_encode($detalle)?>');
+         
+            setearOrden();
+             $('#myModal').on('hidden.bs.modal', function () {
+               
+            //location.reload();
+        });
+            $("#btnSave").hide();
+            //$("#btnCobrar").hide();
+            <?php foreach ($categorias as $categoria) {
+               ?>
+               $("#<?php echo $categoria->nombre;?>").click();
+               <?php
+            }?>
+            
+          
+            recargarTablaOrden();
+            generarTotalOrden();
+            obtenerMesas();
+        });
+        
+        function generarQRPreparado() {
+           new QRCode(document.getElementById("qrPreparado"), "<?php echo base_url()?>/ordenesapi/setearPrepadado/<?php echo $id;?>");
+           }
+
+        function generarQRRapido() {
+           new QRCode(document.getElementById("qrRapido"), "<?php echo base_url()?>/ordenesapi/setearRapido/<?php echo $id;?>");     
+        }
+
+        function obtenerMesas() {
+            let mesasSelect =document.querySelector("#numeroMesa");
+            let mesaActual =  <?php echo $orden->idMesa;?>;
+            mesasSelect.innerHTML ="<option value=''>--N. de mesa--</option>";
+            fetch('<?php echo base_url()?>/ordenesapi/obtenermesas')
+                .then(
+                    r => {
+                        return r.json();
+                    }
+                )
+                .then(mesas => {
+                   
+                    mesas.forEach(mesa => {
+                        mesasSelect.innerHTML+=`<option value="${mesa.id}" ${mesa.id==mesaActual?' selected':''}>${mesa.mesa}</option>`;
+                    });
+                  
+                });
+        }
+
         function obtenerProductosCategoria(id) {
-            let encabezado = "<tr><th>Producto</th><th>Precio</th><th>Cantidad</th><th style=\"width: 40px\">Opciones</th></tr>";
+            fetch('<?php echo base_url()?>productos/obtenerProductosPorCategoria/' + id)
+                .then(
+                    r => {
+                        return r.json();
+                    }
+                )
+                .then(json => {
+                    console.log(json);
+                    let valores = [];
+                    productos[id] = [];
+                    json.forEach(producto => {
+                        valores.push(
+                            {id: producto.id, nombre: producto.nombre, precio: producto.precio}
+                        );
+                    });
+                   
+                    productos[id] = valores;
+                    recrearOpciones(id);
+                });
+        }
+
+        function recrearOpciones(id) {
+            let encabezado = "<tr><th>Producto</th><th>Precio</th><th>Cantidad</th><th style=\"width: 40px\"" +
+                    ">Opciones</th></tr>";
             $("#productosMostrados").html('');
             $("#productosMostrados").append(encabezado);
-            productos[id - 1].forEach(function(element) {
-                let reg = "<tr> <td>" + element.nombre + "</td> <td> " + element.precio + " </td><td><button class='btn btn-primary btn-sm' onclick=\"javascript:masMenos('bajar'," + id + "," + element.id + ")\"> - </button><span id=\"cantidad"+id+""+element.id+"\">      1  </span> <button class='btn btn-primary btn-sm' onclick=\"javascript:masMenos('subir'," + id + "," + element.id + ")\"> + </button></td><td><button class='btn btn-primary btn-sm' onclick=\"javascript:agregarAOrden(" + id + "," + element.id + ")\">Añadir</button></td> </tr>";
+            productos[id].forEach(function (element) {
+                let reg = "<tr> <td>" + element.nombre + "</td> <td> " + element.precio + " </t" +
+                        "d><td><button class='btn btn-primary btn-sm' onclick=\"javascript:masMenos('ba" +
+                        "jar'," + id + "," + element.id + ")\">  -  </button><span id=\"cantidad" + element.id + "\">     1     </span> <button class='btn btn-primary btn-sm'" +
+                        " onclick=\"javascript:masMenos('subir'," + id + "," + element.id + ")\">  +  <" +
+                        "/button></td><td><button class='btn btn-primary btn-sm' onclick=\"javascript:a" +
+                        "gregarAOrden('" + id + "'," + element.id + ")\">Añadir</button></td> </tr>";
                 $("#productosMostrados").append(reg);
             });
-
         }
 
-        function definirOpciones() {
-            productos[0] = [];
-            productos[1] = [];
-            productos[2] = [];
-            productos[0].push({
-                id: 1,
-                nombre: 'Suspiros',
-                precio: 0.50
-            });
-            productos[0].push({
-                id: 2,
-                nombre: 'Galleta Picnic',
-                precio: 1.25
-            });
-            productos[0].push({
-                id: 3,
-                nombre: 'Snickers Pequeño',
-                precio: 1.50
-            });
-
-            productos[1].push({
-                id: 1,
-                nombre: 'Coca Cola',
-                precio: 1.25
-            });
-            productos[1].push({
-                id: 2,
-                nombre: 'Sprite',
-                precio: 1.25
-            });
-            productos[1].push({
-                id: 3,
-                nombre: 'Uva',
-                precio: 1.25
-            });
-
-            productos[2].push({
-                id: 1,
-                nombre: 'Four Loco',
-                precio: 1.25
-            });
-            productos[2].push({
-                id: 2,
-                nombre: 'Smirnoff Ice',
-                precio: 1.25
-            });
-            productos[2].push({
-                id: 3,
-                nombre: 'Algo más',
-                precio: 1.25
-            });
-
-        }
         function masMenos(tipo, idCategoria, idProductos) {
-            let idCantidad = "cantidad" + idCategoria + "" + idProductos;
+            let idCantidad = "cantidad" + idProductos;
             let cantidad = parseInt($("#" + idCantidad).html(), 10);
             if (tipo == "subir") {
                 $("#" + idCantidad).html(cantidad + 1);
-            
+
             } else {
                 if (cantidad > 1) {
-                    
+
                     $("#" + idCantidad).html(cantidad - 1);
                 }
             }
-            
+
         }
 
 
-        $(document).ready(
-            r => {
-
-                definirOpciones();
-                $("#btnSave").hide();
-                $("#btnCobrar").hide();
-                $("#Snacks").click();
-                inicializarCantidadProductos();
-                recargarTablaOrden();
-                generarTotalOrden();
-
+        function generarCobro() {
+            let cont = 0;
+            if($("#numeroMesa").val()==""){
+                toastr["error"]("El campo número de mesa es requerido")
+            }else {
+                cont += 1;
             }
-        );
+            if($("#cliente").val()==""){
+                //toastr["error"]("El campo cliente es requerido")
+            }else {
+                
+            }
+            if($("#mesero").val()==""){
+                toastr["error"]("El campo mesero es requerido")
+            }else{
+                cont += 1;
+            }
+            if(cont==2){
+            $.blockUI({
+                centerX: true,
+                centerY: true,
+                message: '<h1><img src="https://ui-ex.com/images/transparent-background-loading.gif" /> ' +
+                        '<br> Procesando Pago...</h1>'
+            });
+          
+            let url= "<?php echo base_url()?>ordenesapi/actualizarOrden";
+            let formData = new FormData(); 
+            formData.append('idOrden', '<?php echo $id;?>');
+            formData.append('idMesa', $("#numeroMesa").val()); 
+            formData.append('cliente', $("#cliente").val());
+            formData.append('mesero', $("#mesero").val());
+            formData.append('estado','CP');
+            formData.append('comentario', $("#comentario").val());
+            formData.append('llevar', $('#llevar').prop('checked')?"1":"0");
+            formData.append('total',totalOrden);
+            formData.append('propina',totalOrden*0.1);
+            formData.append('detalle', JSON.stringify(orden));
+            fetch(url, {
+                method: "POST",
+                body: formData
+            }).then(respuesta => {
+                return (respuesta.json());
+                
+            }).then(json=>{
+                $.unblockUI();
+              //imprimeTicket( generarPreparados(json.productos)+generarNoPreparados(json.productos),"",generarTicketCobrar(json.orden, json.productos));
 
-        $("#btnSave").click(
-            r => {
                 Swal.fire(
-                    'Exitoso!',
-                    'Su orden se ha guardado satisfactoriamente',
-                    'success');
-                setTimeout(function() {
-                    location.reload();
-                }, 5000);
-            }
-        );
-
-        $("#btnImprimir").click(r=>{
-            generarCobro();}
-        );
-        function inicializarCantidadProductos() {
-            orden =[[{"producto":1,"nombre":"Suspiros","cantidad":4,"total":2},{"producto":2,"nombre":"Galleta Picnic","cantidad":0,"total":0},{"producto":3,"nombre":"Snickers Pequeño","cantidad":2,"total":3}],[{"producto":1,"nombre":"Coca Cola","cantidad":0,"total":0},{"producto":2,"nombre":"Sprite","cantidad":0,"total":0},{"producto":3,"nombre":"Uva","cantidad":0,"total":0}],[{"producto":1,"nombre":"Four Loco","cantidad":0,"total":0},{"producto":2,"nombre":"Smirnoff Ice","cantidad":0,"total":0},{"producto":3,"nombre":"Algo más","cantidad":0,"total":0}]];
+                            'Exitoso!',
+                            'Su orden se cobrado satisfactoriamente',
+                            'success').then(r=>{
+                               // window.location.href = "<?php echo base_url()?>Dashboard";
+                            });                  
+            }).catch(function (error) {
+                console.log(error);
+                $.unblockUI();
+                Swal.fire(
+                            'Upps!',
+                            'Su orden no se pudo cobrar, contacte al admin',
+                            'error');
+                    setTimeout(function() {
+                    //location.reload();
+                    }, 2000);
+});}
         }
-        function agregarAOrden(idCategoria, idProducto) {
-            let idCantidad="cantidad"+idCategoria+""+idProducto;            
-            orden[idCategoria-1][idProducto-1].cantidad+=parseInt($("#" + idCantidad).html(), 10);
-            orden[idCategoria-1][idProducto-1].total=(orden[idCategoria-1][idProducto-1].cantidad*productos[idCategoria-1][idProducto-1].precio);
+
+        $("#btnSave").click(r => {
+            
+            var url = '<?php echo base_url()?>ordenesapi/actualizarOrden';
+            let formData = new FormData();
+            let cont = 0;
+            if($("#numeroMesa").val()==""){
+                toastr["error"]("El campo número de mesa es requerido")
+            }else {
+                cont += 1;
+            }
+            if($("#cliente").val()==""){
+                //toastr["error"]("El campo cliente es requerido")
+            }else {
+                
+            }
+            if($("#mesero").val()==""){
+                toastr["error"]("El campo mesero es requerido")
+            }else{
+                cont += 1;
+            }
+            if(cont == 2){
+            formData.append('idOrden', '<?php echo $id;?>');
+            formData.append('idMesa', $("#numeroMesa").val()); 
+            formData.append('cliente', $("#cliente").val());
+            formData.append('mesero', $("#mesero").val());
+            formData.append('estado','AA');
+            formData.append('comentario', $("#comentario").val());
+            formData.append('llevar', $('#llevar').prop('checked')?"1":"0");
+            formData.append('total',totalOrden);
+            formData.append('propina',totalOrden*0.1);
+            formData.append('detalle', JSON.stringify(orden));
+
+            fetch(url, {
+            method: 'POST',
+            body:formData,            
+            }).then(res => {return res.json()}).then(res =>
+             {
+               
+            
+                swal({
+                title: "Exito!",
+                text: "Su Orden Ha Sido Creada",
+                type: "success",
+                timer: 3000
+                })
+                
+                .then(r=>{
+                    yaCreada=1; 
+                   // imprimeTicket( generarPreparados(res)+generarNoPreparados(res),"","");
+                    //window.location.href = "<?php echo base_url()?>Dashboard";
+                });
+
+                
+
+            });           
+        }
+        });
+        function setearOrden() {
+           
+            productos_.forEach(producto => {
+                let idCantidad = "cantidad" + "" + producto.idProducto;
+                orden.push({
+                    id: producto.idProducto,
+                    nombre: producto.nombre,
+                    categoria : producto.idCategoria,
+                    cantidad: parseInt(producto.cantidad, 10),
+                    total: parseInt(producto.cantidad, 10) * producto.precioUnitario
+                });
+            });
             recargarTablaOrden();
             generarTotalOrden();
-            calcularTotal();
+            if (totalOrden > 0) {
+                $("#btnSave").show();
+                $("#btnCobrar").show();
+            }else{
+                $("#btnSave").hide();
+                //$("#btnCobrar").hide();
+            }
         }
+        function agregarAOrden(idCategoria, idProducto) {
+            let idCantidad = "cantidad" + "" + idProducto;
+            let productoSeleccionado = (
+                productos[parseInt(idCategoria)].filter(producto => producto.id == idProducto)[0]
+            );
+            if (orden.filter(producto => producto.id == idProducto).length == 1) {
+                orden
+                    .filter(producto => producto.id == idProducto)[0]
+                    .cantidad += parseInt($("#" + idCantidad).html(), 10);
+                orden
+                    .filter(producto => producto.id == idProducto)[0]
+                    .total = orden
+                    .filter(producto => producto.id == idProducto)[0]
+                    .cantidad * productoSeleccionado.precio;
 
-        function generarTotalOrden() {
-          totalOrden=0.00;
-          orden.forEach(categoria => {
-            categoria.forEach(producto => {
-              totalOrden+=producto.total;
-             
-            })
-          });
-          $("#totalOrden").html(totalOrden.toFixed(2));
+            } else {
+                orden.push({
+                    id: idProducto,
+                    nombre: productoSeleccionado.nombre,
+                    categoria : idCategoria,
+                    cantidad: parseInt($("#" + idCantidad).html(), 10),
+                    total: parseInt($("#" + idCantidad).html(), 10) * productoSeleccionado.precio
+                });
+            }
+            recargarTablaOrden();
+            generarTotalOrden();
+            if (totalOrden > 0) {
+                $("#btnSave").show();
+                $("#btnCobrar").show();
+            }else{
+                $("#btnSave").hide();
+                $("#btnCobrar").hide();
+            }
         }
 
         function recargarTablaOrden() {
-            let encabezado = "<tr><th>Producto</th><th>Cantidad</th><th>Total</th><th>Opciones</th>";
-            orden.forEach((categoria, id_categoria)=>{
-                categoria.forEach((producto, id_producto)=>{
-                  
-                    if(producto.cantidad){
-                    encabezado=encabezado+"<tr><td>" + producto.nombre + "</td><td><span>" + producto.cantidad +"</span></td><td><span>" + (producto.total)+"</span></td><td><button class='btn btn-sm btn-success' style='margin-right:3px;' onclick='javascript:cambiarCantidadProductoOrden("+id_categoria+","+id_producto+",0)'>-</button><button class='btn btn-sm btn-success ' onclick='javascript:cambiarCantidadProductoOrden("+id_categoria+","+id_producto+",1)'>+</button> </td></tr>";
+            let encabezado = "<tr><th>Producto</th><th>Cantidad</th><th>Total</th> </tr>";
+            orden.forEach(producto => {
+                console.log(producto);
+                if (producto.cantidad) {
+                    encabezado = encabezado + "<tr><td>" + producto.nombre + `</td><td><button onclick="masMenosEditar(${producto.id},'restar')" class='btn btn-primary btn-sm'>-</button><span> ` +
+                            producto.cantidad + `</span> <button class='btn btn-primary btn-sm' onclick="masMenosEditar(${producto.id},'sumar')">+</button></td><td><span>$` + (
+                        producto.total.toFixed(2)
+                    ) + `</span></td></tr>`;
                 }
-        })
             });
             $("#productosSeleccionados").html(encabezado);
-            $("#btnSave").show();
-            $("#btnCobrar").show();
+
         }
-        
-        function cambiarCantidadProductoOrden(idCategoria, idProducto, accion) {
-            if(accion ==1){
-            orden[idCategoria][idProducto].cantidad= orden[idCategoria][idProducto].cantidad+1;}
-            else{
-                orden[idCategoria][idProducto].cantidad= orden[idCategoria][idProducto].cantidad-1;
-            }
-            orden[idCategoria][idProducto].total=(orden[idCategoria][idProducto].cantidad*productos[idCategoria][idProducto].precio);
-            recargarTablaOrden() ;
-            generarTotalOrden();
-            calcularTotal();
+
+        function generarTotalOrden() {
+            subTotalOrden = 0.00;
+            orden.forEach(producto => {
+                subTotalOrden += producto.total;
+            });
+            <?php if($porcentajePropina>0){?>
+                 propina = (<?php echo $porcentajePropina /100;?>* subTotalOrden );
+                totalOrden = subTotalOrden+propina;
+            <?php } ?>
+            $("#subtotalOrden").html(subTotalOrden.toFixed(2));
+            $("#totalOrden").html(totalOrden.toFixed(2));
+            $("#propina").html(propina.toFixed(2));
         }
 
         function calcularTotal() {
+            console.log(idOrdenCreada);
             let efectivo = $("#efectivo").val();
             $("#totalACobrar").html(totalOrden.toFixed(2));
             cambio = efectivo - totalOrden;
@@ -275,27 +474,226 @@
                 $("#btnImprimir").attr("disabled", true);
             } else {
                 $("#btnImprimir").attr("disabled", false);
-
             }
         }
 
-        
-        function generarCobro() {
-        
-        $.blockUI({centerX: true,
-centerY: true, message: '<h1><img src="https://ui-ex.com/images/transparent-background-loading.gif" /> <br> Procesando Pago...</h1>' });
-      setTimeout(function() {
-        $.unblockUI({ message: '<h1><img src="https://ui-ex.com/images/transparent-background-loading.gif" /> Procesando Pago...</h1>' });
-        Swal.fire(
-          'Exitoso!',
-          'Su orden se cobrado satisfactoriamente',
-          'success');
-      }, 3000);
+        function masMenosEditar(id, operacion) {
+            if(operacion=="sumar"){
+                orden.forEach(producto => {                    
+              if(producto.id==id){
+                  producto.cantidad+=1;
+                  let productoSeleccionado = (
+                  productos[parseInt(producto.categoria)].filter(productoBuscar => productoBuscar.id == producto.id)[0]);
+                producto.total = producto.cantidad* productoSeleccionado.precio;
+              }
+            });
+            
+            }else{
+                orden.forEach(producto => {
+                    
+                    if(producto.id==id){
+                        producto.cantidad-=1;
+                        let productoSeleccionado = (
+                        productos[parseInt(producto.categoria)].filter(productoBuscar => productoBuscar.id == producto.id)[0]);
+                      producto.total = producto.cantidad* productoSeleccionado.precio;
+                    }    
+                  });
+            }
+            recargarTablaOrden();
+            generarTotalOrden();
+            calcularTotal();
 
-      setTimeout(function() {
-          location.reload();
-      }, 5000);
-  }
+            if (totalOrden > 0) {
+                $("#btnSave").show();
+                $("#btnCobrar").show();
+            }else{
+                $("#btnSave").hide();
+                $("#btnCobrar").hide();
+            }
+        }
+
+//Para imprimir los tickets
+function imprimeTicket(ticket1="", ticket2="", ticket3="") {
+     
+    var mywindow = window.open('', 'Print', 'height=600,width=400');
+    mywindow.document.write(ticket1);
+    mywindow.document.write(ticket2);
+    mywindow.document.write(ticket3);   
+    mywindow.document.close();
+    mywindow.focus()
+    mywindow.print();
+    mywindow.close();
+    return true;
+}
+
+function generarTicketCobrar(orden, productos) {
+    let cliente =$("#cliente").val();
+    let mesa =$("#numeroMesa").val();
+    let efectivo = parseFloat($("#efectivo").val());
+    let cambio= (efectivo-totalOrden );
+    var content = '<html><head><title>Print</title> </head><body >'+`<h1><?php echo $parametros["Nombre"];?></h1> 
+    <hr>
+
+    <strong>Giro: <?php echo $parametros["Giro"];?></strong> <br>
+    <strong>NIT: <?php echo $parametros["NIT"];?></strong> <br>
+    <strong>Tel: <?php echo $parametros["Telefono"];?></strong> <br>
+    <strong>Dirección: <?php echo $parametros["Direccion"];?></strong> <br>
+    <strong>Fecha: ${orden.fecha}</strong>
+        <table style="width:100%">
+  <tr>
+    <th> Orden: ${orden.id} </th>
+    <th> Mesa: ${mesa} </th>
+    <th> Cliente: ${cliente}</th> 
+  </tr></table>
+  
+  <br>
+        <hr>
+        <table style="width:100%">
+  <tr>
+    <th>Producto</th>
+    <th>Cantidad</th> 
+    <th>Total</th>
+  </tr>
+ 
+    `;
+    productos.forEach(producto => {
+        content+=`<tr> <td>${producto.nombre}</td><td> ${producto.cantidad}</td><td>  $${(producto.precio*producto.cantidad).toFixed(2)} </td></tr>`;
+    });
+    content+=`</table>
+    <br> <br>
+    <hr>
+    <div align="left">
+    <strong> Subtotal: $${subTotalOrden.toFixed(2)}</strong><br>
+    <strong> Propina: $${propina.toFixed(2)}</strong><br>
+    <strong> Total: $${totalOrden.toFixed(2)}</strong><br>
+    
+    <strong> Efectivo: $${efectivo.toFixed(2)}</strong><br>
+    <strong> Cambio: $${cambio.toFixed(2)}</strong><br>
+    </div>
+
+    <hr>
+    <div align="center">
+    Gracias Por Su Compra
+    </div>
+    
+    `;
+    content +='</body></html>';
+    return content;
+}
+
+function generarPreparados(productos) {
+<?php if ($imprimirPreparados){ ?>
+
+    let cantidadProductos =0;
+        productos.forEach(producto => {
+       if(producto.preparado==1){cantidadProductos++}});
+
+
+if(cantidadProductos>0){
+    let qr  =$("#qrPreparado").html(); 
+
+let contentPreparados=`<html><body>
+<h1>A Preparar Cocina</h1>
+<hr>
+    <strong>Productos Preparados
+    </strong>
+    <br>
+        <table style="width:100%">
+            <br>
+                <hr>
+                    <table style="width:100%">
+                        <tr>
+                            <th>Producto</th>
+                            <th>Cantidad</th>
+                        </tr>
+
+   `;
+     productos.forEach(producto => {
+       if(producto.preparado==1){
+        contentPreparados+=`<tr> <td>${producto.nombre}</td><td> ${producto.cantidad}</td></tr>`;
+   }
+   }); 
+   
+   let observacion = $("#comentario").val();
+   contentPreparados+=`</table>
+   
+   <br>
+   <strong>Observacion:</strong>
+   ${   observacion}
+   <br>
+   <hr>
+   <br>
+   ${qr}
+   <div style=" page-break-before: always;"></div>
+  
+   </body></html>
+   `;
+   return contentPreparados;}
+   else{
+       return "";
+   }
+   
+    <?php } else{?>
+        return "";
+        <?php }?>
+}
+
+
+
+function generarNoPreparados(productos) {
+    <?php if ($imprimirNoPreparados){ ?>
+        let cantidadProductos =0;
+        productos.forEach(producto => {
+       if(producto.preparado==0){cantidadProductos++}});
+
+        if(cantidadProductos >0){
+            let qr = $("#qrRapido").html();
+let contentPreparados=`<html><body>
+<h1>¡Listos! Ya preparados</h1>
+<hr>
+    <strong>Productos No Preparados
+    </strong>
+    <br>
+        <table style="width:100%">
+            <br>
+                <hr>
+                    <table style="width:100%">
+                        <tr>
+                            <th>Producto</th>
+                            <th>Cantidad</th>
+                        </tr>
+
+   `;
+     productos.forEach(producto => {
+       if(producto.preparado==0){
+        contentPreparados+=`<tr> <td>${producto.nombre}</td><td> ${producto.cantidad}</td></tr>`;
+   }
+   });
+
+   let observacion = $("#comentario").val();
+   contentPreparados+=`</table>
+   
+   <br>
+   <strong>Observacion:</strong>
+   ${observacion}
+   <br>
+   <hr>
+   <br>
+   ${qr}
+   <div style=" page-break-before: always;"></div>
+   </body></html>
+   `;
+   return contentPreparados;
+}
+   else{
+       return "";
+   }
+   <?php } else{ ?>
+    return "";
+   <?php } ?>
+}
+
+
     </script>
 
 <div id="myModal" class="modal fade" role="dialog">
@@ -309,32 +707,28 @@ centerY: true, message: '<h1><img src="https://ui-ex.com/images/transparent-back
       </div>
       <div class="modal-body">
         <label>Total:</label>
-        $<span id="totalACobrar"></span>
+        <span id="totalACobrar"></span>
         <br>
         <label>Efectivo:</label>
         <br>
         <input type="number" onkeyup="javascript:calcularTotal()" id="efectivo" class="form-field" min="0.00" step="0.01">
         <br>
         <label>Cambio:</label>
-    
-       $<span id="cambio">0.0</span>
+        <span id="cambio">0.0</span>
         <br>
-        
       </div>
-      <div class="modal-footer">
-             
+      <div class="modal-footer">   
       <div class="container">
         <div class="row">
         <div class="col-md-1">
-        <button id="btnImprimir" disabled="disabled" data-dismiss="modal" onclick="javascript:generarCobro()" class="btn btn-primary">Imprimir</button>
+        <button id="btnImprimir" disabled="disabled"  data-dismiss="modal" onclick="javascript:generarCobro()"  class="btn btn-primary">Imprimir</button>
         </div>
         <div class="col-md-1">
-        <button id="btnSave" class="btn btn-primary" data-dismiss="modal">Cancelar</button>
+        <button id="cancelar" class="btn btn-primary" data-dismiss="modal">Cancelar</button>
         </div>
         </div>
         </div>
       </div>
     </div>
-
   </div>
 </div>

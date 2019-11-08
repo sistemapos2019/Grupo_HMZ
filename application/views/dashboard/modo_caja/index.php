@@ -299,7 +299,7 @@
 <script>
     var totalOrden =0.00;
     function generarCobro() {
-        let url= "<?php echo base_url()?>ordenesapi/actualizarOrden";
+        let url= "<?php echo base_url()?>ordenesapi/cobrarDesdeDashboard";
         $.blockUI({
             centerX: true,
             centerY: true,
@@ -307,7 +307,7 @@
         });
       let formData = new FormData();
 formData.append('idOrden', codigoOrden);
-formData.append('estado', '0');
+
 fetch(url, {
     method: "POST",
     body: formData
@@ -319,7 +319,7 @@ fetch(url, {
                 'Su orden se cobrado satisfactoriamente',
                 'success');
         setTimeout(function() {
-            window.location.href = "<?php echo base_url()?>Dashboard";
+    //window.location.href = "<?php echo base_url()?>Dashboard";
         }, 2000);
 }).catch(function (error) {
     $.unblockUI();
