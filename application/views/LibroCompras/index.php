@@ -45,8 +45,8 @@
                     <table border="1" class="col-md-12" style="overflow-x:scroll;">
                         <thead>
                             <tr>
-                                <td colspan="6">Nombre del Contribuyente: <?php
-                                     echo $parametros["Nombre"]; 
+                                <td colspan="12">Nombre del Contribuyente: <?php
+                                     echo $parametros["Nombre"];
                                 ?></td>
 
                             </tr>
@@ -57,51 +57,62 @@
                                 ?></td>
 
                             </tr>
+                            
+                            <!--
                             <tr>
                                 <th colspan="1"></th>
-                                <th colspan="2" align="center">Compras Gravadas</th>
+                                <th colspan="2" align="center">Documentos Emitidos</th>
                                 <th colspan="3" align="center"></th>
                             </tr>
+                            -->
+                            
                             <tr>
-                                <th>Día</th>
+                                <th>No</th>
+                                <th>Fecha de Emisión</th>
+                                <th>No. de Documento</th>
+                                <th>NRC</th>
+                                <th>NIT/DUI</th>
+                                <th>Nombre Proveedor</th>
                                 <th>Internas</th>
-                                <th>Importaciones e Internacionales</th>
-                                <th>Venta</th>
-                                <th>Propinas</th>
-                                <th>Total De Ventas Díarias Propias</th>
-
+                                <th>Importaciones</th>
+                                <th>Credito Fiscal</th>
+                                <th>IVA</th>
+                                <th>Total Compras</th>
+                                <th>Compras a Excluidos</th>
                             </tr>
+                            
                         </thead>
                         <tbody id="registros">
                            
                         </tbody>
                         <tfoot>
                             <tr>
-                                <th colspan="3" align="left"></th>
-                                <th colspan="1" id="totalventas"></th>
-                                <th colspan="1" id="totalpropinas"></th>
-                                <th id="totalReal"></th>
+                              <!--  <th colspan="3" align="left"></th> -->
+                            <!--    <th colspan="1" id="totalventas"></th> -->
+                             <!--   <th colspan="1" id="totalpropinas"></th> -->
+                             <!--   <th id="totalReal"></th> -->
 
                             </tr>
                             <tr>
-                                <th colspan="2" align="left">Total De Ventas:</th>
-                                <th colspan="1" id="totalesventas"></th>
-                                <th colspan="2">Ventas Netas Gravadas Locales:</th>
-                                <th id="ventasnetas"></th>
+                              <!--  <th colspan="2" align="left">Total De Ventas:</th> -->
+                              <!--  <th colspan="1" id="totalesventas"></th> -->
+                             <!--   <th colspan="2">Ventas Netas Gravadas Locales:</th> -->
+                              <!--  <th id="ventasnetas"></th> -->
 
                             </tr>
                             <tr>
-                                <th colspan="3" align="left"></th>
-                                <th colspan="2">13% Impuesto IVA:</th>
-                                <th id="impuesto"></th>
-
-                            </tr>
-                            <tr>
-                                <th colspan="3" align="left"></th>
-                                <th colspan="2">Total Ventas:</th>
+                                <th colspan="8" align="left"></th>
+                                <th colspan="2">Total:</th>
                                 <th id="totalesdeventa"></th>
 
                             </tr>
+                            <tr>
+                                <th colspan="4" align="right"></th>
+                                <th colspan="2">Total:</th>
+                                
+
+                            </tr>
+                            
                         </tfoot>
                     </table>
                     <br>
@@ -186,13 +197,18 @@
         let cantidadIds = ids.length;
             contenido+=`
             <tr>
+                                <td>${registro.id}</td>
                                 <td>${registro.fecha}</td>
-                                <td>${ids[0]}</td>
-                                <td>${ids[cantidadIds-1]}</td>
-
-                                <td>$${registro.total}</td>
-                                <td>$${registro.propina}</td>
-                                <td>$${registro.venta}</td>
+                                <td>${registro.Ndocumento}</td>
+                                <td>${registro.NRC}</td>
+                                <td>${registro.NITDUI}</td>
+                                <td>${registro.nombreProveedor}</td>
+                                <td>${registro.montoInterno}</td>
+                                <td></td>
+                                <td>${registro.creditoFiscal}</td>
+                                <td>${registro.iva}</td>
+                                <td>${registro.total}</td>
+                                <td></td>
                             </tr>`
         });
         

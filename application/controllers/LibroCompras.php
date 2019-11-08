@@ -7,13 +7,15 @@ class LibroCompras extends CI_Controller {
     {
         parent::__construct();
         $this->load->model("LibroComprasModelo", "compras");
+        $this->load->model("parametrosmodel","parametros");
 
     }
     public function index()
     {
-       $this->load->view("LibroCompras/index");
+        $data['parametros'] = $this->parametros->obtenerTodos();
+        $this->layout->load_view("LibroCompras/index", $data);
     }
-    public function getVentasMes()
+    public function getComprasMes()
     {
         $mes=$_POST['mes'];
         $compras=$this->compras->getComprasMes($mes);

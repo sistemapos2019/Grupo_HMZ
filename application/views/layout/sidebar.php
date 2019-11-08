@@ -60,14 +60,14 @@
             
           </a>
         </li>
-
+        <!--
         <li>
         <a href="<?= base_url();?>Inventario">
             <i class="fa fa-linode"></i> <span>Inventario</span>
             
           </a>
         </li>
-
+        -->
         <li>
           <a href="<?= base_url();?>Estadisticas">
             <i class="fa fa-bar-chart"></i> <span>Estadísticas</span>
