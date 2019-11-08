@@ -110,7 +110,18 @@ class OrdenesModel extends CI_Model {
 
     public function obtenerVentas($fechaInicio, $fechaFin)
     {
-        return $this->ci->db->query("SELECT * FROM orden WHERE estado = 'CC' AND fecha BETWEEN '$fechaInicio' AND '$fechaFin'")->result(); 
+        if($fechaInicio==$fechaFin){
+            return $this->db->query("SELECT fecha, SUM(total) totalVentas, SUM(propina) totalPropina FROM orden  WHERE estado = 'CC' AND fecha = '$fechaInicio' GROUP BY fecha ORDER BY fecha ASC")->result(); 
+        }else{
+        return $this->db->query("SELECT fecha, SUM(total) totalVentas, SUM(propina) totalPropina FROM orden  WHERE estado = 'CC' AND fecha BETWEEN '$fechaInicio' AND '$fechaFin' GROUP BY fecha ORDER BY fecha ASC")->result(); 
+        }
+    }
+
+    public function ObtenerVentasMesActual()
+    {
+       $anioMes =  date("Y-m");
+       return $this->db->query("SELECT fecha, SUM(total) totalVentas, SUM(propina) totalPropina FROM orden WHERE fecha LIKE '$anioMes%' GROUP BY fecha ORDER BY fecha ASC")->result();
+        # code...
     }
 
 }

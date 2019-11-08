@@ -29,68 +29,70 @@
                         <div class="box-body">
                         <input type="text" id="fechaInicio">
                         <input type="text" id="fechaFin">
-                        <button onclick="javascript:obtenerRegistros()">Consultar</button>
+                        <button onclick="javascript:obtenerVentasEntreFechas()">Consultar</button>
                         </div>
                         </div>
             </div>
             </div>
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-md-4">
                     <div class="box">
                         <div class="box-header">
-                            <h3 class="box-title">Ventas</h3>
+                            <h3 class="box-title">Ventas Mes Actual</h3>
                         </div>
                         <div class="box-body">
                             <table class="table table-bordered">
-                                <tbody>
-                                    <tr>
-                                        <th style="width: 10px">#</th>
-                                        <th>Fecha</th>
-                                        <th>Total</th>
-                                        <th style="width: 40px">Label</th>
-                                    </tr>
-                                    <?php foreach ($totalOrdenes as $registro) {
-                                   ?>
-                                    <tr>
-  
-                                        <td>1.</td>
-                                        <td><?php echo $registro->fecha;?></td>
-                                        <td>
-                                            <div class="progress progress-xs">
-                                                <div class="progress-bar progress-bar-danger" style="width: 30%"></div>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <span class="badge bg-red">$<?php echo $registro->total;?></span>
-                                        </td>
-                                    </tr>
-                                    <?php
-                                }?>
-                               
-                                    <!--tr>
-                                        <td>2.</td>
-                                        <td>Viernes 05 de Abril 2019</td>
-                                        <td>
-                                            <div class="progress progress-xs">
-                                                <div class="progress-bar progress-bar-yellow" style="width: 40%"></div>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <span class="badge bg-yellow">$40</span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>3.</td>
-                                        <td>Sábado 06 de Abril 2019</td>
-                                        <td>
-                                            <div class="progress progress-xs progress-striped active">
-                                                <div class="progress-bar progress-bar-primary" style="width: 70%"></div>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <span class="badge bg-light-blue">$70</span>
-                                        </td>
-                                    </tr-->
+                            <thead>
+                            <th>Fecha</th>
+                            <th>Total Venta</th>
+                            <th>Total Propina</th>
+                            </thead>
+                                <tbody id="ventasMesActual">
+                                    
+                                    
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="box">
+                        <div class="box-header">
+                            <h3 class="box-title">Ventas Diarias</h3>
+                        </div>
+                        <div class="box-body">
+                            <table class="table table-bordered">
+                            <thead>
+                            <th>Fecha</th>
+                            <th>Total Venta</th>
+                            <th>Total Propina</th>
+                            </thead>
+                                <tbody id="ventasDiarias">
+                                    
+                                    
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="box">
+                        <div class="box-header">
+                            <h3 class="box-title">Ventas Entre Fechas Seleccionadas</h3>
+                        </div>
+                        <div class="box-body">
+                            <table class="table table-bordered">
+                            <thead>
+                            <th>Fecha</th>
+                            <th>Total Venta</th>
+                            <th>Total Propina</th>
+                            </thead>
+                                <tbody id="ventasFechas">
+                                    
+                                    
                                 </tbody>
                             </table>
                         </div>
@@ -132,65 +134,87 @@
                     var fechas =[];
                     var totales =[];
                     var productos =[];
-                    var totalProductos =[];
-                    var json = JSON.parse('<?php echo json_encode($totalOrdenes); ?>');
-                    json.forEach(registro => {
-                        fechas.push(registro.fecha);
-                        totales.push(registro.total);
-                    });
-                    var productosJson = JSON.parse('<?php echo json_encode($productosVendidos); ?>');
-                    productosJson.forEach(registro => {
-                        productos.push(registro.nombre);
-                        totalProductos.push(registro.total);
-                    });
+                    var totalProductos =[]; 
+                    
                 </script>
                 
-
-        </section>
-    </section>
-</div>
+ 
 
 <style>
 
 </style>
 <script src="<?= base_url();?>assets/bower_components/chart.js/Chart.js"></script>
     
-    <script>
-    var codigoOrden =false;
-    let opciones= {
-        language:
-{
-	"sProcessing":     "Procesando...",
-	"sLengthMenu":     "Mostrar _MENU_ registros",
-	"sZeroRecords":    "No se encontraron resultados",
-	"sEmptyTable":     "Ningún dato disponible en esta tabla",
-	"sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-	"sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
-	"sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
-	"sInfoPostFix":    "",
-	"sSearch":         "Buscar:",
-	"sUrl":            "",
-	"sInfoThousands":  ",",
-	"sLoadingRecords": "Cargando...",
-	"oPaginate": {
-		"sFirst":    "Primero",
-		"sLast":     "Último",
-		"sNext":     "Siguiente",
-		"sPrevious": "Anterior"
-	},
-	"oAria": {
-		"sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
-		"sSortDescending": ": Activar para ordenar la columna de manera descendente"
-	}
-}, 
-       
-        select: {
-            style: 'single'
-        },
+    <script> 
+    function obtenerVentasMesActual() {
+        fetch("<?php echo base_url()?>Estadisticas/obtenerVentasMesActual").then(r=>r.json()).then(r=>{
+            let tabla = document.querySelector("#ventasMesActual");
+            let contenido = "";
+            r.forEach(registro => {
+                contenido+= `<tr>
+             
+            	<td>${registro.fecha}</td>
+            	<td>
+            	$${registro.totalVentas}
+            	</td>
+            	<td>
+                $${registro.totalPropina}
+            	</td>
+            </tr>`;
+            });
+            tabla.innerHTML=contenido;
+        });
+    }
 
-    };
+    function obtenerVentasDiarias() {
+        fetch("<?php echo base_url()?>Estadisticas/obtenerVentasDiarias").then(r=>r.json()).then(r=>{
+            let tabla = document.querySelector("#ventasDiarias");
+            let contenido = "";
+            r.forEach(registro => {
+                contenido+= `<tr>
+             
+            	<td>${registro.fecha}</td>
+            	<td>
+            	$${registro.totalVentas}
+            	</td>
+            	<td>
+                $${registro.totalPropina}
+            	</td>
+            </tr>`;
+            });
+            tabla.innerHTML=contenido;
+        });
+    }
+    function obtenerVentasEntreFechas() {
+        let formData = new FormData();
+formData.append('fechaI', $("#fechaInicio").val());
+formData.append('fechaF', $("#fechaFin").val());
+        fetch(
+        "<?php echo base_url()?>Estadisticas/obtenerVentasEntreFechas",
+       { method: "POST",
+        body: formData}
+        ).then(r=>r.json()).then(r=>{
+            let tabla = document.querySelector("#ventasFechas");
+            let contenido = "";
+            r.forEach(registro => {
+                contenido+= `<tr>
+             
+            	<td>${registro.fecha}</td>
+            	<td>
+            	$${registro.totalVentas}
+            	</td>
+            	<td>
+                $${registro.totalPropina}
+            	</td>
+            </tr>`;
+            });
+            tabla.innerHTML=contenido;
+        });
+    }
+
    $(document).ready(function () {
-    
+    obtenerVentasMesActual();
+    obtenerVentasDiarias();
     var table = $('#tablaOrdenes').DataTable();
     $('#tablaOrdenes tbody ').on('click', 'tr', function () {
         if (!$(this).hasClass('selected')) {
