@@ -111,6 +111,8 @@
                                 <hr>
                                 <h3>Total $ <span id="totalOrden"></span></h3>
                                 <hr>
+                                <div id="qrPreparado" style="display:none;"></div>
+                                <div id="qrRapido" style="display:none;"></div>
                                 <button id="btnSave" class="btn btn-primary">Guardar Orden</button>
                                 <?php if($parametros["ModoEntorno"]=="CAJA"){?>
                                 <button id="btnCobrar" onclick="javascript:calcularTotal()" class="btn btn-warning" data-toggle="modal" data-target="#myModal">Cobrar Orden</button>
@@ -125,8 +127,8 @@
 
         </section>
         </section>
-        <div id="qrRapido" style="display:none;"></div>
-        <div id="qrPreparado" style="display:none;"></div>
+      
+        
     </div>
     <script src="<?php echo base_url()?>assets/bower_components/blockUI/blockui.js"></script>
     <script src="<?php echo base_url()?>assets/bower_components/swal2/sweetalert2.all.js"></script>
@@ -146,7 +148,10 @@
         
 
         $(document).ready(r => {
+            generarQRPreparado() ; 
+            generarQRRapido() ; 
             $('#myModal').on('hidden.bs.modal', function () {
+               
             //location.reload();
         });
             $("#btnSave").hide();
@@ -157,32 +162,14 @@
             obtenerMesas();
         });
         
-        function generarQRs() {
-          
-           new QRCode(document.getElementById("qrRapido"), "<?php base_url()?>/ordenesapi/setearRapido/<?php echo $id;?>");
-           new QRCode(document.getElementById("qrPreparado"), "<?php base_url()?>/ordenesapi/setearPrepadado/<?php echo $id;?>");
-           let rapido = document.getElementById("qrRapido");
-           let preparado = document.getElementById("qrPreparado");
-           setTimeout(function(){
-            var mywindow = window.open('', 'Print', 'height=600,width=400');
-                    
-                     mywindow.document.write("<h1>Validar Tiempo Rapido</h1>"); 
-                    mywindow.document.write(rapido.innerHTML);
-                    mywindow.document.write("<br>");   
-                    mywindow.document.write("<h1>Validar Tiempo Preparado</h1>"); 
-                    mywindow.document.write(preparado.innerHTML);
-                
-                    mywindow.document.close();
-                    mywindow.focus()
-                    mywindow.print();
-                    mywindow.close();
+        function generarQRPreparado() {
+           new QRCode(document.getElementById("qrPreparado"), "<?php echo base_url()?>/ordenesapi/setearPrepadado/<?php echo $id;?>");
+           }
 
-            }, 2000);
-          
-                   
-    return true;
-           
+        function generarQRRapido() {
+           new QRCode(document.getElementById("qrRapido"), "<?php echo base_url()?>/ordenesapi/setearRapido/<?php echo $id;?>");     
         }
+
         function obtenerMesas() {
             let mesasSelect =document.querySelector("#numeroMesa");
             mesasSelect.innerHTML ="<option value=''>--N. de mesa--</option>";
@@ -373,9 +360,7 @@
                 })
                 
                 .then(r=>{
-                    yaCreada=1;
-                  
-                     
+                    yaCreada=1; 
                     imprimeTicket( generarPreparados(res)+generarNoPreparados(res),"","");
                     window.location.href = "<?php echo base_url()?>Dashboard";
                 });
@@ -501,7 +486,7 @@
 
 //Para imprimir los tickets
 function imprimeTicket(ticket1="", ticket2="", ticket3="") {
-    generarQRs();
+     
     var mywindow = window.open('', 'Print', 'height=600,width=400');
     mywindow.document.write(ticket1);
     mywindow.document.write(ticket2);
@@ -577,6 +562,8 @@ function generarPreparados(productos) {
 
 
 if(cantidadProductos>0){
+    let qr  =$("#qrPreparado").html(); 
+
 let contentPreparados=`<html><body>
 <h1>A Preparar Cocina</h1>
 <hr>
@@ -605,6 +592,10 @@ let contentPreparados=`<html><body>
    <br>
    <strong>Observacion:</strong>
    ${   observacion}
+   <br>
+   <hr>
+   <br>
+   ${qr}
    <div style=" page-break-before: always;"></div>
   
    </body></html>
@@ -628,6 +619,7 @@ function generarNoPreparados(productos) {
        if(producto.preparado==0){cantidadProductos++}});
 
         if(cantidadProductos >0){
+            let qr = $("#qrRapido").html();
 let contentPreparados=`<html><body>
 <h1>¡Listos! Ya preparados</h1>
 <hr>
@@ -656,6 +648,10 @@ let contentPreparados=`<html><body>
    <br>
    <strong>Observacion:</strong>
    ${observacion}
+   <br>
+   <hr>
+   <br>
+   ${qr}
    <div style=" page-break-before: always;"></div>
    </body></html>
    `;

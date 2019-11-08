@@ -153,11 +153,16 @@ class Ordenesapi extends CI_Controller {
     
     public function setearRapido($id)
     {
-      echo "ok";
+      $this->ordenes-> TiempoRapidoNull($id);
+      echo "<h1>Orden $id: Productos No Preparados Entregados </h1>";
+      echo "<script>setTimeout(function(){ window.location = '".base_url()."'  },3000);</script>";
+      
     }
 
     public function setearPrepadado($id)
-    {
-       echo "ok";
+    { 
+        $this->ordenes->TiempoPreparadoNull($id);
+        echo "<h1>Orden $id: Productos Preparados Entregados </h1>";
+        echo "<script>setTimeout(function(){ window.location = '".base_url()."'  },3000);</script>";
     }
 }
