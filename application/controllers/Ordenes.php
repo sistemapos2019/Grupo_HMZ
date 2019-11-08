@@ -6,6 +6,8 @@ class Ordenes extends CI_Controller {
       parent::__construct();
       $this->load->model('Productomodel','productos');
       $this->load->model('Categoriasmodel','categorias');
+      $this->load->model('OrdenesModel','ordenes');
+
             //Do your magic here
     }
 
@@ -18,5 +20,10 @@ class Ordenes extends CI_Controller {
     public function detallesOrden($id){
         $data['categorias']= $this->categorias->obtenerCategorias();
         $this->layout->load_view('ordenes/detalles_orden', $data);
+    }
+
+    public function obtenerVentas()
+    {
+        $this->$fechaF
     }
 }
