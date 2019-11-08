@@ -29,13 +29,13 @@
                         <div class="box-body">
                         <input type="text" id="fechaInicio">
                         <input type="text" id="fechaFin">
-                        <button>Consultar</button>
+                        <button onclick="javascript:obtenerRegistros()">Consultar</button>
                         </div>
                         </div>
             </div>
             </div>
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-12">
                     <div class="box">
                         <div class="box-header">
                             <h3 class="box-title">Ventas</h3>
@@ -97,80 +97,37 @@
 
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <div class="box">
-                        <div class="box-header">
-                            <h3 class="box-title" id="aaa">Opciones</h3>
-                        </div>
-                        <div class="box-body" style="max-width:500px;">
-                        <canvas id="barChart2"   style="height:100%; width:100%;"></canvas>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="box">
-                        <div class="box-header">
-                            <h3 class="box-title">Productos</h3>
-                        </div>
-                        <div class="box-body">
-                        <table class="table table-bordered">
-                                <tbody>
-                                    <tr>
-                                        <th style="width: 10px">#</th>
-                                        <th>Producto</th>
-                                        <th>Cantidad</th>
-                                        <th style="width: 40px">Label</th>
-                                    </tr>
-                                    <?php foreach ($productosVendidos as $producto) {
-                                        # code...
-                                    ?>
-                                    <tr>
-                                        <td>1.</td>
-                                        <td><?php echo $producto->nombre;?></td>
-                                        <td>
-                                            <div class="progress progress-xs">
-                                                <div class="progress-bar progress-bar-danger" style="width: 25%"></div>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <span class="badge bg-red"><?php echo $producto->total;?></span>
-                                        </td>
-                                    </tr>
-                                <?php }?>
-                                    <!--tr>
-                                        <td>2.</td>
-                                        <td>Churritos</td>
-                                        <td>
-                                            <div class="progress progress-xs">
-                                                <div class="progress-bar progress-bar-yellow" style="width: 12%"></div>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <span class="badge bg-yellow">12</span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>3.</td>
-                                        <td>Snickers pequeños</td>
-                                        <td>
-                                            <div class="progress progress-xs progress-striped active">
-                                                <div class="progress-bar progress-bar-primary" style="width: 10%"></div>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <span class="badge bg-light-blue">10</span>
-                                        </td>
-                                    </tr-->
-                                </tbody>
-                            </table>
-                        </div>
-
                     </div>
                 </div>
                
+               <script>
+                $(function () {
+                        $("#fechaInicio").datepicker(
+                            {autoclose: true, format: 'yyyy-mm-dd'}
+                        );
+                    });
+               </script>
+
+               <script>
+                    $(function () {
+                        $("#fechaFin").datepicker(
+                            {autoclose: true, format: 'yyyy-mm-dd'}
+                        );
+                    });
+               </script>
+
+                <script>
+                function obtenerRegistros(){
+                    let fechaInicioSeleccionado = $("#fechaInicio").val();
+                   // console.log(fechaInicioSeleccionado);
+                    let fechaFinSeleccionado = $("#fechaFin").val();
+                   //  console.log(fechaFinSeleccionado);
+                    
+
+                }
+                
+                </script>
+
                 <script>
                     var fechas =[];
                     var totales =[];
@@ -187,17 +144,7 @@
                         totalProductos.push(registro.total);
                     });
                 </script>
-                <div class="col-md-6">
-                    <div class="box">
-                        <div class="box-header">
-                            <h3 class="box-title" id="aaa">Opciones</h3>
-                        </div>
-                        <div class="box-body" style="max-width:500px; ">
-                        <canvas id="barChart"  style="height:100%;width:100%;"></canvas>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                
 
         </section>
     </section>

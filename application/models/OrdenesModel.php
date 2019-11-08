@@ -27,9 +27,7 @@ class OrdenesModel extends CI_Model {
     { 
             $this->db->insert('orden', $orden);
             $insert_id = $this->db->insert_id();
-         
             return  $insert_id;
-        
     }
 
     public function guardarDetalleOrden($id, $orden)
@@ -63,4 +61,30 @@ class OrdenesModel extends CI_Model {
     {
         return $this->db->query("UPDATE orden SET TiempoRapido = NULL WHERE id = $id");
     }
+
+    //Funciones de Estadísticas
+
+    public function ordenesActivas()
+    {
+        return ($this->ci->db->query("SELECT * FROM orden WHERE estado ='AA';")->result());
+    }
+
+    public function ObtenerTotalVentasFecha()
+    {
+        return $this->ci->db->query("SELECT CAST(fecha AS DATE) fecha, SUM(total) total FROM orden GROUP BY CAST(fecha AS DATE);")->result();
+    }
+
+    public function ObtenerProductosVendidos()
+    {
+        return $this->ci->db->query("SELECT  SUM(detalleorden.cantidad) as cantidad, producto.nombre
+        FROM detalleorden 
+        INNER JOIN producto ON detalleorden.idProducto = producto.id
+        GROUP BY producto.nombre ORDER BY producto.precio DESC;")->result();
+    }
+
+    public function obtenerVentas($fechaInicio, $fechaFin)
+    {
+        return $this->ci->db->query("SELECT * FROM orden WHERE estado = 'CC' AND fecha BETWEEN '$fechaInicio' AND '$fechaFin'")->result(); 
+    }
+
 }
