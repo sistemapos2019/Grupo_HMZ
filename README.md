@@ -4,6 +4,10 @@
   Ernesto Benjamín Herrera López HL15012
   Juan Carlos Zepeda Abrego ZA15009
 
+#Pagina Web de Documentacion
+https://zentaury.github.io/Grupo_HMZ.io/
+  
+
 
 # Planificación de pruebas del sistema
 El siguiente documento en google Drive contiene el documento del manual de pruebas: 
